@@ -13,7 +13,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -22,7 +25,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     LayoutInflater inflater;
     ArrayList<ScheduleDTO> list;
     Context context;
-    private Object ScheduleFragment3;
+    ScheduleDTO dto;
 
     public ScheduleAdapter(LayoutInflater inflater, ArrayList<ScheduleDTO> list, Context context) {
         this.inflater = inflater;
@@ -77,6 +80,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                                     dialog.dismiss();
                                 }else if (which == 1){
                                     // 1 번지 == 삭제
+                                    Gson gson = new Gson();
+                                    AskTask task = new AskTask("schedule_delete");
+                                    dto = list.get(position);
+                                    task.addParam("dto", gson.toJson(dto));
+                                    CommonMethod.executeAskGet(task);
+
                                     ((ScheduleActivity)context).changeFragment(new ScheduleFragment2());
                                     Toast.makeText(context.getApplicationContext(), "해당 일정이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();

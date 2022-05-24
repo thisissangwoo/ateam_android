@@ -52,14 +52,6 @@ public class ScheduleFragment1 extends Fragment {
             @Override
             public void onClick(View v) {
 
-                AskTask task = new AskTask("/schedule_insert");
-                dto.setSc_title(edt_schedule_title_schedule.getText() + "");
-                dto.setSc_memo(edt_schedule_memo_schedule.getText() + "");
-                dto.setSc_date(schedule);
-                dto.setUser_id("admin");
-                task.addParam("schedule_insert", gson.toJson(dto));
-                CommonMethod.executeAskGet(task);
-
                 if(edt_schedule_title_schedule.getText().toString().length() == 0 || edt_schedule_title_schedule.getText().toString().equals(" ")){
                     Toast.makeText(getContext().getApplicationContext(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     edt_schedule_title_schedule.requestFocus();
@@ -67,6 +59,13 @@ public class ScheduleFragment1 extends Fragment {
                     Toast.makeText(getContext().getApplicationContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     edt_schedule_memo_schedule.requestFocus();
                 }else{
+                    AskTask task = new AskTask("/schedule_insert");
+                    dto.setSc_title(edt_schedule_title_schedule.getText() + "");
+                    dto.setSc_memo(edt_schedule_memo_schedule.getText() + "");
+                    dto.setSc_date(schedule);
+                    dto.setUser_id("admin");
+                    task.addParam("schedule_insert", gson.toJson(dto));
+                    CommonMethod.executeAskGet(task);
                     Toast.makeText(getContext().getApplicationContext(), "일정 등록 완료", Toast.LENGTH_SHORT).show();
                     ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2());
                 }

@@ -33,13 +33,13 @@ public class ScheduleFragment2 extends Fragment {
 //==================================================================================================
         RecyclerView recv_schedule = v.findViewById(R.id.recv_schedule);
 
-
         // 리사이클러뷰의 진행 방향을 가로로 할 건지 세로로 할 건지 정하는 코드
         RecyclerView.LayoutManager manager = new LinearLayoutManager(
                 getContext(), RecyclerView.VERTICAL, false);
 
-        // 리사이클러뷰에 표시할 데이터의 리스트를 생성
-        // 프래그먼트에서 어싱크로 내가 보낼 where 절에 쓸 조건을 보내면 스프링에서 조회를 하면 selectList 로 옴
+        // 리사이클러뷰에 보여줄 데이터의 리스트를 생성
+        // 프래그먼트에서 어싱크로 내가 보낼 where 절에 쓸 조건을 보내면
+        // 스프링에서 조회를 하면 selectList 로 옴
         Gson gson = new Gson();
         AskTask task = new AskTask("/schedule_select");
         task.addParam("select", "admin");

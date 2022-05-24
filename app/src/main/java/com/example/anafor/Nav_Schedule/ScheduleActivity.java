@@ -1,6 +1,7 @@
 package com.example.anafor.Nav_Schedule;
 
 import android.app.Activity;
+
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,8 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.anafor.Hp_List.Hp_ListFragment;
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
+
 import com.example.anafor.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -34,21 +39,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 public class ScheduleActivity extends AppCompatActivity {
 
     MaterialCalendarView calendarView;
     ImageView imgv_my_allim_back;
     TextView tv_schedule_insert, tv_schedule_diary_date;
-    ArrayList<ScheduleDTO> list = new ArrayList<>();
 
-    //int cnt = 0;
+    String dto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-
 
         tv_schedule_insert = findViewById(R.id.tv_schedule_insert);
         tv_schedule_diary_date = findViewById(R.id.tv_schedule_diary_date);
@@ -90,23 +94,34 @@ public class ScheduleActivity extends AppCompatActivity {
         calendarView.setTitleFormatter(new MonthArrayTitleFormatter(getResources().getTextArray(R.array.custom_months)));
         calendarView.setWeekDayFormatter(new ArrayWeekDayFormatter(getResources().getTextArray(R.array.custom_weekdays)));
 
-        // 특정일에 파란색 점을 찍기 위해여 필요한 데이터 나중에 DB 에서 가지고 오면 될 것 같음
-        // 하루 , 이틀 전에 대하여 파란점을 찍게 만듬
+        // 특정일에 파란색 점을 찍기 위해 필요한 데이터 나중에 DB 에서 가지고 오면 될 것 같음
+        // 임시로 하루, 이틀 전에 대하여 파란점을 찍게 만듬
+        // group by
         ArrayList<CalendarDay> dates = new ArrayList<>();
         dates.add(CalendarDay.from(LocalDate.now().minusDays(1)));
         dates.add(CalendarDay.from(LocalDate.now().minusDays(2)));
+
+
 
         // addDecorators 를 이용해서 일요일 , 토요일에 색을 주고 , 특정일 ↑ 선택이 되게끔 데이터 넘김
         calendarView.addDecorators(new SundayDecorator(),new SaturdayDecorator() , new EventDecorator(Color.RED, dates,this));
         calendarView.setSelectedDate(CalendarDay.today()); // 처음에 오늘 날짜를 선택하게 해둠
 
-        // 선택한 날짜랑 DB 에서 가져온 날짜랑 비교했을 때 있으면 없으면 비교 -예정-
-        // 수정하기 누르면 모달창 띄우기 -예정-
         // 원하는 날짜를 클릭시 setText 로 date 찍어주는 이벤트
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 tv_schedule_diary_date.setText(String.format(date.getYear() + "년 " + date.getMonth() + "월 " + date.getDay() + "일 " ));
+                // select
+                // 어싱크 해서 날짜에 있는 값을 가져오고 dto 에 담아준다.
+                // 그 dto 에 있는 것을 recv 에 뿌려준다.
+                // where date 조건
+//                Gson gson = new Gson();
+//                AskTask task = new AskTask("/schedule_date_select");
+//                task.addParam("date_select", String.format(date.getYear() + "년 " + date.getMonth() + "월 " + date.getDay() + "일 "));
+//                dto = String.format(date.getYear() + "년 " + date.getMonth() + "월 " + date.getDay() + "일 " );
+//                ArrayList<ScheduleDTO> list = gson.fromJson(CommonMethod.executeAskGet(task),
+//                        new TypeToken<List<ScheduleDTO>>(){}.getType());
             }
         });
     }
@@ -169,8 +184,6 @@ public class ScheduleActivity extends AppCompatActivity {
         @Override
         public void decorate(DayViewFacade view) {
             view.addSpan(new DotSpan(10, Color.BLUE)); // 날자 밑에 점
-            // 날짜에 텍스트? 리스트가 null 이 아니면 ~ 점 찍어주기?
-            //if ()
         }
     }
 
