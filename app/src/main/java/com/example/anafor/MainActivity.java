@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationView nav_view;
     ViewFlipper pic_Slid; // 사진 슬라이드
     TextView tv_login, tv_edit; //신보배 0522 코드추가
+    Context context;
 
     /* 위치 권한 확인을 위한 코드 */
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
 
         // DrawerLayout → 레이아웃이 감춰져 있다가 나오는 것
         // 카톡을 키고 아무 대화방이나 들어가서 메뉴 누르면 나왔다가 슬라이드로 없어졌다가 함
@@ -135,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     changeFragment(new Hp_MainFragment());
                 }else if (item.getItemId() == R.id.btm_cheobang){
                     pic_Slid.setVisibility(View.GONE);
-                    changeFragment(new Pill_MainFragment());
+                    changeFragment(new Pill_MainFragment(context));
                 }else if (item.getItemId() == R.id.btm_yagtong){
                     pic_Slid.setVisibility(View.GONE);
                     changeFragment(new Box_MainFragment());

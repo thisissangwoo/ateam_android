@@ -1,5 +1,6 @@
 package com.example.anafor.Pill_Main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -36,6 +37,11 @@ public class Pill_MainFragment extends Fragment {
     Pill_MainAdapter adapter;
     TextView tv_pill_main_date,tv_pill_main_camera;
     RecyclerView recv_select;
+    Context context;
+
+    public Pill_MainFragment(Context context) {
+        this.context = context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +60,7 @@ public class Pill_MainFragment extends Fragment {
         tv_pill_main_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Pill_QRcodeActivity.class);
+                Intent intent = new Intent(context, Pill_QRcodeActivity.class);
                 startActivity(intent);
 
             }
@@ -81,7 +87,7 @@ public class Pill_MainFragment extends Fragment {
         selectList(CommonVal.loginInfo.getUser_id());
         Log.d("TAG", "onCreateView: " + list.get(0).getPill_code());
 
-        adapter = new Pill_MainAdapter(inflater, list, getContext());
+        adapter = new Pill_MainAdapter(inflater, list,context);
         recv_select.setAdapter(adapter);
         recv_select.setLayoutManager(manager);
 

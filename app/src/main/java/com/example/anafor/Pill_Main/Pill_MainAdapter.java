@@ -3,7 +3,6 @@ package com.example.anafor.Pill_Main;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,19 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.anafor.Hp_Map.Hp_MapActivity;
-import com.example.anafor.Nav_Schedule.ScheduleActivity;
-import com.example.anafor.Nav_Schedule.ScheduleFragment2;
-import com.example.anafor.Pill_QRcode.Pill_QRcodeActivity;
 import com.example.anafor.R;
 import com.example.anafor.pill_detail.Pill_detailActivity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.ViewHolder> {
@@ -81,17 +76,16 @@ public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.View
         View itemview;
         ImageView imgv_pill_main_img;
         TextView tv_pill_main_name,tv_pill_main_date;
-        RecyclerView container_pill;
+        LinearLayout item;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemview = itemView;
+            this.imgv_pill_main_img = itemView.findViewById(R.id.imgv_pill_main_img);
+            this.tv_pill_main_name = itemView.findViewById(R.id.tv_pill_main_name);
+            this.tv_pill_main_date = itemView.findViewById(R.id.tv_pill_main_date);
 
-            imgv_pill_main_img = itemView.findViewById(R.id.imgv_pill_main_img);
-            tv_pill_main_name = itemView.findViewById(R.id.tv_pill_main_name);
-            tv_pill_main_date = itemView.findViewById(R.id.tv_pill_main_date);
-
-           itemview.setOnLongClickListener(new View.OnLongClickListener() {
+            itemview.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
 

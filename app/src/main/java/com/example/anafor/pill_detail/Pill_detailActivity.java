@@ -31,27 +31,27 @@ public class Pill_detailActivity extends AppCompatActivity {
     Pill_MainDTO dto;
     Context context;
     ArrayList<Pill_detailDTO> list = new ArrayList<>();
-    ImageView drug_img;
+    ImageView drug_img, imgv_pill_detail_back;
     TextView drug_name, drug_cp, drug_efcy, drug_use, drug_se, drug_atpn;
     RecyclerView recv_pill_detail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pill_detail);
-
+        dto = new Pill_MainDTO();
 
         Intent intent = getIntent();
         dto = (Pill_MainDTO) intent.getSerializableExtra("dto");
 
 
 
-        drug_name = findViewById(R.id.drug_name);
+        /*drug_name = findViewById(R.id.drug_name);
         drug_cp = findViewById(R.id.drug_cp);
         drug_efcy = findViewById(R.id.drug_efcy);
         drug_use = findViewById(R.id.drug_use);
         drug_se = findViewById(R.id.drug_se);
 
-        drug_img.setOnClickListener(new View.OnClickListener() {
+        imgv_pill_detail_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();    // 바로 이전에 왔던 곳으로 이동 (마이페이지 유지)
@@ -81,7 +81,7 @@ public class Pill_detailActivity extends AppCompatActivity {
                     new TypeToken<List<Pill_MainDTO>>(){}.getType());
         }else{
             Log.d("TAG", "selectList: ");
-        }
+        }*/
     }
 
 
