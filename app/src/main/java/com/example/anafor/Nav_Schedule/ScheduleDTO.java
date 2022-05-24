@@ -1,6 +1,8 @@
 package com.example.anafor.Nav_Schedule;
 
-public class ScheduleDTO {
+import java.io.Serializable;
+
+public class ScheduleDTO implements Serializable {
 
     private int sc_code;
     private String user_id, sc_date, sc_title, sc_memo;
@@ -42,23 +44,6 @@ public class ScheduleDTO {
     }
 
     public void setSc_memo(String sc_memo) {
-        this.sc_memo = sc_memo;
-    }
-
-    public ScheduleDTO(int sc_code, String user_id, String sc_date, String sc_title, String sc_memo) {
-        this.sc_code = sc_code;
-        this.user_id = user_id;
-        this.sc_date = sc_date;
-        this.sc_title = sc_title;
-        this.sc_memo = sc_memo;
-    }
-
-    public ScheduleDTO() {
-
-    }
-
-    public ScheduleDTO(String sc_title, String sc_memo) {
-        this.sc_title = sc_title;
         this.sc_memo = sc_memo;
     }
 

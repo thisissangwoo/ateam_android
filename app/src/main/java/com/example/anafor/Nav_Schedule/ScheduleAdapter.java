@@ -10,10 +10,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -22,12 +24,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
     LayoutInflater inflater;
     ArrayList<ScheduleDTO> list;
     Context context;
-    private Object ScheduleFragment3;
+    ScheduleDTO dto;
+    String schedule;
 
-    public ScheduleAdapter(LayoutInflater inflater, ArrayList<ScheduleDTO> list, Context context) {
+    public ScheduleAdapter(LayoutInflater inflater, ArrayList<ScheduleDTO> list, Context context, String schedule) {
         this.inflater = inflater;
         this.list = list;
         this.context = context;
+        this.schedule = schedule;
     }
 
     @NonNull
@@ -39,8 +43,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tv_schedule_title.setText(list.get(position).getSc_title());
-        holder.tv_schedule_content.setText(list.get(position).getSc_memo());
+            holder.tv_schedule_title.setText(list.get(position).getSc_title());
+            holder.tv_schedule_content.setText(list.get(position).getSc_memo());
     }
 
     @Override
@@ -73,11 +77,17 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                                     // 0 번째 == 수정
                                     // 액티비티를 제외한 프래그먼트, 어댑터는 본인의 출처 즉, 부모가 누구인지
                                     // 알아야 서로 넘겨주면서 사용이 가능하므로 Context 로 받아와서 사용하여야 함
-                                    ((ScheduleActivity)context).changeFragment(new ScheduleFragment3(list.get(position)));
+                                    ((ScheduleActivity)context).changeFragment(new ScheduleFragment3(list.get(position),schedule));
                                     dialog.dismiss();
                                 }else if (which == 1){
                                     // 1 번지 == 삭제
-                                    ((ScheduleActivity)context).changeFragment(new ScheduleFragment2());
+                                    Gson gson = new Gson();
+                                    AskTask task = new AskTask("schedule_delete");
+                                    dto = list.get(position);
+                                    task.addParam("dto", gson.toJson(dto));
+                                    CommonMethod.executeAskGet(task);
+
+                                    ((ScheduleActivity)context).changeFragment(new ScheduleFragment2(schedule));
                                     Toast.makeText(context.getApplicationContext(), "해당 일정이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 }
