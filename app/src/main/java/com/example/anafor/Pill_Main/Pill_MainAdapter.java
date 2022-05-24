@@ -3,6 +3,7 @@ package com.example.anafor.Pill_Main;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Hp_Map.Hp_MapActivity;
+import com.example.anafor.Nav_Schedule.ScheduleActivity;
+import com.example.anafor.Nav_Schedule.ScheduleFragment2;
+import com.example.anafor.Pill_QRcode.Pill_QRcodeActivity;
 import com.example.anafor.R;
 import com.example.anafor.pill_detail.Pill_detailActivity;
 
@@ -50,11 +55,19 @@ public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder,@SuppressLint("RecyclerView") int i) {
-        holder.bind(holder, i);
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
+        holder.tv_pill_main_name.setText(list.get( position).getUser_id());
+        holder.tv_pill_main_date.setText(list.get( position).getPill_date());
 
-
+        holder.itemview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Pill_detailActivity.class);
+                intent.putExtra("dto", list.get(position));
+                context.startActivity(intent);
+            }
+        });
 
     }
 
@@ -78,25 +91,17 @@ public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.View
             tv_pill_main_name = itemView.findViewById(R.id.tv_pill_main_name);
             tv_pill_main_date = itemView.findViewById(R.id.tv_pill_main_date);
 
-
-            itemView.setOnClickListener(new View.OnClickListener() {
+           itemview.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    Intent intent = new Intent(context, Pill_detailActivity.class);
-                    intent.putExtra("dto", (Serializable) list.get(position));
-                    context.startActivity(intent);
-                }
-            });
+                public boolean onLongClick(View v) {
 
-           /* itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
                     int position = getAdapterPosition();
+                    //아이템 삭제 처리`
                     if (position != RecyclerView.NO_POSITION){
+
                         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                         builder.setTitle("원하시는 항목을 선택해주세요.");
-                        builder.setSingleChoiceItems(new String[]{"수정", "삭제"}, 2, new DialogInterface.OnClickListener() {
+                        builder.setSingleChoiceItems(new String[]{"삭제"}, 1, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // setSingleChoiceItems 2개인 각각의 아이템 중
@@ -104,24 +109,16 @@ public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.View
                                 if (which == 0){
 
                                     dialog.dismiss();
-                                }else if (which == 1){
-
-                                    dialog.dismiss();
                                 }
                             }
                         }).show();
                     }
-                    return;
+                    return false;
                 }
-            });*/
-        }
-
-
-        public void bind(ViewHolder holder, int i) {
-            holder.tv_pill_main_name.setText(list.get(i).getUser_id());
-            holder.tv_pill_main_date.setText(list.get(i).getPill_date());
+            });
 
         }
+
     }
 
 

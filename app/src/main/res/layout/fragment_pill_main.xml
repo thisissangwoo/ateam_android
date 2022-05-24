@@ -50,16 +50,7 @@
                     android:textColor="#696aad"
                     android:gravity="left"/>
 
-                <TextView
-                    android:id="@+id/tv_box_alarm_edit"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:textStyle="bold"
-                    android:textSize="16dp"
-                    android:textColor="#696aad"
-                    android:text="편집"/>
+
 
             </LinearLayout>
 
