@@ -25,9 +25,11 @@ public class ScheduleFragment3 extends Fragment {
     Button btn_schedule_insert_modify;
 
     ScheduleDTO dto;
+    String schedule;
 
-    public ScheduleFragment3(ScheduleDTO dto) {
+    public ScheduleFragment3(ScheduleDTO dto, String schedule) {
         this.dto = dto;
+        this.schedule = schedule;
     }
 
     @Override
@@ -72,7 +74,7 @@ public class ScheduleFragment3 extends Fragment {
                     CommonMethod.executeAskGet(task);
 
                     Toast.makeText(getContext().getApplicationContext(), "일정 수정 완료", Toast.LENGTH_SHORT).show();
-                    ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2());
+                    ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2(schedule));
                 }
             }
         });

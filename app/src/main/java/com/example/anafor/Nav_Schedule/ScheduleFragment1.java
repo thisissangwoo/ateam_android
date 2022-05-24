@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
-import com.example.anafor.Common.CommonVal;
+
 import com.example.anafor.R;
 import com.google.gson.Gson;
 
@@ -67,7 +67,7 @@ public class ScheduleFragment1 extends Fragment {
                     task.addParam("schedule_insert", gson.toJson(dto));
                     CommonMethod.executeAskGet(task);
                     Toast.makeText(getContext().getApplicationContext(), "일정 등록 완료", Toast.LENGTH_SHORT).show();
-                    ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2());
+                    ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2(schedule));
                 }
 
             }
