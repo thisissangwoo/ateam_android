@@ -154,8 +154,13 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
                     startActivity(intent);
                 }else if(item.getItemId() == R.id.nav_choice){
-                    Intent intent = new Intent(MainActivity.this, ChoiceActivity.class);
-                    startActivity(intent);
+                     if(CommonVal.loginInfo == null){
+                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                         startActivity(intent);
+                     }else{
+                         Intent intent = new Intent(MainActivity.this, ChoiceActivity.class);
+                         startActivity(intent);
+                     }
                 }else if (item.getItemId() == R.id.nav_review) {
                     Intent intent = new Intent(MainActivity.this, MyReviewActivity.class);
                     startActivity(intent);
