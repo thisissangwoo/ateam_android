@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "로그인";
     TextInputEditText tiedt_id, tiedt_pw;
     Button btn_login;
-    TextView joinBtn,loginName;
+    TextView tv_join, loginName, pwFind;
     Switch chk_auto ;
 
     @Override
@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.tv_login_anaforlogo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goMain();
+                onBackPressed();
             }
         });
 
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.imgv_login_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goMain();
+                onBackPressed();
             }
         });
 
@@ -71,23 +71,34 @@ public class LoginActivity extends AppCompatActivity {
         tiedt_id = findViewById(R.id.tiedt_login_id );
         tiedt_pw = findViewById(R.id.tiedt_login_pw );
         btn_login = findViewById(R.id.btn_login_login );
+        tv_join = findViewById(R.id.tv_login_join);
         chk_auto = findViewById(R.id.switch_login_autologin);
         SharedPreferences preferences = getPreferences(LoginActivity.MODE_PRIVATE);
         tiedt_id.setText(preferences.getString("id" , ""));
         tiedt_pw.setText(preferences.getString("pw" , ""));
         loginName = findViewById(R.id.tv_main_header_login);
+        pwFind = findViewById(R.id.tv_login_pwFind);
 
-        //TextInputLayout 아이디 찾기
-
+        //비번찾기
+        pwFind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,PwFindActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //로그인버튼 클릭
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( tiedt_id.getText().toString().trim().length() < 1 ||
-                        tiedt_pw.getText().toString().trim().length() < 1){
-                    Toast.makeText(LoginActivity.this, "아이디 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
-                    //tiedt_id.requestFocus();
+                if( tiedt_id.getText().toString().trim().length() < 1 ) {
+                    Toast.makeText(LoginActivity.this, "아이디를 입력하세요.", Toast.LENGTH_SHORT).show();
+                    tiedt_id.requestFocus();
+                    return;
+                }else if(tiedt_pw.getText().toString().trim().length() < 1){
+                    Toast.makeText(LoginActivity.this, "비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
+                    tiedt_pw.requestFocus();
                     return;
                 }else{
                     UserDAO dao = new UserDAO(LoginActivity.this);
@@ -176,8 +187,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //회원가입 화면으로 이동
-        joinBtn = findViewById(R.id.tv_login_join);
-        joinBtn.setOnClickListener(new View.OnClickListener() {
+        tv_join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this,JoinActivity.class);

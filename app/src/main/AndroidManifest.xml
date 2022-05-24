@@ -5,8 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 카카오맵 api -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 카카오맵 api -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -19,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".User.PwFindActivity"
+            android:exported="false" />
         <!-- 로그인 -->
         <uses-library
             android:name="org.apache.http.legacy"
@@ -35,9 +37,7 @@
             android:exported="false" />
         <activity
             android:name=".User.JoinActivity"
-            android:exported="false" />
-        <!-- 로그인 -->
-
+            android:exported="false" /> <!-- 로그인 -->
         <activity
             android:name=".Hp_Information.Hp_InformationActivity"
             android:exported="false" />
@@ -101,6 +101,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
