@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/tv_my_review_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="박천일 님"
+            android:textStyle="bold"
+            android:textColor="#696aad"
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_my_review_date"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="2022.04.21"
+            android:textStyle="bold"
+            android:textColor="#c0c0c0"
+            android:textSize="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_my_review_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A 조 내과"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"/>
+
+        <RatingBar
+            android:id="@+id/reviewRating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="false"
+            android:progressTint="#FFC107"
+            android:layout_marginLeft="8dp"
+            android:max="5"
+            android:numStars="5"
+            android:rating="4"
+            android:stepSize="1">
+
+        </RatingBar>
+
+        <TextView
+            android:id="@+id/tv_my_review_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="감기 몸살 기운이 있어서 내원 했는데\n다행히 코로나는 아니네요 !\n그리고 의사분도 매우 친절 하셨습니다."
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="병원 만족도 조사"
+            android:textColor="#696aad"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_my_review_survey1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="● 증상을 쉽게 설명해 주셨어요."
+            android:textColor="#808080"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/tv_my_review_survey2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="● 꼼꼼하게 진단해 주셨어요."
+            android:textColor="#808080"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/tv_my_review_survey3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="● 친절하게 알려 주셨어요."
+            android:textColor="#808080"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:layout_marginLeft="10dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="382dp"
+        android:layout_height="2dp"
+        android:background="#ccc"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>

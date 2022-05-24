@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.anafor">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 카카오맵 api -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <!-- 로그인 -->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name=".User.UserDeleteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".User.UserInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".User.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".User.JoinActivity"
+            android:exported="false" />
+        <!-- 로그인 -->
+
+        <activity
+            android:name=".Hp_Information.Hp_InformationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Hp_Information.Hp_InformationReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Nav_Schedule.ScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Nav_Choice.ChoiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Nav_MyReview.MyReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Nav_Vaccine.VaccineActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation" />
+        <activity
+            android:name=".Box_Alarm.Box_AlarmActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Box_Alarm.Box_Alarm_detailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Box_Recode.Box_RecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Box_Main.Box_SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Pill_QRcode.Pill_QRcodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Hp_Map.Hp_MapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Hp_List.Hp_ListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Hp_Hash.Hp_HashActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data
+                    android:host="oauth"
+                    android:scheme="kakao8b43a4029fe7a1169d57ad185993d4f0" />
+            </intent-filter>
+        </activity> <!-- 지도 사용 app key -->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="8b43a4029fe7a1169d57ad185993d4f0" />
+    </application>
+
+</manifest>

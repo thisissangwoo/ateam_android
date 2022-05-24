@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".User.UserInfoActivity"
+    android:orientation="vertical">
+
+    <!-- 툴바 -->
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:background="#696aad"
+        app:contentInsetStart="0dp">
+        <ImageView
+            android:id="@+id/imgv_userInfo_back"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="?attr/homeAsUpIndicator"
+            android:layout_gravity="left"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원정보수정"
+            android:layout_gravity="center"
+            android:textSize="22dp"
+            android:textColor="#fff"
+            android:textStyle="bold"/>
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <!-- 회원정보폼 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="30dp">
+                <!-- AnaFor로고 -->
+                <TextView
+                    android:id="@+id/tv_userInfo_anaforlogo"
+                    android:gravity="center|bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="AnaFor"
+                    android:textSize="45dp"
+                    android:textColor="#696aad"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:gravity="center|top"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="      아픈 나를 위해 아나포"
+                    android:textSize="12dp"
+                    android:textStyle="bold"
+                    android:textColor="#696aad"
+                    android:layout_marginTop="-10dp"
+                    android:layout_marginBottom="15dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:text="*필수입력"
+                    android:textSize="10dp"
+                    android:layout_gravity="right"/>
+                <!--이메일-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_userInfo_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    app:boxBackgroundColor="@color/white"
+                    android:enabled="false"
+                    app:helperText="아이디(이메일)는 변경할수없습니다"
+                    android:layout_marginBottom="5dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tiet_userInfo_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="50"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--비밀번호-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_userInfo_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="비밀번호*"
+                    android:padding="2dp"
+                    app:boxBackgroundColor="@color/white"
+                    app:endIconMode="password_toggle"
+                    app:errorEnabled="true"
+                    app:helperTextEnabled="true"
+                    app:helperText="8~16자이내로 영문과 숫자를 혼합하여 입력해주세요"
+                    android:layout_marginBottom="5dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tiedt_userInfo_pw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:singleLine="true"
+                        android:maxLength="16" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--비밀번호 확인-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_userInfo_pwChk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="비밀번호 확인*"
+                    android:padding="2dp"
+                    app:boxBackgroundColor="@color/white"
+                    app:endIconMode="password_toggle"
+                    app:errorEnabled="true"
+                    android:layout_marginBottom="5dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tiedt_userInfo_pwChk"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:singleLine="true"
+                        android:maxLength="16" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--이름-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_userInfo_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="이름*"
+                    android:padding="2dp"
+                    app:boxBackgroundColor="@color/white"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    android:enabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tiedt_userInfo_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:maxLength="10"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--전화번호-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_userInfo_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="휴대폰 번호*"
+                    android:padding="2dp"
+                    app:endIconMode="clear_text"
+                    app:boxBackgroundColor="@color/white"
+                    app:errorEnabled="true"
+                    app:helperTextEnabled="true"
+                    app:helperText="'-'없이 번호만 입력하세요     예)01012345678"
+                    android:layout_marginBottom="5dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tiedt_userInfo_tel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:singleLine="true"
+                        android:maxLength="11"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--생년월일-->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/til_userInfo_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="생년월일*"
+                    android:padding="2dp"
+                    app:boxBackgroundColor="@color/white"
+                    app:endIconMode="clear_text"
+                    app:errorEnabled="true"
+                    app:helperTextEnabled="true"
+                    app:helperText="예)19950101"
+                    android:layout_marginBottom="10dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tiedt_userInfo_birth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:singleLine="true"
+                        android:maxLength="8"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!--성별-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="성별*"
+                    android:textSize="15dp"
+                    android:textColor="#595959"
+                    android:layout_marginBottom="5dp"/>
+
+                <RadioGroup
+                    android:id="@+id/rdoG_userInfo_rdoG"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/rdoBtn_userInfo_male"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:text="남"
+                        android:textColor="#595959"
+                        android:layout_marginRight="50dp" />
+                    <RadioButton
+                        android:id="@+id/rdoBtn_userInfo_female"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:text="여"
+                        android:textColor="#595959" />
+                </RadioGroup>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="-45dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginRight="-20dp"
+                android:layout_marginLeft="-20dp"
+                android:layout_marginTop="30dp"
+                android:background="#ECECEC"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_userInfo_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="로그아웃"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:gravity="center|left"
+                    android:layout_margin="15dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginRight="-20dp"
+                    android:layout_marginLeft="-20dp"
+                    android:background="#ECECEC" />
+                <TextView
+                    android:id="@+id/tv_userInfo_idDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="회원탈퇴"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:gravity="center|left"
+                    android:layout_margin="15dp"/>
+
+                <!--수정하기버튼-->
+                <android.widget.Button
+                    android:id="@+id/btn_userInfo_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/round_button"
+                    android:text="저장하기"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
