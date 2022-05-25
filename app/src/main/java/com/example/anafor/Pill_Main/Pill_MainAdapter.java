@@ -12,12 +12,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
+import com.example.anafor.Nav_Schedule.ScheduleActivity;
+import com.example.anafor.Nav_Schedule.ScheduleFragment2;
 import com.example.anafor.R;
 import com.example.anafor.pill_detail.Pill_detailActivity;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -26,7 +32,7 @@ public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.View
     LayoutInflater inflater;
     ArrayList<Pill_MainDTO> list;
     Context context;
-
+    Pill_MainDTO dto;
     public Pill_MainAdapter(LayoutInflater inflater, ArrayList<Pill_MainDTO> list, Context context) {
         this.inflater = inflater;
         this.list = list;
@@ -101,7 +107,13 @@ public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.View
                                 // setSingleChoiceItems 2개인 각각의 아이템 중
                                 // 0 번째 == 수정, 1 번째 == 삭제
                                 if (which == 0){
+                                    Gson gson = new Gson();
+                                    AskTask task = new AskTask("/pill_delete");
+                                    dto = list.get(position);
+                                    task.addParam("dto", gson.toJson(dto));
+                                    CommonMethod.executeAskGet(task);
 
+                                    Toast.makeText(context.getApplicationContext(), "해당 처방전이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 }
                             }
