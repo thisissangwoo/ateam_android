@@ -144,11 +144,11 @@ public class Hp_InformationActivity extends AppCompatActivity {
 
                 int position = tab.getPosition();
 
-                if(position == 0){
+                if(position == 0){          //진료시간
                     hp_infor_scview.smoothScrollTo(0, hp_infor_time.getTop());
-                }else if (position == 1){
+                }else if (position == 1){           //병원정보
                     hp_infor_scview.smoothScrollTo(0, hp_infor_infor.getTop());
-                }else if (position == 2){
+                }else if (position == 2){           //리뷰
                     hp_infor_scview.smoothScrollTo(0, hp_infor_review.getTop());
                 }
 
