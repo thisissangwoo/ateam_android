@@ -104,19 +104,8 @@
         android:gravity="center"
         android:textSize="15dp"
         android:visibility="visible"
-        android:text="한울직업전문학교"/>
+        android:text="AnaFor"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:textStyle="bold"
-            android:layout_marginTop="740dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:textSize="15dp"
-            android:text="로그아웃"
-            android:visibility="invisible"/>
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
