@@ -69,7 +69,6 @@ public class Hp_ListAdapter extends RecyclerView.Adapter<Hp_ListAdapter.ViewHold
             holder.tv_hp_list_addr.setText(list.get(i).getHp_addr());
             holder.tv_hp_list_kategorie.setText(list.get(i).getHp_tel());
 
-
             holder.hp_list_reviewchoic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
