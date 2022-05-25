@@ -26,6 +26,7 @@ import com.google.gson.reflect.TypeToken;
 
 
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class Pill_MainFragment extends Fragment {
 
     ArrayList<Pill_MainDTO> list;
     Pill_MainAdapter adapter;
-    TextView tv_pill_main_date,tv_pill_main_camera;
+    TextView tv_pill_main_date,tv_pill_main_camera, tv_pill_main_none;
     RecyclerView recv_select;
 
 
@@ -48,9 +49,7 @@ public class Pill_MainFragment extends Fragment {
         list = new ArrayList<>();
         recv_select = v.findViewById(R.id.recv_select);
         tv_pill_main_date = v.findViewById(R.id.tv_pill_main_date);
-        
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(
-                getContext(), RecyclerView.VERTICAL, false);
+        tv_pill_main_none = v.findViewById(R.id.tv_pill_main_none);
 
 
         tv_pill_main_camera = v.findViewById(R.id.tv_pill_main_camera);
@@ -78,30 +77,37 @@ public class Pill_MainFragment extends Fragment {
         adapter = new Pill_MainAdapter(inflater, list);*/
         //selectList(CommonVal.loginInfo.getUser_id());
 
-        selectList(CommonVal.loginInfo.getUser_id());
+
+        selectList();
         //널인지 체크해서 로그인 액티비티로 이동
 
-        Log.d("TAG", "onCreateView: " + list.get(0).getPill_code());
-
-        adapter = new Pill_MainAdapter(inflater, list,getContext());
-        recv_select.setAdapter(adapter);
-        recv_select.setLayoutManager(manager);
 
         return v;
     }
 
-    public void selectList(String query){
+    public void selectList(){
         Gson gson = new Gson();
         AskTask task = new AskTask("/select");
-        task.addParam("select", query);
-        InputStreamReader ir = CommonMethod.executeAskGet(task);
+        task.addParam("user_id", CommonVal.loginInfo.getUser_id());
+        list = gson.fromJson(CommonMethod.executeAskGet(task), new TypeToken< ArrayList<Pill_MainDTO> >(){}.getType());
+        if (list.size() == 0){
+            tv_pill_main_none.setVisibility(View.VISIBLE);
+            recv_select.setVisibility(View.GONE);
+        }else {
+            adapter = new Pill_MainAdapter(getLayoutInflater(), list, getContext());
+            recv_select.setAdapter(adapter);
+            recv_select.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        }
+
+
+        /*InputStreamReader ir = CommonMethod.executeAskGet(task);
          list = null;
         if(ir != null){
             list = gson.fromJson(ir,
                     new TypeToken< List<Pill_MainDTO> >(){}.getType());
         }else{
             Log.d("TAG", "selectList: ");
-        }
+        }*/
 
     }
     //새로고침 로직00

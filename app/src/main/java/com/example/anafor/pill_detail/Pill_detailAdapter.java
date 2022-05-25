@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anafor.Pill_Main.Pill_MainAdapter;
 import com.example.anafor.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ public class Pill_detailAdapter extends RecyclerView.Adapter<Pill_detailAdapter.
 
     LayoutInflater inflater;
     ArrayList<Pill_detailDTO> list;
+    Gson gson = new Gson();
     Context context;
 
     public Pill_detailAdapter(LayoutInflater inflater, ArrayList<Pill_detailDTO> list, Context context) {
@@ -31,36 +33,44 @@ public class Pill_detailAdapter extends RecyclerView.Adapter<Pill_detailAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        return new ViewHolder(inflater.inflate(R.layout.item_pill_detail,parent,false));
+        View itemview = inflater.inflate(R.layout.item_pill_detail, parent, false);
+
+        return new ViewHolder(itemview);
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.tv_pill_detail_name.setText(list.get(position).getDrug_name());
+        holder.tv_pill_detail_cp.setText(list.get(position).getDrug_cp());
+        holder.tv_pill_detail_efcy.setText(list.get(position).getDrug_efcy());
+        holder.tv_pill_detail_use.setText(list.get(position).getDrug_use());
+        holder.tv_pill_detail_se.setText(list.get(position).getDrug_se());
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         View itemview;
-        ImageView drug_img;
-        TextView drug_name,drug_cp,drug_efcy, drug_use,drug_se;
+        ImageView imgv_pill_detail_img;
+        TextView tv_pill_detail_name, tv_pill_detail_cp, tv_pill_detail_efcy, tv_pill_detail_use, tv_pill_detail_se;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemview = itemView;
-
-            drug_img = itemView.findViewById(R.id.drug_img);
-            drug_name = itemView.findViewById(R.id.drug_name);
-            drug_cp = itemView.findViewById(R.id.drug_cp);
-            drug_efcy = itemView.findViewById(R.id.drug_efcy);
-            drug_use = itemView.findViewById(R.id.drug_use);
-            drug_se = itemView.findViewById(R.id.drug_se);
+            imgv_pill_detail_img = itemView.findViewById(R.id.imgv_pill_detail_img);
+            tv_pill_detail_name = itemView.findViewById(R.id.tv_pill_detail_name);
+            tv_pill_detail_cp = itemView.findViewById(R.id.tv_pill_detail_cp);
+            tv_pill_detail_efcy = itemView.findViewById(R.id.tv_pill_detail_efcy);
+            tv_pill_detail_use = itemView.findViewById(R.id.tv_pill_detail_use);
+            tv_pill_detail_se = itemView.findViewById(R.id.tv_pill_detail_se);
 
         }
     }

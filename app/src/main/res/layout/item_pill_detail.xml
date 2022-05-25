@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/drug_img"
+                android:id="@+id/imgv_pill_detail_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/drug" />
@@ -44,7 +44,7 @@
                 android:background="@color/black"/>
 
             <TextView
-                android:id="@+id/drug_name"
+                android:id="@+id/tv_pill_detail_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="약이름~~~~~~"/>
@@ -69,7 +69,7 @@
                 android:background="@color/black"/>
 
             <TextView
-                android:id="@+id/drug_cp"
+                android:id="@+id/tv_pill_detail_cp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="회사이름~~~"/>
@@ -94,10 +94,10 @@
                 android:background="@color/black"/>
 
             <TextView
-                android:id="@+id/drug_efcy"
+                android:id="@+id/tv_pill_detail_efcy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="약효능 설명~~~~~"/>
+                android:text="약효능 설명~~~~~" />
 
         </LinearLayout>
 
@@ -119,7 +119,7 @@
                 android:background="@color/black"/>
 
             <TextView
-                android:id="@+id/drug_use"
+                android:id="@+id/tv_pill_detail_use"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="약사용법 ~~~~~~~~~"/>
@@ -144,7 +144,7 @@
                 android:background="@color/black"/>
 
             <TextView
-                android:id="@+id/drug_se"
+                android:id="@+id/tv_pill_detail_se"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="약부작용 ~~~~~~~~~"/>
