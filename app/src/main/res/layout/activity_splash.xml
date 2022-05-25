@@ -23,10 +23,8 @@
         android:textColor="#fff"
         android:textStyle="bold"
         android:layout_gravity="center"
-        android:layout_marginLeft="7dp"
         android:layout_marginTop="35dp"
-        android:text="아픈 나를 위해 아나포" />
-
+        android:text="안 아플 나를 위해 아나포" />
 
     <ImageView
         android:layout_width="match_parent"

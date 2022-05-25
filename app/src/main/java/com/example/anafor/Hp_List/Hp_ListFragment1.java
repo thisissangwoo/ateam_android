@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
-import com.example.anafor.Hp_Hash.hpVO;
+import com.example.anafor.Hp_Hash.HpDTO;
 import com.example.anafor.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class Hp_ListFragment1 extends Fragment {
 
-    ArrayList<hpVO> list;
+    ArrayList<HpDTO> list;
     Hp_ListAdapter adapter;
     String query;
 
@@ -42,8 +42,9 @@ public class Hp_ListFragment1 extends Fragment {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(
                 getContext(), RecyclerView.VERTICAL, false);
 
-        selectList(query);
+        //selectList(query);
         adapter = new Hp_ListAdapter(inflater, list, getActivity());
+
         // 리사이클러뷰에 어댑터를 세팅
         recv_select.setAdapter(adapter);
         recv_select.setLayoutManager(manager);
@@ -51,20 +52,20 @@ public class Hp_ListFragment1 extends Fragment {
         return v;
 //==================================================================================================
     }
-    public void selectList(String query){
-
-        try{
-            Gson gson = new Gson();
-            AskTask task = new AskTask("hashreview");
-            task.addParam("query", query);
-            InputStreamReader isr =  CommonMethod.executeAskGet(task);
-            list = gson.fromJson(isr, new TypeToken<ArrayList<hpVO>>(){}.getType());
-            for(hpVO vo : list){
-                Log.d("@@@@", "onQueryTextSubmit: " + vo.getHp_name());
-            }
-            Log.d("hash", "onQueryTextSubmit: " + list.size());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public void selectList(String query){
+//
+//        try{
+//            Gson gson = new Gson();
+//            AskTask task = new AskTask("review");
+//            task.addParam("query", query);
+//            InputStreamReader isr =  CommonMethod.executeAskGet(task);
+//            list = gson.fromJson(isr, new TypeToken<ArrayList<HpDTO>>(){}.getType());
+//            for(HpDTO vo : list){
+//                Log.d("@@@@", "onQueryTextSubmit: " + vo.getHp_name());
+//            }
+//            Log.d("hash", "onQueryTextSubmit: " + list.size());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

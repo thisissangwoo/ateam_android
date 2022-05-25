@@ -5,33 +5,25 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
-import com.example.anafor.Common.MemberSelect;
-import com.example.anafor.Hp_Hash.Hp_HashActivity;
+import com.example.anafor.Hp_Hash.HpDTO;
 
-import com.example.anafor.Hp_Hash.hpVO;
-import com.example.anafor.Hp_Information.Hp_infoDTO;
 import com.example.anafor.R;
 
-import com.example.anafor.gps.GpsTracker;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class Hp_ListActivity extends AppCompatActivity {
 
@@ -40,7 +32,7 @@ public class Hp_ListActivity extends AppCompatActivity {
     SearchView schv_hp_hash_search;
     String query="";
     TextView search_text;
-    ArrayList<hpVO> list = new ArrayList<>();
+    ArrayList<HpDTO> list = new ArrayList<>();
     RecyclerView recv_hp_list_hplist;
 
 
@@ -103,9 +95,7 @@ public class Hp_ListActivity extends AppCompatActivity {
                 if (tab.getPosition() == 0){
                     getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment(query)).commit();
                 }else if (tab.getPosition() == 1) {
-                    //
                     getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment1(query)).commit();
-
                 }
             }
 
@@ -132,8 +122,8 @@ public class Hp_ListActivity extends AppCompatActivity {
             AskTask task = new AskTask("hash");
             task.addParam("query",query);
             InputStreamReader isr =  CommonMethod.executeAskGet(task);
-            list = gson.fromJson(isr, new TypeToken<ArrayList<hpVO>>(){}.getType());
-            for(hpVO vo : list){
+            list = gson.fromJson(isr, new TypeToken<ArrayList<HpDTO>>(){}.getType());
+            for(HpDTO vo : list){
                 Log.d("@@@@", "onQueryTextSubmit: "+vo.getHp_name());
             }
             Log.d("hash", "onQueryTextSubmit: " + list.size());

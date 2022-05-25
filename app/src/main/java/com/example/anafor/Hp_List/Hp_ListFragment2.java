@@ -10,17 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.anafor.Hp_Hash.hpVO;
+import com.example.anafor.Hp_Hash.HpDTO;
 import com.example.anafor.R;
 
 import java.util.ArrayList;
 
 public class Hp_ListFragment2 extends Fragment {
 
-    ArrayList<hpVO> list;
+    ArrayList<HpDTO> list;
     Hp_ListAdapter adapter;
 
-    public Hp_ListFragment2(ArrayList<hpVO> list) {
+    public Hp_ListFragment2(ArrayList<HpDTO> list) {
         this.list = list;
     }
 
