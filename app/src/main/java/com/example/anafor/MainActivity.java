@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,7 +29,6 @@ import android.widget.ViewFlipper;
 
 
 import com.example.anafor.Common.CommonVal;
-import com.example.anafor.Hp_Information.Hp_InformationActivity;
 import com.example.anafor.Nav_Schedule.ScheduleActivity;
 import com.example.anafor.Nav_Choice.ChoiceActivity;
 import com.example.anafor.Pill_Main.Pill_MainFragment;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawer;
     NavigationView nav_view;
     ViewFlipper pic_Slid; // 사진 슬라이드
-    TextView tv_login, tv_edit; //신보배 0522 코드추가
+    TextView tv_login, tv_edit;
 
     /* 위치 권한 확인을 위한 코드 */
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -96,17 +96,6 @@ public class MainActivity extends AppCompatActivity {
         tv_login = headerView.findViewById(R.id.tv_main_header_login);
         tv_edit = headerView.findViewById(R.id.tv_main_header_edit);
 
-        //로그인
-        tv_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
         changeFragment(new Hp_MainFragment());
 
 
@@ -131,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // 프래그먼트가 각각의 화면에 맞게 전환 됨
-                // 광고 ViewFlipper 를 메인 엑티비티에만 적용시키고 
+                // 광고 ViewFlipper 를 메인 엑티비티에만 적용시키고
                 // 나머지 바텀메뉴 프래그먼트에는 안보이게 GONE 처리
                 if (item.getItemId() == R.id.btm_home){
                     pic_Slid.setVisibility(View.VISIBLE);
@@ -147,65 +136,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //비로그인상태일때 이용불가능한 기능/ 로그인 후 이용가능하다는 알림
         nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             private static final String TAG = "홈";
+
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                 if (item.getItemId() == R.id.nav_schedule){
-                     if(CommonVal.loginInfo == null){
-                         alertLogin();
-                     }else {
-                         Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
-                         startActivity(intent);
-                     }
+                if (item.getItemId() == R.id.nav_schedule){
+                    Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
+                    startActivity(intent);
                 }else if(item.getItemId() == R.id.nav_choice){
-                     if(CommonVal.loginInfo == null){
-                        alertLogin();
-                     }else{
-                         Intent intent = new Intent(MainActivity.this, ChoiceActivity.class);
-                         startActivity(intent);
-                     }
+                    Intent intent = new Intent(MainActivity.this, ChoiceActivity.class);
+                    startActivity(intent);
                 }else if (item.getItemId() == R.id.nav_review) {
-                     if(CommonVal.loginInfo == null){
-                         alertLogin();
-                     }else {
-                         Intent intent = new Intent(MainActivity.this, MyReviewActivity.class);
-                         startActivity(intent);
-                     }
+                    Intent intent = new Intent(MainActivity.this, MyReviewActivity.class);
+                    startActivity(intent);
                 }else if(item.getItemId() == R.id.nav_information){
-                     if(CommonVal.loginInfo == null){
-                         alertLogin();
-                     }else {
-                         Intent intent = new Intent(MainActivity.this, VaccineActivity.class);
-                         startActivity(intent);
-                     }
+                    Intent intent = new Intent(MainActivity.this, VaccineActivity.class);
+                    startActivity(intent);
                 }
                 return true;
             }
         });
-    }
-
-    //비로그인상태일때 로그인해야 이용가능하다는 알림
-    public void alertLogin(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("로그인");
-        builder.setMessage("로그인이 필요한 기능입니다. 로그인 하시겠습니까?");
-        builder.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(loginIntent);
-            }
-        });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
     }
 
     // 이미지를 보여주기 위한 리스트 추가
@@ -359,25 +311,26 @@ public class MainActivity extends AppCompatActivity {
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    //신보배 0517 코드 추가
+    //로그인   했을때 : 사용자이름 띄우고 로그인버튼을 수정버튼으로 텍스트변경, 버튼클릭시 회원정보 정보수정화면으로 intent
+    //로그아웃 했을때 : 로그인버튼 클릭시 로그인화면으로 intent
     @Override
     protected void onResume() {
         super.onResume();
-        if(CommonVal.loginInfo != null){
-            tv_login.setText(CommonVal.loginInfo.getUser_name()+"님 반갑습니다");
-            tv_login.setOnClickListener(new View.OnClickListener() {
+        if(CommonVal.loginInfo != null) {
+            tv_login.setText(CommonVal.loginInfo.getUser_name() + "님 반갑습니다");
+            tv_edit.setText("수정");
+            tv_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
                     startActivity(intent);
                 }
             });
-            
-            //신보배 0522코드추가
+        }else{
             tv_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
             });
