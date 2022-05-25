@@ -44,8 +44,6 @@ public class Pill_QRcodeActivity extends AppCompatActivity {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 // todo
                 //DB insert 처리를 함
-
-
                 AskTask task = new AskTask("/pill");
                 task.addParam("pill", result.getContents());
 

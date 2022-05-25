@@ -37,11 +37,8 @@ public class Pill_MainFragment extends Fragment {
     Pill_MainAdapter adapter;
     TextView tv_pill_main_date,tv_pill_main_camera;
     RecyclerView recv_select;
-    Context context;
 
-    public Pill_MainFragment(Context context) {
-        this.context = context;
-    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,14 +57,11 @@ public class Pill_MainFragment extends Fragment {
         tv_pill_main_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Pill_QRcodeActivity.class);
+                Intent intent = new Intent(getContext(), Pill_QRcodeActivity.class);
                 startActivity(intent);
 
             }
         });
-
-
-
 
         /*list = new ArrayList<>();
         list.add(new Pill_MainDTO(0, 0, 0, 0, "", "", ""));
@@ -85,14 +79,15 @@ public class Pill_MainFragment extends Fragment {
         //selectList(CommonVal.loginInfo.getUser_id());
 
         selectList(CommonVal.loginInfo.getUser_id());
+        //널인지 체크해서 로그인 액티비티로 이동
+
         Log.d("TAG", "onCreateView: " + list.get(0).getPill_code());
 
-        adapter = new Pill_MainAdapter(inflater, list,context);
+        adapter = new Pill_MainAdapter(inflater, list,getContext());
         recv_select.setAdapter(adapter);
         recv_select.setLayoutManager(manager);
 
         return v;
-
     }
 
     public void selectList(String query){
@@ -109,16 +104,11 @@ public class Pill_MainFragment extends Fragment {
         }
 
     }
-
-
-
     //새로고침 로직00
     //여기서 리스트 추가하는 로직 작성
     @Override
     public void onResume() {
         super.onResume();
-
-
 
     }
 }

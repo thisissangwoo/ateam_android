@@ -42,14 +42,16 @@ public class Pill_detailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         dto = (Pill_MainDTO) intent.getSerializableExtra("dto");
+        Log.d("TAG", "onCreate: " + dto.getPill_code());
 
 
-
-        /*drug_name = findViewById(R.id.drug_name);
+        drug_name = findViewById(R.id.drug_name);
         drug_cp = findViewById(R.id.drug_cp);
         drug_efcy = findViewById(R.id.drug_efcy);
         drug_use = findViewById(R.id.drug_use);
         drug_se = findViewById(R.id.drug_se);
+        recv_pill_detail = findViewById(R.id.recv_pill_detail);
+        imgv_pill_detail_back = findViewById(R.id.imgv_pill_detail_back);
 
         imgv_pill_detail_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +59,7 @@ public class Pill_detailActivity extends AppCompatActivity {
                 onBackPressed();    // 바로 이전에 왔던 곳으로 이동 (마이페이지 유지)
             }
         });
+
 
         selectList(dto);
 
@@ -81,7 +84,7 @@ public class Pill_detailActivity extends AppCompatActivity {
                     new TypeToken<List<Pill_MainDTO>>(){}.getType());
         }else{
             Log.d("TAG", "selectList: ");
-        }*/
+        }
     }
 
 

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if (item.getItemId() == R.id.btm_cheobang){
                     pic_Slid.setVisibility(View.GONE);
                     changeFragment(new Pill_MainFragment());
+                    //여기서 로그인 액티비티로 이동
                 }else if (item.getItemId() == R.id.btm_yagtong){
                     pic_Slid.setVisibility(View.GONE);
                     changeFragment(new Box_MainFragment());
