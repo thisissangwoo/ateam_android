@@ -79,6 +79,7 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
         ImageView imgv_my_choice_img;
         TextView tv_my_choice_name, tv_my_choice_addr, tv_my_choice_category;
         CardView card_mychoice;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemview = itemView;

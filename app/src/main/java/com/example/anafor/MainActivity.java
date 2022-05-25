@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 
+import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Common.CommonVal;
 import com.example.anafor.Hp_Information.Hp_InformationActivity;
 import com.example.anafor.Nav_Schedule.ScheduleActivity;
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         drawer = findViewById(R.id.drawer);
         nav_view = findViewById(R.id.nav_view);
         pic_Slid = findViewById(R.id.mainMidMenu);
+
 
         slidePic();
 
@@ -128,7 +131,13 @@ public class MainActivity extends AppCompatActivity {
                     changeFragment(new Hp_MainFragment());
                 }else if (item.getItemId() == R.id.btm_cheobang){
                     pic_Slid.setVisibility(View.GONE);
-                    changeFragment(new Pill_MainFragment());
+                    //여기서 로그인 액티비티로 이동
+                    if(CommonVal.loginInfo == null){
+                        alertLogin();
+                    }else{
+                        changeFragment(new Pill_MainFragment());
+                    }
+
                 }else if (item.getItemId() == R.id.btm_yagtong){
                     pic_Slid.setVisibility(View.GONE);
                     changeFragment(new Box_MainFragment());
