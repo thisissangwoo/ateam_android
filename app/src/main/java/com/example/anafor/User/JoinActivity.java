@@ -12,6 +12,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,7 +37,7 @@ import java.util.regex.Pattern;
 public class JoinActivity extends AppCompatActivity {
     private static final String TAG = "회원가입";
 
-    String str_result;
+    String str_result, pwInput, pwChkInput, code, checkNum;
     TextView tv_logo;
     ImageView back;
     Button btn_idChk, btn_code, btn_join;
@@ -44,11 +45,17 @@ public class JoinActivity extends AppCompatActivity {
     TextInputEditText tiedt_id,tiedt_code,tiedt_pw,tiedt_pwChk,tiedt_name,tiedt_birth,tiedt_tel;
     RadioGroup radioGroup;
     RadioButton rdo_male, rdo_female;
+    Boolean idChk, pwChk, nameChk, telChk, birthChk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
+
+        //Button 아이디 찾기
+        btn_idChk = findViewById(R.id.btn_join_idChek);
+        btn_code = findViewById(R.id.btn_join_emailCode);
+        btn_join = findViewById(R.id.btn_join_join);
 
         //TextInputLayout 아이디 찾기
         til_id = findViewById(R.id.til_join_email);
@@ -92,70 +99,74 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
-        /* 유효성 검사 (1.이메일, 2.비번, 3.비번확인, 4.이름, 5.전화번호, 6.생년월일, 7.성별 ) */
+        /* 유효성 검사 (1.아이디(이메일) 2.이메일코드인증 3.비밀번호, 4.비번확인, 5.생년월일, 6.전화번호, 7.성별 ) */
 
-        // 1.아이디(=이메일)
+        // 1.아이디(=이메일) 유효성 검사 및 중복체크
         tiedt_id.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tiedt_code.setText(null);
+                btn_code.setText("이메일인증");
+                btn_code.setEnabled(false);
             }
             @Override
             public void afterTextChanged(Editable s) {
+                idChk = false;
                 String idInput = tiedt_id.getText().toString();
                 if(!idInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(idInput).matches()) {
                     til_id.setHelperText("중복확인 버튼을 눌러주세요");
-                }else if(idInput.replace(" ", "").equals("")){
-                    til_id.setError("아이디는 이메일 형식으로 입력해주세요");
-                    til_id.setHelperText(null);
+                    til_id.setError(null);
+                    btn_idChk.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AskTask task = new AskTask("id_chk");
+                            task.addParam("user_id",tiedt_id.getText().toString());
+
+                            InputStreamReader isr = CommonMethod.executeAskGet(task);
+                            Gson gson = new Gson();
+
+                            idChk = gson.fromJson(isr,Boolean.class);
+
+                            Log.d(TAG, "onClick: " + idChk);
+
+                            if(idChk==true) {
+                                til_id.setHelperText("사용 가능한 이메일입니다");
+                                til_id.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
+                                til_id.setError(null);
+                                btn_code.setEnabled(true);
+                            }else{
+                                til_id.setError("등록된 이메일입니다 다시 입력하세요");
+                                til_id.setHelperText(null);
+                                btn_code.setEnabled(false);
+                                idChk = false;
+                            }
+                        }
+                    });
                 }else{
                     til_id.setError("아이디는 이메일 형식으로 입력해주세요");
                     til_id.setHelperText(null);
+                    btn_code.setEnabled(false);
+                    idChk = false;
                 }
             }
         });
 
-        //아이디중복체크
-        btn_idChk = findViewById(R.id.btn_join_idChek);
-        btn_idChk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AskTask task = new AskTask("id_chk");
-                task.addParam("user_id",tiedt_id.getText().toString());
-
-                InputStreamReader isr = CommonMethod.executeAskGet(task);
-                Gson gson = new Gson();
-
-                Boolean idChk = gson.fromJson(isr,Boolean.class);
-
-                Log.d(TAG, "onClick: " + idChk);
-
-                if(idChk==true) {
-                    til_id.setHelperText("사용 가능한 이메일입니다");
-                    til_id.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
-                }else{
-                    til_id.setError("등록된 이메일입니다 다시 입력하세요");
-                    til_id.setHelperText(null);
-                }
-            }
-        });
-
-        //이메일인증
-        btn_code = findViewById(R.id.btn_join_emailCode);
+        // 2.이메일 인증
+        btn_code.setEnabled(false);
         btn_code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Gson gson = new Gson();
                 String data = gson.toJson(tiedt_id.getText().toString());
                 AskTask task = new AskTask("emailCheck");
-                task.addParam("user_id",data);
+                task.addParam("user_id", data);
 
                 InputStreamReader isr = CommonMethod.executeAskGet(task);
-                EmailNumberVO evo= gson.fromJson(isr,EmailNumberVO.class);
+                EmailNumberVO evo = gson.fromJson(isr, EmailNumberVO.class);
                 Log.d(TAG, "onClick: " + evo.getCheckNum());
-
                 btn_code.setText("재전송");
 
                 tiedt_code.addTextChangedListener(new TextWatcher() {
@@ -167,34 +178,25 @@ public class JoinActivity extends AppCompatActivity {
                     }
                     @Override
                     public void afterTextChanged(Editable s) {
-                        String checkNum = String.valueOf(evo.getCheckNum());
-                        String code = tiedt_code.getText().toString();
-                        String idInput = tiedt_code.getText().toString();
+                        checkNum = String.valueOf(evo.getCheckNum());
+                        code = tiedt_code.getText().toString();
                         if(checkNum.equals(code)) {
                             til_code.setHelperText("인증코드가 일치합니다.");
                             til_code.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
-                            btn_code.setText("일치");
+                            btn_code.setText("이메일인증");
                             btn_code.setEnabled(false);
-                        }else if(idInput.replace(" ", "").equals("")){
-                            til_code.setError("이메일 인증코드를 입력해주세요");
-                            til_code.setHelperText(null);
-                            btn_code.setText("재전송");
-                            btn_code.setEnabled(true);
                         }else{
-                            til_code.setError("일치하지않습니다.");
+                            til_code.setError("이메일 인증코드를 정확히 입력해주세요");
                             til_code.setHelperText(null);
                             btn_code.setText("재전송");
                             btn_code.setEnabled(true);
                         }
                     }
                 });
-
-
             }
         });
 
-
-        // 2.비밀번호
+        // 3.비밀번호
         tiedt_pw.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -206,21 +208,26 @@ public class JoinActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String pwInput = tiedt_pw.getText().toString();
+                pwInput = tiedt_pw.getText().toString();
                 if(!pwInput.isEmpty() && Pattern.matches("^[a-zA-Z0-9]{8,16}$", pwInput)){
                     til_pw.setHelperText("사용 가능한 비밀번호입니다.");
                     til_pw.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
-                }else if(pwInput.replace(" ", "").equals("")){
-                    til_pw.setError("비밀번호를 입력하세요");
-                    til_pwChk.setHelperText(null);
-                    til_pwChk.setError(null);
+                    tiedt_pwChk.setEnabled(true);
+                    tiedt_pwChk.setError(null);
+                    tiedt_pwChk.setText(null);
+                    pwChk =true;
                 }else{
-                    til_pw.setError("사용할 수 없는 비밀번호입니다.");
+                    til_pw.setError("비밀번호 형식에 맞게 입력해주세요");
+                    til_pwChk.setHelperText(null);
+                    tiedt_pwChk.setEnabled(false);
+                    tiedt_pwChk.setError(null);
+                    tiedt_pwChk.setText(null);
+                    pwChk = false;
                 }
             }
         });
 
-        // 3.비밀번호확인
+        // 4.비밀번호확인
         tiedt_pwChk.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -230,21 +237,18 @@ public class JoinActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String pwInput = tiedt_pw.getText().toString();
-                String pwChkInput = tiedt_pwChk.getText().toString();
+                pwChkInput = tiedt_pwChk.getText().toString();
                 if(pwChkInput.equals(pwInput) && !(pwChkInput.replace(" ", "").equals("")) && !(pwInput.isEmpty()) ) {
                     til_pwChk.setHelperText("비밀번호가 일치합니다");
                     til_pwChk.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
                     til_pwChk.setError(null);
-                }else if(pwChkInput.replace(" ", "").equals("")){
-                    til_pwChk.setError("비밀번호를 입력하세요");
                 }else{
-                    til_pwChk.setError("비밀번호 정보가 일치하지 않습니다.");
+                    til_pwChk.setError("비밀번호가 일치하지 않습니다.");
                 }
             }
         });
 
-        // 4.이름
+        // 5.이름
         tiedt_name.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -257,10 +261,10 @@ public class JoinActivity extends AppCompatActivity {
                 String nameInput = tiedt_name.getText().toString();
                 if (!nameInput.isEmpty() && Pattern.matches("^[가-힣]*$", nameInput)) {
                     til_name.setHelperText(" ");
-                } else if (nameInput.replace(" ", "").equals("")) {
-                    til_name.setError("이름을 입력하세요");
-                } else {
+                    nameChk = true;
+                }else{
                     til_name.setError("이름을 한글로 입력해주세요");
+                    nameChk = false;
                 }
             }
         });
@@ -278,10 +282,10 @@ public class JoinActivity extends AppCompatActivity {
                 String telInput = tiedt_tel.getText().toString();
                 if (!telInput.isEmpty() && Pattern.matches("\\d{11}", telInput)) {
                     til_tel.setHelperText(" ");
-                } else if (telInput.replace(" ", "").equals("")) {
-                    til_tel.setError("핸드폰번호를 입력하세요");
-                } else {
+                    telChk = true;
+                }else {
                     til_tel.setError("번호만 입력하세요 예)01012345678");
+                    telChk = false;
                 }
             }
         });
@@ -303,12 +307,15 @@ public class JoinActivity extends AppCompatActivity {
                     dateFormatParser.parse(birthInput); //대상 값 포맷에 적용되는지 확인
                     til_birth.setHelperText("");
                     til_birth.setError(null);
+                    birthChk = true;
                 } catch (ParseException e) {
                     e.printStackTrace();
                     til_birth.setError("생년월일 입력하세요 예)19950101");
+                    birthChk = false;
                 }
             }
         });
+
 
         // 7. 성별
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -322,6 +329,7 @@ public class JoinActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     @Override
@@ -329,27 +337,32 @@ public class JoinActivity extends AppCompatActivity {
         super.onStart();
 
         //가입하기 버튼
-        btn_join = findViewById(R.id.btn_join_join);
         btn_join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tiedt_id.getText().toString().length() < 1){
+                if(tiedt_id.getText().toString().length() < 1 || idChk == false ) {
                     Toast.makeText(JoinActivity.this, "이메일을 입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
-                }else if(tiedt_pw.getText().toString().length() < 1){
+                }else if(tiedt_code.getText().toString().length() < 1 ){
+                    Toast.makeText(JoinActivity.this, "인증코드를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if(tiedt_pw.getText().toString().length() < 1 || pwChk == false){
                     Toast.makeText(JoinActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }else if(tiedt_pwChk.getText().toString().length() < 1){
-                    Toast.makeText(JoinActivity.this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(JoinActivity.this, "비밀번호를 재입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
-                }else if(tiedt_name.getText().toString().length() < 1){
+                }else if(tiedt_name.getText().toString().length() < 1 || nameChk == false){
                     Toast.makeText(JoinActivity.this, "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
-                }else if(tiedt_tel.getText().toString().length() < 1){
+                }else if(tiedt_tel.getText().toString().length() < 1 || telChk == false){
                     Toast.makeText(JoinActivity.this, "전화번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
-                }else if(tiedt_birth.getText().toString().length() < 1){
+                }else if(tiedt_birth.getText().toString().length() < 1 || birthChk == false){
                     Toast.makeText(JoinActivity.this, "생년월일을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }else if (!(checkNum.equals(code))){
+                    Toast.makeText(JoinActivity.this, "인증코드를 확인하세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 AskTask task = new AskTask("join");
@@ -360,18 +373,11 @@ public class JoinActivity extends AppCompatActivity {
                 task.addParam("user_birth",tiedt_birth.getText().toString());
                 task.addParam("user_gender",str_result);
                 CommonMethod.executeAskGet(task);
+                Toast.makeText(JoinActivity.this, "아나포 회원이 되신것을 환영합니다", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(JoinActivity.this,LoginActivity.class);
                 startActivity(intent);
             }
         });
     }
-
-    //포커스
-    public void requestFocus(View view){
-        if (view.requestFocus()){
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        }
-    }
-
 }
 

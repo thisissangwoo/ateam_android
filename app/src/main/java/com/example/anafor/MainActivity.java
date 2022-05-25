@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawer;
     NavigationView nav_view;
     ViewFlipper pic_Slid; // 사진 슬라이드
-    TextView tv_login, tv_edit; //신보배 0522 코드추가
+    TextView tv_login, tv_edit;
 
     /* 위치 권한 확인을 위한 코드 */
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
@@ -94,15 +95,6 @@ public class MainActivity extends AppCompatActivity {
         //headerView tv 아이디찾기
         tv_login = headerView.findViewById(R.id.tv_main_header_login);
         tv_edit = headerView.findViewById(R.id.tv_main_header_edit);
-
-        //로그인
-        tv_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
-        });
 
         changeFragment(new Hp_MainFragment());
 
@@ -319,25 +311,26 @@ public class MainActivity extends AppCompatActivity {
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    //신보배 0517 코드 추가
+    //로그인   했을때 : 사용자이름 띄우고 로그인버튼을 수정버튼으로 텍스트변경, 버튼클릭시 회원정보 정보수정화면으로 intent
+    //로그아웃 했을때 : 로그인버튼 클릭시 로그인화면으로 intent
     @Override
     protected void onResume() {
         super.onResume();
-        if(CommonVal.loginInfo != null){
-            tv_login.setText(CommonVal.loginInfo.getUser_name()+"님 반갑습니다");
-            tv_login.setOnClickListener(new View.OnClickListener() {
+        if(CommonVal.loginInfo != null) {
+            tv_login.setText(CommonVal.loginInfo.getUser_name() + "님 반갑습니다");
+            tv_edit.setText("수정");
+            tv_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
                     startActivity(intent);
                 }
             });
-            
-            //신보배 0522코드추가
+        }else{
             tv_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
             });

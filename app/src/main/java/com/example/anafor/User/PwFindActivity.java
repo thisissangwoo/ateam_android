@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +26,6 @@ import java.io.InputStreamReader;
 public class PwFindActivity extends AppCompatActivity {
     private static final String TAG = "비밀번호찾기";
     Button btn_find;
-
     TextInputLayout til_id;
     TextInputEditText tiedt_id;
 
@@ -45,6 +46,22 @@ public class PwFindActivity extends AppCompatActivity {
         btn_find = findViewById(R.id.btn_pwFind_btn);
         til_id = findViewById(R.id.til_pwFind_id);
         tiedt_id = findViewById(R.id.tiedt_pwFind_id);
+        tiedt_id.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                til_id.setError(null);
+            }
+        });
 
         btn_find.setOnClickListener(new View.OnClickListener() {
             @Override
