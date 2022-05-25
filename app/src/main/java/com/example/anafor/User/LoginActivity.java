@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.MainActivity;
 import com.example.anafor.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -131,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess() {
                 Log.d(TAG,"onSuccess: " + NaverIdLoginSDK.INSTANCE.getAccessToken());
                 Log.d(TAG,"onSuccess: " + NaverIdLoginSDK.INSTANCE.getRefreshToken());
+                
                 getNaverProfile(); //프로필메소드 호출
             }
 
@@ -195,6 +198,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     //네이버 프로필 가져오기
@@ -206,6 +210,9 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "onSuccess 이름: " + nidProfileResponse.getProfile().getName());
                 Log.d(TAG, "onSuccess 이메일: " + nidProfileResponse.getProfile().getEmail());
                 Log.d(TAG, "onSuccess 전화번호: " + nidProfileResponse.getProfile().getMobile());
+
+
+
                 goMain();
             }
 

@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
         changeFragment(new Hp_MainFragment());
 
 
+
+
         //위치 권한 퍼미션
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting();
