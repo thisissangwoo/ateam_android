@@ -42,7 +42,7 @@ public class Hp_ListFragment2 extends Fragment {
         }
 
         adapter = new Hp_ListAdapter(inflater, list);*/
-        adapter = new Hp_ListAdapter(inflater, list);
+        adapter = new Hp_ListAdapter(inflater, list, getActivity());
         // 리사이클러뷰에 어댑터를 세팅
         recv_select.setAdapter(adapter);
         recv_select.setLayoutManager(manager);

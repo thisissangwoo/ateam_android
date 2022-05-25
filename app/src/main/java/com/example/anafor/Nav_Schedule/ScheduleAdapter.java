@@ -1,5 +1,6 @@
 package com.example.anafor.Nav_Schedule;
 
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
@@ -32,25 +33,44 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         this.list = list;
         this.context = context;
         this.schedule = schedule;
-    }
+    }// ScheduleAdapter
 
-    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = inflater.inflate(R.layout.item_schedule, parent, false);
+
+        View itemView;
+
+        // list 사이즈가 0 이면 화면을 교체를 해줌
+        if (list.size() == 0) {
+            // 기존에 리사이클러뷰가 들어있는 xml 에 등록된 일정이 없습니다. 라는 TextView 를 썻는데
+            // inflate 로 해당 TextView 가 있는 프래그먼트를 붙여보니 문구가 두번 적혀 나와서
+            // 따로 item 을 추가하여 TextView 를 붙여줬음
+            itemView = inflater.inflate(R.layout.item_schedule_empty, parent, false);
+        } else {
+            itemView = inflater.inflate(R.layout.item_schedule, parent, false);
+        }// if
         return new ViewHolder(itemView);
-    }
+    }// onCreateViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // list 의 size 가 0 이 아닐 때
+        if (list.size() != 0) {
             holder.tv_schedule_title.setText(list.get(position).getSc_title());
             holder.tv_schedule_content.setText(list.get(position).getSc_memo());
-    }
+        }// if
+    }// onBindViewHolder
 
     @Override
     public int getItemCount() {
-        return list.size();
-    }
+        // 해당하는 list.size 가 0 이면 리턴을 1 을 주고,
+        // 0 이 아닐 때는 해당하는 데이터의 list.size 만큼 보여줌
+        if (list.size() == 0){
+            return 1;
+        }else{
+            return list.size();
+        }// if
+    }// getItemCount
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -58,8 +78,12 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_schedule_title = itemView.findViewById(R.id.tv_schedule_title);
-            tv_schedule_content = itemView.findViewById(R.id.tv_schedule_content);
+
+            // list 의 size 가 0 이 아닐 때
+            if(list.size() != 0){
+                tv_schedule_title = itemView.findViewById(R.id.tv_schedule_title);
+                tv_schedule_content = itemView.findViewById(R.id.tv_schedule_content);
+            }// if
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -80,7 +104,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                                     ((ScheduleActivity)context).changeFragment(new ScheduleFragment3(list.get(position),schedule));
                                     dialog.dismiss();
                                 }else if (which == 1){
-                                    // 1 번지 == 삭제
+                                    // 1 번째 == 삭제
                                     Gson gson = new Gson();
                                     AskTask task = new AskTask("schedule_delete");
                                     dto = list.get(position);
@@ -95,8 +119,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                         }).show();
                     }
                     return false;
-                }
-            });
-        }
-    }
-}
+                }// onLongClick
+            });// LongClickListener
+        }// ViewHolder
+
+    }// class ViewHolder
+}// class ScheduleAdapter

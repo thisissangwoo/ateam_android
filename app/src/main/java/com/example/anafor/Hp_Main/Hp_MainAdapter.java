@@ -13,11 +13,10 @@ import java.util.ArrayList;
 
 public class Hp_MainAdapter extends BaseAdapter {
 
-    // 화면 붙일 LayoutInflater 1 , getCount와 내용을 동적으로 보여줄 ArrayList
+    // 화면 붙일 LayoutInflater 하나,
+    // getCount 와 내용을 동적으로 보여줄 ArrayList
     ArrayList<Hp_MainDTO> list;
     LayoutInflater inflater ;
-
-
 
     public Hp_MainAdapter(ArrayList<Hp_MainDTO> list, LayoutInflater inflater) {
         this.list = list;
@@ -41,12 +40,12 @@ public class Hp_MainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         convertView = inflater.inflate(R.layout.item_hp_main, parent , false);
         ImageView imgv_grid = convertView.findViewById(R.id.imgv_hp_main_kategorie);
         TextView tv_filename = convertView.findViewById(R.id.tv_hp_main_name);
         tv_filename.setText(list.get(position).getText());
         imgv_grid.setImageResource(list.get(position).getUrl());
-
 
         return convertView;
     }

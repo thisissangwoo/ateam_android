@@ -26,8 +26,9 @@ public class Hp_MainFragment extends Fragment {
         ViewGroup v = (ViewGroup) inflater.inflate(R.layout.fragment_hp_main, container, false);
         GridView gridView = v.findViewById(R.id.grid_hp_main_kategorie);
 
-        //DTO , XML
-        // fragment_self_grid <= 여기 안에 listview가 없음 find를 통해서 찾아도 null gridview.!
+        // DTO, XML
+        // fragment_self_grid 안에 ListView 가 없으면
+        // find 를 통해서 찾아도 GridView 는 null 임
         ArrayList<Hp_MainDTO> list = new ArrayList<>();
 
         list.add(new Hp_MainDTO(R.drawable.naegwa , "내과"));
@@ -53,12 +54,12 @@ public class Hp_MainFragment extends Fragment {
                 Intent intent = new Intent(getContext(), Hp_MapActivity.class);
                 intent.putExtra("subject",list.get(position).getText());
                 startActivity(intent);
-            }
-        });
+            }// onItemClick
+        });// setOnItemClickListener
 
         Hp_MainAdapter adapter = new Hp_MainAdapter(list ,inflater);
         gridView.setAdapter(adapter);
 
         return v;
-    }
-}
+    }// onCreateView
+}// class Hp_MainFragment

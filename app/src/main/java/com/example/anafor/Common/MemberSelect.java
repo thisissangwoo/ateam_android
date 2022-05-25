@@ -30,7 +30,7 @@ public class MemberSelect extends AsyncTask<Void, Void, InputStreamReader> {
     String query;
     //MemberAdapter adapter;
 
-//    public MemberSelect(ArrayList<hpVO> dtos, MemberAdapter adapter) {
+    //    public MemberSelect(ArrayList<hpVO> dtos, MemberAdapter adapter) {
 //        this.dtos = dtos;
 //        //this.adapter = adapter;
 //    }

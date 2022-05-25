@@ -56,6 +56,8 @@ public class Hp_HashActivity extends AppCompatActivity {
             }
         });
 
+
+
         schv_hp_hash_search.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -72,7 +74,7 @@ public class Hp_HashActivity extends AppCompatActivity {
                 }*/
                 // Intent
                 Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
-                intent.putExtra("query", "내과");
+                intent.putExtra("query", query);
 
                 startActivity(intent);
 
