@@ -69,7 +69,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:text="*필수입력"
+                android:text="*필수입력사항"
                 android:textSize="10dp"
                 android:layout_gravity="right"/>
             <!--이메일-->
@@ -279,7 +279,8 @@
                     android:layout_height="wrap_content"
                     android:text="남"
                     android:textColor="#595959"
-                    android:layout_marginRight="50dp" />
+                    android:layout_marginRight="50dp"
+                    android:checked="true"/>
                 <RadioButton
                     android:id="@+id/rdoBtn_join_female"
                     android:layout_width="50dp"
