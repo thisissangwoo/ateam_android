@@ -6,22 +6,29 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.anafor.Hp_Hash.hpVO;
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
+import com.example.anafor.Hp_Hash.HpDTO;
 import com.example.anafor.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class Hp_ListFragment1 extends Fragment {
 
-    ArrayList<hpVO> list;
+    ArrayList<HpDTO> list;
     Hp_ListAdapter adapter;
+    String query;
 
-    public Hp_ListFragment1(ArrayList<hpVO> list) {
-        this.list = list;
+    public Hp_ListFragment1(String query) {
+        this.query = query;
     }
 
     @Override
@@ -35,14 +42,9 @@ public class Hp_ListFragment1 extends Fragment {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(
                 getContext(), RecyclerView.VERTICAL, false);
 
-        // 리사이클러뷰에 표시할 데이터의 리스트를 생성
-        /*list = new ArrayList<>();
-        for(int i = 1; i <= 10; i++){
-            list.add(new Hp_ListDTO(R.drawable.junghyeong,"정형외과" ));
-        }
+        //selectList(query);
+        adapter = new Hp_ListAdapter(inflater, list, getActivity());
 
-        adapter = new Hp_ListAdapter(inflater, list);*/
-        adapter = new Hp_ListAdapter(inflater, list);
         // 리사이클러뷰에 어댑터를 세팅
         recv_select.setAdapter(adapter);
         recv_select.setLayoutManager(manager);
@@ -50,4 +52,20 @@ public class Hp_ListFragment1 extends Fragment {
         return v;
 //==================================================================================================
     }
+//    public void selectList(String query){
+//
+//        try{
+//            Gson gson = new Gson();
+//            AskTask task = new AskTask("review");
+//            task.addParam("query", query);
+//            InputStreamReader isr =  CommonMethod.executeAskGet(task);
+//            list = gson.fromJson(isr, new TypeToken<ArrayList<HpDTO>>(){}.getType());
+//            for(HpDTO vo : list){
+//                Log.d("@@@@", "onQueryTextSubmit: " + vo.getHp_name());
+//            }
+//            Log.d("hash", "onQueryTextSubmit: " + list.size());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

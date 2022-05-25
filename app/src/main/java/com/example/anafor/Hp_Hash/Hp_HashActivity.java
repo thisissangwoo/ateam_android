@@ -5,25 +5,16 @@ import androidx.appcompat.widget.SearchView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.anafor.Common.AskTask;
-import com.example.anafor.Common.CommonMethod;
-import com.example.anafor.Common.MemberSelect;
 import com.example.anafor.Hp_List.Hp_ListActivity;
 import com.example.anafor.R;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class Hp_HashActivity extends AppCompatActivity {
 
@@ -31,7 +22,7 @@ public class Hp_HashActivity extends AppCompatActivity {
     Button btn_hp_hash_head, btn_hp_hash_bone, btn_hp_hash_teeth;
     SearchView schv_hp_hash_search;
     TextView search_text;
-    ArrayList<hpVO> dtos;
+    ArrayList<HpDTO> dtos;
 
 
     @Override
@@ -56,6 +47,8 @@ public class Hp_HashActivity extends AppCompatActivity {
             }
         });
 
+
+
         schv_hp_hash_search.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -72,7 +65,7 @@ public class Hp_HashActivity extends AppCompatActivity {
                 }*/
                 // Intent
                 Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
-                intent.putExtra("query", "내과");
+                intent.putExtra("query", query);
 
                 startActivity(intent);
 
