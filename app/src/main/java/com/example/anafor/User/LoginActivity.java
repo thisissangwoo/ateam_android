@@ -266,8 +266,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // 로그인 했을때 메인액티비티로 이동
     public void goMain(){
-        Intent intent = new Intent(LoginActivity.this , MainActivity.class);
-        startActivity(intent);
+       onBackPressed();
     }
 
     //자동로그인

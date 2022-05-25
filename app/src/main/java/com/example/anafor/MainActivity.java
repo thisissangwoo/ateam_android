@@ -28,6 +28,7 @@ import android.widget.ViewFlipper;
 
 
 import com.example.anafor.Common.CommonVal;
+import com.example.anafor.Hp_Information.Hp_InformationActivity;
 import com.example.anafor.Nav_Schedule.ScheduleActivity;
 import com.example.anafor.Nav_Choice.ChoiceActivity;
 import com.example.anafor.Pill_Main.Pill_MainFragment;
@@ -99,8 +100,10 @@ public class MainActivity extends AppCompatActivity {
         tv_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+
             }
         });
 
@@ -144,33 +147,65 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //비로그인상태일때 이용불가능한 기능/ 로그인 후 이용가능하다는 알림
         nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             private static final String TAG = "홈";
-
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                  if (item.getItemId() == R.id.nav_schedule){
-                    Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
-                    startActivity(intent);
+                     if(CommonVal.loginInfo == null){
+                         alertLogin();
+                     }else {
+                         Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
+                         startActivity(intent);
+                     }
                 }else if(item.getItemId() == R.id.nav_choice){
                      if(CommonVal.loginInfo == null){
-                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                         startActivity(intent);
+                        alertLogin();
                      }else{
                          Intent intent = new Intent(MainActivity.this, ChoiceActivity.class);
                          startActivity(intent);
                      }
                 }else if (item.getItemId() == R.id.nav_review) {
-                    Intent intent = new Intent(MainActivity.this, MyReviewActivity.class);
-                    startActivity(intent);
+                     if(CommonVal.loginInfo == null){
+                         alertLogin();
+                     }else {
+                         Intent intent = new Intent(MainActivity.this, MyReviewActivity.class);
+                         startActivity(intent);
+                     }
                 }else if(item.getItemId() == R.id.nav_information){
-                    Intent intent = new Intent(MainActivity.this, VaccineActivity.class);
-                    startActivity(intent);
+                     if(CommonVal.loginInfo == null){
+                         alertLogin();
+                     }else {
+                         Intent intent = new Intent(MainActivity.this, VaccineActivity.class);
+                         startActivity(intent);
+                     }
                 }
                 return true;
             }
         });
+    }
+
+    //비로그인상태일때 로그인해야 이용가능하다는 알림
+    public void alertLogin(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("로그인");
+        builder.setMessage("로그인이 필요한 기능입니다. 로그인 하시겠습니까?");
+        builder.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     // 이미지를 보여주기 위한 리스트 추가

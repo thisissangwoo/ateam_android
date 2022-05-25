@@ -52,6 +52,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_hp_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="00병원"
@@ -70,7 +71,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:text="저의 병원은 어떠셨나요?"
+                android:text="병원은 어떠셨나요?"
                 android:textColor="#696aad"
                 android:gravity="center"
                 android:textSize="20dp"/>
@@ -118,6 +119,7 @@
 
 
             <CheckBox
+                android:id="@+id/chk_type1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="병원은 청결했나요?"
@@ -125,6 +127,7 @@
                 android:textSize="20dp"/>
 
             <CheckBox
+                android:id="@+id/chk_type2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="친절하게 진단 해주셨나요?"
@@ -132,6 +135,7 @@
                 android:textSize="20dp"/>
 
             <CheckBox
+                android:id="@+id/chk_type3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="부대시설은 만족하셨나요?"

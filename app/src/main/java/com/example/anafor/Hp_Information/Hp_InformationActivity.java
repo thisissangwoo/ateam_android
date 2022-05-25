@@ -95,7 +95,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
 
         //로그인이 된 경우
         if(CommonVal.loginInfo !=null) {
-            heartclick = gson.fromJson(aTask("check.heart"),boolean.class);
+            heartclick = gson.fromJson(aTask("check.heart"),boolean.class);           //해당병원을 찜했는지 확인
             if(heartclick){
                 flag =1;
                 imgv_heartclick.setImageResource(R.drawable.heartclick);
@@ -107,23 +107,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(CommonVal.loginInfo ==null) {          //비로그인상태 - 로그인이 필요한 기능
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Hp_InformationActivity.this);
-                    builder.setTitle("로그인");
-                    builder.setMessage("로그인이 필요한 기능입니다. 로그인 하시겠습니까?");
-                    builder.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent loginIntent = new Intent(Hp_InformationActivity.this, LoginActivity.class);
-                            startActivity(loginIntent);
-                        }
-                    });
-                    builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.show();
+                    alertLogin();
                 }else{                          //로그인상태
                     if (flag==1){    //찜한 상태
                         imgv_heartclick.setImageResource(R.drawable.heartnull);
@@ -139,7 +123,6 @@ public class Hp_InformationActivity extends AppCompatActivity {
 
         hp_infor_tab_layout = findViewById(R.id.hp_infor_tab_layout);  //탭 레이아웃
         imgv_hp_infor_back = findViewById(R.id.imgv_hp_infor_back);
-
 
         imgv_hp_infor_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,8 +169,15 @@ public class Hp_InformationActivity extends AppCompatActivity {
         btn_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Hp_InformationActivity.this, Hp_InformationReviewActivity.class);
-                startActivity(intent);
+                if(CommonVal.loginInfo != null){
+                    Intent intent = new Intent(Hp_InformationActivity.this, Hp_InformationReviewActivity.class);
+                    intent.putExtra("hp_name",infoDTO.getHp_name());
+                    intent.putExtra("hp_code",infoDTO.getHp_code());
+                    startActivity(intent);
+                }else{
+                    alertLogin();
+                }
+
             }
         });
     }
@@ -305,6 +295,26 @@ public class Hp_InformationActivity extends AppCompatActivity {
                 }
             }
             finish();
+    }
+    //비로그인상태일때 로그인해야 이용가능하다는 알림
+    public void alertLogin(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(Hp_InformationActivity.this);
+        builder.setTitle("로그인");
+        builder.setMessage("로그인이 필요한 기능입니다. 로그인 하시겠습니까?");
+        builder.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent loginIntent = new Intent(Hp_InformationActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 }
 
