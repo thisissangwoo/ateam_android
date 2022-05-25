@@ -348,21 +348,27 @@ public class JoinActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(tiedt_id.getText().toString().length() < 1 || idChk == false){
                     Toast.makeText(JoinActivity.this, "이메일을 정확히 입력해주세요", Toast.LENGTH_SHORT).show();
+                    tiedt_id.requestFocus();
                     return;
                 }else if(tiedt_code.getText().toString().length() < 1 || !codeInput.equals(checkNum)){
                     Toast.makeText(JoinActivity.this, "코드를 정확히 입력해주세요", Toast.LENGTH_SHORT).show();
+                    tiedt_code.requestFocus();
                     return;
                 }else if(tiedt_pw.getText().toString().length() < 1 || pwChk == false){
                     Toast.makeText(JoinActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    tiedt_pw.requestFocus();
                     return;
                 }else if(!(tiedt_pwChk.getText().toString().equals(tiedt_pw.getText().toString()))){
                     Toast.makeText(JoinActivity.this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
+                    tiedt_pwChk.requestFocus();
                     return;
                 }else if(tiedt_name.getText().toString().length() < 1 || nameChk == false){
                     Toast.makeText(JoinActivity.this, "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    tiedt_name.requestFocus();
                     return;
                 }else if(tiedt_tel.getText().toString().length() < 1 || telChk == false){
                     Toast.makeText(JoinActivity.this, "전화번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    tiedt_tel.requestFocus();
                     return;
                 }else if(tiedt_birth.getText().toString().length() < 1 || birthChk == false) {
                     Toast.makeText(JoinActivity.this, "생년월일을 입력해주세요", Toast.LENGTH_SHORT).show();
