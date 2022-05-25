@@ -3,7 +3,24 @@ package com.example.anafor.Hp_Information;
 public class ReviewVO {
     int rev_num,rev_text1,rev_text2,rev_text3;
     double rev_grade;
-    String user_id, rev_date, hp_code;
+
+    String user_id, rev_date, hp_code, rev_text4, hp_name;
+
+    public String getHp_name() {
+        return hp_name;
+    }
+
+    public void setHp_name(String hp_name) {
+        this.hp_name = hp_name;
+    }
+
+    public void setRev_text4(String rev_text4) {
+        this.rev_text4 = rev_text4;
+    }
+
+    public String getRev_text4() {
+        return rev_text4;
+    }
 
     public String getHp_code() {
         return hp_code;

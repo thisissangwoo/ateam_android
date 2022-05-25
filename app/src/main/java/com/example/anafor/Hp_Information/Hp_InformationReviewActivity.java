@@ -15,10 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
+import com.example.anafor.Common.CommonVal;
 import com.example.anafor.MainActivity;
 import com.example.anafor.R;
 import com.example.anafor.utils.GetDate;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 public class Hp_InformationReviewActivity extends AppCompatActivity {
 
@@ -34,6 +37,8 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
     ReviewVO rvo;               //리뷰 저장 VO
 
     Gson gson = new Gson();
+
+    ArrayList<ReviewVO> reviewList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,7 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (edt_infor_review_content.getText().toString().length() == 0 || edt_infor_review_content.getText().toString().equals(" ")){
                     Toast.makeText(getApplicationContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+
                     edt_infor_review_content.requestFocus();
                     return;
                 }else if(reviewRating.getRating()==0){  //별점을 매기지 않았을때
@@ -81,10 +87,13 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
                     AskTask task = new AskTask("insert.review");
                     rvo.setHp_code(hp_code);
                     GetDate getDate = new GetDate();
+                    rvo.setUser_id(CommonVal.loginInfo.getUser_id());
                     rvo.setRev_date(getDate.getCurrentDate());
                     rvo.setRev_text1(0);
                     rvo.setRev_text2(0);
                     rvo.setRev_text3(0);
+                    rvo.setRev_text4(edt_infor_review_content.getText().toString());
+                    rvo.setRev_grade(reviewRating.getRating());
                     cbxclick();
                     task.addParam("vo",gson.toJson(rvo));
                     CommonMethod.executeAskGet(task);
@@ -94,11 +103,11 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
         });
     }
     public void cbxclick(){
-        if(chk_type1.isChecked()){
+        if(chk_type1.isChecked()==true){
             rvo.setRev_text1(1);
-        }else if(chk_type2.isChecked()){
+        }else if(chk_type2.isChecked()==true){
             rvo.setRev_text2(1);
-        }else if(chk_type3.isChecked()){
+        }else if(chk_type3.isChecked()==true){
             rvo.setRev_text3(1);
         }
     }
