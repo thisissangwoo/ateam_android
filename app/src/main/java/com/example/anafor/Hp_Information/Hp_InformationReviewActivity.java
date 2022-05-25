@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -12,7 +13,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
+import com.example.anafor.MainActivity;
 import com.example.anafor.R;
+import com.example.anafor.utils.GetDate;
+import com.google.gson.Gson;
 
 public class Hp_InformationReviewActivity extends AppCompatActivity {
 
@@ -23,13 +29,19 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
     TextView tv_hp_name;            
     RatingBar reviewRating;         //별점
 
+    CheckBox chk_type1, chk_type2, chk_type3;
+
+    ReviewVO rvo;               //리뷰 저장 VO
+
+    Gson gson = new Gson();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infor_review);
 
+        rvo = new ReviewVO();
         Intent  intent =getIntent();
-
         hp_name = intent.getStringExtra("hp_name");   //병원 이름
         hp_code = intent.getStringExtra("hp_code");       //병원 조회 위한 병원 코드
 
@@ -38,6 +50,9 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
         edt_infor_review_content = findViewById(R.id.edt_infor_review_content);
         tv_hp_name = findViewById(R.id.tv_hp_name);
         reviewRating = findViewById(R.id.reviewRating);
+        chk_type1 = findViewById(R.id.chk_type1);
+        chk_type2 = findViewById(R.id.chk_type2);
+        chk_type3 = findViewById(R.id.chk_type3);
 
         tv_hp_name.setText(hp_name);
 
@@ -59,11 +74,32 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     edt_infor_review_content.requestFocus();
                     return;
+                }else if(reviewRating.getRating()==0){  //별점을 매기지 않았을때
+                        Toast.makeText(Hp_InformationReviewActivity.this, "별점을 입력해주세요", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getApplicationContext(), "소중한 리뷰 감사합니다.", Toast.LENGTH_SHORT).show();
+                    AskTask task = new AskTask("insert.review");
+                    rvo.setHp_code(hp_code);
+                    GetDate getDate = new GetDate();
+                    rvo.setRev_date(getDate.getCurrentDate());
+                    rvo.setRev_text1(0);
+                    rvo.setRev_text2(0);
+                    rvo.setRev_text3(0);
+                    cbxclick();
+                    task.addParam("vo",gson.toJson(rvo));
+                    CommonMethod.executeAskGet(task);
                     onBackPressed();
                 }
             }
         });
+    }
+    public void cbxclick(){
+        if(chk_type1.isChecked()){
+            rvo.setRev_text1(1);
+        }else if(chk_type2.isChecked()){
+            rvo.setRev_text2(1);
+        }else if(chk_type3.isChecked()){
+            rvo.setRev_text3(1);
+        }
     }
 }

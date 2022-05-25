@@ -34,7 +34,7 @@ public class MyReviewActivity extends AppCompatActivity {
         });
 
         recv_my_review_list = findViewById(R.id.recv_my_review_list);
-        list.add(new MyReviewDTO("김상우 님", "2022.05.16", "A조 내과",
+  /*      list.add(new MyReviewDTO("김상우 님", "2022.05.16", "A조 내과",
                 "감기 몸살 기운이 있어서 내원 했는데\n다행히 코로나는 아니네요 !\n그리고 의사분도 매우 친절 하셨습니다.",
                 "● 증상을 쉽게 설명해 주셨어요.", "● 꼼꼼하게 진단해 주셨어요.", "● 친절하게 알려 주셨어요."));
 
@@ -52,7 +52,7 @@ public class MyReviewActivity extends AppCompatActivity {
 
         list.add(new MyReviewDTO("박천일 님", "2022.05.16", "A조 내과",
                 "감기 몸살 기운이 있어서 내원 했는데\n다행히 코로나는 아니네요 !\n그리고 의사분도 매우 친절 하셨습니다.",
-                "● 증상을 쉽게 설명해 주셨어요.", "● 꼼꼼하게 진단해 주셨어요.", "● 친절하게 알려 주셨어요."));
+                "● 증상을 쉽게 설명해 주셨어요.", "● 꼼꼼하게 진단해 주셨어요.", "● 친절하게 알려 주셨어요."));*/
 
         MyReviewAdapter adapter = new MyReviewAdapter(getLayoutInflater(), list);
 
