@@ -7,7 +7,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,22 +53,28 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
         TextView tv_hp_distance = view.findViewById(R.id.tv_hp_distance);
         TextView tv_hp_roadAddr = view.findViewById(R.id.tv_hp_roadAddr);
 
+        LinearLayout linear = view.findViewById(R.id.linear);
+
         tv_hp_place_name.setText(place_name);
         tv_hp_distance.setText(distance+"m");
         tv_hp_roadAddr.setText(roadAddr);
 
-        tv_hp_place_name.setOnClickListener(new View.OnClickListener() {
+       linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Hp_InformationActivity.class);
                 //카카오 api 조회해서 나온 장소 이름과 전화번호로 해당하는 상세 정보 조회
-                AskTask task  = new AskTask("detail.map");
-                task.addParam("place_name",place_name);
-                task.addParam("phone",phone);
+                AskTask task = new AskTask("detail.map");
+                task.addParam("place_name", place_name);
+                task.addParam("phone", phone);
                 InputStreamReader isr = CommonMethod.executeAskGet(task);
+                Intent intent = new Intent(context, Hp_InformationActivity.class);
                 Hp_infoDTO infoDTO = gson.fromJson(isr, Hp_infoDTO.class);
-                intent.putExtra("infoDTO",infoDTO);
-                startActivity(intent);                   // Hp_InformationActivity로 이동
+                if (infoDTO != null) {                 //select 가 안 될 경우
+                    intent.putExtra("infoDTO", infoDTO);
+                    startActivity(intent);                   // Hp_InformationActivity로 이동
+                } else {
+                    Toast.makeText(context, "상세정보를 조회할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

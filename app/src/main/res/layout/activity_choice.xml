@@ -50,19 +50,6 @@
             android:textStyle="bold"
             android:textSize="18dp"/>
 
-        <!--        <TextView-->
-        <!--            android:id="@+id/tv_choice_edit"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="편집"-->
-        <!--            android:tag="N"-->
-        <!--            android:textColor="#696aad"-->
-        <!--            android:textStyle="bold"-->
-        <!--            android:layout_marginLeft="240dp"-->
-        <!--            android:layout_marginTop="30dp"-->
-        <!--            android:textSize="16dp"/>-->
-
-
     </LinearLayout>
 
     <View
@@ -72,10 +59,22 @@
         android:background="#ccc"
         android:layout_marginTop="8dp"/>
 
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_heart"
+        android:text="자주 찾는 병원을 찜 해보세요."
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textColor="#232323"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="13dp"
-        android:id="@+id/recv_my_choice_list"/>
+        android:id="@+id/recv_my_choice_list"
+        android:visibility="visible"/>
 
 </LinearLayout>
