@@ -1,7 +1,10 @@
 package com.example.anafor.Nav_Choice;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +16,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
+import com.example.anafor.Hp_Information.Hp_InformationActivity;
+import com.example.anafor.Hp_Information.Hp_infoDTO;
 import com.example.anafor.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -23,22 +32,12 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
 
     LayoutInflater inflater;
     ArrayList<ChoiceDTO> list;
-    ChoiceActivity activity;
-
-    boolean visibleChk = false;
-
-    public ChoiceAdapter(LayoutInflater inflater, ArrayList<ChoiceDTO> list , ChoiceActivity activity) {
+    Gson gson = new Gson();
+    Context context;
+    public ChoiceAdapter(LayoutInflater inflater, ArrayList<ChoiceDTO> list ,Context context) {
         this.inflater = inflater;
         this.list = list;
-        this.activity = activity;
-    }
-
-    public boolean isVisibleChk() {
-        return visibleChk;
-    }
-
-    public void setVisibleChk(boolean visibleChk) {
-        this.visibleChk = visibleChk;
+        this.context =context;
     }
 
     @NonNull
@@ -51,37 +50,23 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.imgv_my_choice_img.setImageResource(list.get(position).getImg_url());
-        holder.tv_my_choice_name.setText(list.get(position).getName());
-        holder.tv_my_choice_addr.setText(list.get(position).getAddr());
-        holder.tv_my_choice_category.setText(list.get(position).getCategory());
-        holder.tv_my_choice_date.setText(list.get(position).getDate());
+//        holder.imgv_my_choice_img.setImageResource(list.get(position).getImg_url());
+        holder.tv_my_choice_name.setText(list.get(position).getHp_name());
+        holder.tv_my_choice_addr.setText(list.get(position).getHp_addr());
+      //  holder.tv_my_choice_category.setText(list.get(position).getCategory());
+        holder.card_mychoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    AskTask task = new AskTask("detail.hp");
+                    task.addParam("code",list.get(position).getHp_code());
+                    Intent intent = new Intent(context, Hp_InformationActivity.class);
+                    Hp_infoDTO infoDTO =  gson.fromJson(CommonMethod.executeAskGet(task),Hp_infoDTO.class);
+                    intent.putExtra("infoDTO", infoDTO);
+                    Log.d("3333", "onClick: "+infoDTO.getHp_addr());
+                    context.startActivity(intent);
+            }
+        });
 
-        /*if(visibleChk)holder.ckb_choice.setVisibility(View.VISIBLE);
-        else holder.ckb_choice.setVisibility(View.GONE);*/
-
-//        holder.ckb_choice.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (holder.ckb_choice.isChecked()) {
-//                    holder.btn_my_choice_delete.setVisibility(View.VISIBLE);
-//                } else if( ! holder.ckb_choice.isChecked()){
-//                    holder.btn_my_choice_delete.setVisibility(View.GONE);
-//                }
-//            }
-//        });
-
-// 체크박스 안에다가 삭제버튼도 괜찮을듯 디자인
-        //프래그먼트에 변수를하나 넘겨주는게 좋음
-//        holder.btn_my_choice_delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (holder.ckb_choice.isChecked()){
-//                    //activity.delete(한건씩해도되고, 여러건해도되고);
-//                    activity.delete();
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -92,46 +77,32 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         View itemview;
         ImageView imgv_my_choice_img;
-        TextView tv_my_choice_name, tv_my_choice_addr, tv_my_choice_category, tv_my_choice_date;
-        CheckBox ckb_choice;
-        //Button btn_my_choice_delete;
+        TextView tv_my_choice_name, tv_my_choice_addr, tv_my_choice_category;
+        CardView card_mychoice;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemview = itemView;
-
+            card_mychoice = itemView.findViewById(R.id.card_mychoice);
             imgv_my_choice_img = itemView.findViewById(R.id.imgv_my_choice_img);
             tv_my_choice_name = itemView.findViewById(R.id.tv_my_choice_name);
             tv_my_choice_addr = itemView.findViewById(R.id.tv_my_choice_addr);
             tv_my_choice_category = itemView.findViewById(R.id.tv_my_choice_category);
-            tv_my_choice_date = itemView.findViewById(R.id.tv_my_choice_date);
-            ckb_choice = itemView.findViewById(R.id.ckb_choice);
-            //btn_my_choice_delete = itemView.findViewById(R.id.btn_my_choice_delete);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+        /*    itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                        builder.setTitle("원하시는 항목을 선택해주세요.");
-                        builder.setSingleChoiceItems(new String[]{"수정", "삭제"}, 2, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // setSingleChoiceItems 2개인 각각의 아이템 중
-                                // 0 번째 == 수정, 1 번째 == 삭제
-                                if (which == 0){
-
-                                    //dialog.dismiss();
-                                }else if (which == 1){
-
-                                    //dialog.dismiss();
-                                }
-                            }
-                        }).show();
+                        AskTask task = new AskTask("detail.hp");
+                        task.addParam("code",list.get(position).getHp_code());
+                        Intent intent = new Intent(context, Hp_InformationActivity.class);
+                        Hp_infoDTO infoDTO =  gson.fromJson(CommonMethod.executeAskGet(task),Hp_infoDTO.class);
+                        intent.putExtra("infoDTO", infoDTO);
+                        Log.d("3333", "onClick: "+infoDTO.getHp_addr());
+                        context.startActivity(intent);
                     }
-                    return;
                 }
-            });
+            });*/
         }
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/linear"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -37,9 +38,10 @@
             android:textColor="@color/black"
             android:textSize="14dp" />
         <ImageView
+            android:layout_marginLeft="10dp"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@android:drawable/status_bar_item_app_background" />
+            android:src="@drawable/ic_baseline_local_hospital_24" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

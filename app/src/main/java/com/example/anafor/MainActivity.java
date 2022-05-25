@@ -30,6 +30,7 @@ import android.widget.ViewFlipper;
 
 
 import com.example.anafor.Common.CommonVal;
+import com.example.anafor.Hp_Information.Hp_InformationActivity;
 import com.example.anafor.Nav_Schedule.ScheduleActivity;
 import com.example.anafor.Nav_Choice.ChoiceActivity;
 import com.example.anafor.Pill_Main.Pill_MainFragment;
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // 프래그먼트가 각각의 화면에 맞게 전환 됨
-                // 광고 ViewFlipper 를 메인 엑티비티에만 적용시키고 
+                // 광고 ViewFlipper 를 메인 엑티비티에만 적용시키고
                 // 나머지 바텀메뉴 프래그먼트에는 안보이게 GONE 처리
                 if (item.getItemId() == R.id.btm_home){
                     pic_Slid.setVisibility(View.VISIBLE);
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                 if (item.getItemId() == R.id.nav_schedule){
+                if (item.getItemId() == R.id.nav_schedule){
                     Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
                     startActivity(intent);
                 }else if(item.getItemId() == R.id.nav_choice){
@@ -337,5 +338,25 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    //비로그인상태일때 로그인해야 이용가능하다는 알림
+    public void alertLogin(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("로그인");
+        builder.setMessage("로그인이 필요한 기능입니다. 로그인 하시겠습니까?");
+        builder.setPositiveButton("로그인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(loginIntent);
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 }

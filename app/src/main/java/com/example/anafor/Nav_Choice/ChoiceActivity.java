@@ -13,77 +13,62 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
+import com.example.anafor.Common.CommonVal;
 import com.example.anafor.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
 public class ChoiceActivity extends AppCompatActivity {
 
+    TextView tv_heart;
     ImageView imgv_hp_choice_back;
     RecyclerView recv_my_choice_list;
     ArrayList<ChoiceDTO> list = new ArrayList<>();
-    //    TextView tv_choice_edit;
     ChoiceAdapter adapter;
+    Gson gson = new Gson();
+    Context context;
+
+    //무조건 로그인했을때만 사용가능함
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choice);
-
+        context = this;
         imgv_hp_choice_back = findViewById(R.id.imgv_hp_choice_back);
-
+        tv_heart = findViewById(R.id.tv_heart);
+        recv_my_choice_list = findViewById(R.id.recv_my_choice_list);  //리사이클러뷰
         imgv_hp_choice_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();    // 바로 이전에 왔던 곳으로 이동 (마이페이지 유지)
             }
         });
+        selectList();
 
-        recv_my_choice_list = findViewById(R.id.recv_my_choice_list);
-        list.add(new ChoiceDTO(R.drawable.junghyeong, "전남대 병원", "전남로 93번길", "정형외과", "목요일 10:00 ~ 20:00"));
-        list.add(new ChoiceDTO(R.drawable.angwa, "서울대 병원", "서울 93번길", "안과", "수요일 10:00 ~ 20:00"));
-        list.add(new ChoiceDTO(R.drawable.jungsin, "성모 병원", "성모 93번길", "정신과", "금요일 10:00 ~ 20:00"));
-
-        adapter = new ChoiceAdapter(getLayoutInflater(), list , ChoiceActivity.this);
-
-        recv_my_choice_list.setAdapter(adapter);
-        recv_my_choice_list.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-
-//        tv_choice_edit = findViewById(R.id.tv_choice_edit);
-//        tv_choice_edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // xml 에서 android:tag="N" boolean 참 거짓으로 다 사용 가능
-//                // 그래서 기본 값은 N 으로 돼있고 click 했을 때 보여주고 감추고 처리
-//                if(tv_choice_edit.getTag().toString().equals("N")){
-//                    tv_choice_edit.setTag("Y");
-//                    click(View.VISIBLE);
-//                    adapter.setVisibleChk(true);
-//                }else{
-//                    tv_choice_edit.setTag("N");
-//                    click(View.GONE);
-//                    adapter.setVisibleChk(false);
-//                }
-//            }
-//        });
     }
 
-    // 메소드를 활용하여 사용하려고 만들었음
-    public void click(int visible){
-        for(int i = 0 ; i < recv_my_choice_list.getChildCount(); i++){
-            recv_my_choice_list.getChildAt(i).findViewById(R.id.ckb_choice).setVisibility(visible);
-            // CheckBox chk =   recv_my_choice_list.getChildAt(i).findViewById(R.id.ckb_choice);
-            // chk.setChecked(true);
+    public void selectList(){
+        AskTask task = new AskTask("select.heart");
+        task.addParam("user_id",CommonVal.loginInfo.getUser_id());
+        list = gson.fromJson(CommonMethod.executeAskGet(task),new TypeToken<ArrayList<ChoiceDTO>>(){}.getType());
+        if(list.size()==0){
+            tv_heart.setVisibility(View.VISIBLE);
+            recv_my_choice_list.setVisibility(View.GONE);
+        }else{
+            adapter = new ChoiceAdapter(getLayoutInflater(), list,context);
+            recv_my_choice_list.setAdapter(adapter);
+            recv_my_choice_list.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         }
     }
 
-    public void delete(){
-        //1.삭제 처리
-        //2.데이터 조회
-        list.clear();
-        list.add(new ChoiceDTO(R.drawable.junghyeong, "전남대 병원", "전남로 93번길", "정형외과", "목요일 10:00 ~ 20:00"));
-        list.add(new ChoiceDTO(R.drawable.angwa, "서울대 병원", "서울 93번길", "안과", "수요일 10:00 ~ 20:00"));
-        adapter.notifyDataSetChanged();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        selectList();
     }
-
 }

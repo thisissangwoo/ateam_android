@@ -70,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <TextView
-                            android:id="@+id/hp_info_name"
+                            android:id="@+id/tv_hp_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="전남대 병원"
@@ -79,7 +79,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/hp_info_addr"
+                            android:id="@+id/tv_hp_addr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -165,7 +165,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="10:30 ~ 20:30"
+                        android:text="전화 문의"
                         android:textColor="#939393" />
 
 
@@ -188,11 +188,11 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/tv_hp_todayLunchTime"
+                        android:id="@+id/tv_hp_tlunch"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="13:00 ~ 14:00"
+                        android:text="전화 문의"
                         android:textColor="#939393" />
 
 
@@ -245,10 +245,11 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_hp_mon"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:text="10:30 ~ 20:30"
+                                android:text="전화 문의"
                                 android:textColor="#939393" />
 
 
@@ -271,10 +272,11 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_hp_tue"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:text="10:30 ~ 20:30"
+                                android:text="전화 문의"
                                 android:textColor="#939393" />
 
 
@@ -312,10 +314,11 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_hp_wed"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:text="10:30 ~ 20:30"
+                                android:text="전화 문의"
                                 android:textColor="#939393" />
 
 
@@ -338,10 +341,11 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_hp_thu"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:text="10:30 ~ 20:30"
+                                android:text="전화 문의"
                                 android:textColor="#939393" />
 
 
@@ -379,10 +383,11 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_hp_fri"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:text="10:30 ~ 20:30"
+                                android:text="전화 문의"
                                 android:textColor="#939393" />
 
 
@@ -405,10 +410,11 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_hp_sat"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:text="10:30 ~ 20:30"
+                                android:text="전화 문의"
                                 android:textColor="#939393" />
 
 
@@ -446,11 +452,12 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_hp_sun"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:text="10:30 ~ 20:30"
-                                android:textColor="#939393" />
+                                android:text="전화 문의"
+                                android:textColor="#F44336" />
 
 
                         </LinearLayout>
@@ -472,11 +479,12 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_hp_holi"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:text="10:30 ~ 20:30"
-                                android:textColor="#939393" />
+                                android:text="전화 문의"
+                                android:textColor="#F44336" />
 
 
                         </LinearLayout>
@@ -513,10 +521,11 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_hp_dlunch"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:text="10:30 ~ 20:30"
+                                android:text="전화 문의"
                                 android:textColor="#939393" />
 
 
@@ -539,10 +548,11 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_hp_wlunch"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
-                                android:text="10:30 ~ 20:30"
+                                android:text="전화 문의"
                                 android:textColor="#939393" />
 
 
@@ -579,14 +589,46 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_hp_intro"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="여기는 병원 소개글이 들어갈 구간입니다, 소개글을 적어주세요"
-                        android:textSize="16dp" />
+                        android:text="병원 사이트"
+                        android:textColor="#696aad"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/tv_hp_url"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="정보 없음"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#ccc" />
+                    <TextView
+                        android:layout_marginTop="15dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="병원 전화번호"
+                        android:textColor="#696aad"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/tv_hp_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="정보 없음"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -913,7 +955,7 @@
                 android:gravity="center">
 
                 <Button
-                    android:id="@+id/review_edt"
+                    android:id="@+id/btn_review"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#696aad"

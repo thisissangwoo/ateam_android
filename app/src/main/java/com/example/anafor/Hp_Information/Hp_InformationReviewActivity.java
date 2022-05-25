@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,15 +19,27 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
     ImageView imgv_hp_infor_review_back;
     Button btn_infor_review_insert;
     EditText edt_infor_review_content;
+    String hp_name, hp_code;
+    TextView tv_hp_name;            
+    RatingBar reviewRating;         //별점
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infor_review);
 
+        Intent  intent =getIntent();
+
+        hp_name = intent.getStringExtra("hp_name");   //병원 이름
+        hp_code = intent.getStringExtra("hp_code");       //병원 조회 위한 병원 코드
+
         imgv_hp_infor_review_back = findViewById(R.id.imgv_hp_infor_review_back);
         btn_infor_review_insert = findViewById(R.id.btn_infor_review_insert);
         edt_infor_review_content = findViewById(R.id.edt_infor_review_content);
+        tv_hp_name = findViewById(R.id.tv_hp_name);
+        reviewRating = findViewById(R.id.reviewRating);
+
+        tv_hp_name.setText(hp_name);
 
         imgv_hp_infor_review_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +61,7 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
                     return;
                 }else{
                     Toast.makeText(getApplicationContext(), "소중한 리뷰 감사합니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Hp_InformationReviewActivity.this, Hp_InformationActivity.class);
-                    startActivity(intent);
+                    onBackPressed();
                 }
             }
         });
