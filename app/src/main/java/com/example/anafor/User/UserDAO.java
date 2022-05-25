@@ -21,8 +21,8 @@ public class UserDAO {
     public boolean isUserLogin(){
         Log.d(TAG,"onClick: ");
         AskTask task = new AskTask("login");
-        task.addParam("user_id",activity.tiedt_id.getText().toString());
-        task.addParam("user_pw",activity.tiedt_pw.getText().toString());
+        task.addParam("user_id",activity.tiedt_login_id.getText().toString());
+        task.addParam("user_pw",activity.tiedt_login_pw.getText().toString());
 
         InputStreamReader isr = CommonMethod.executeAskGet(task);
         Gson gson = new Gson();
@@ -38,9 +38,9 @@ public class UserDAO {
         }else{
             Toast.makeText(activity,"아이디 또는 비밀번호가 틀립니다",Toast.LENGTH_SHORT).show();
 
-            activity.tiedt_id.setText("");
-            activity.tiedt_pw.setText("");
-            activity.tiedt_id.requestFocus();
+            activity.tiedt_login_id.setText("");
+            activity.tiedt_login_pw.setText("");
+            activity.tiedt_login_id.requestFocus();
             return false;
         }
     }

@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -17,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.anafor.MainActivity;
 import com.example.anafor.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.kakao.sdk.auth.model.OAuthToken;
@@ -40,10 +40,11 @@ import kotlin.jvm.functions.Function2;
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "로그인";
-    TextInputEditText tiedt_id, tiedt_pw;
-    Button btn_login;
+
+    TextInputEditText tiedt_login_id, tiedt_login_pw;
+    Button btn_login_login;
     TextView tv_join, loginName, pwFind;
-    Switch chk_auto ;
+    Switch switch_login_autologin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +69,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //아이디찾기
-        tiedt_id = findViewById(R.id.tiedt_login_id );
-        tiedt_pw = findViewById(R.id.tiedt_login_pw );
-        btn_login = findViewById(R.id.btn_login_login );
+        tiedt_login_id = findViewById(R.id.tiedt_login_id );
+        tiedt_login_pw = findViewById(R.id.tiedt_login_pw );
+        btn_login_login = findViewById(R.id.btn_login_login );
         tv_join = findViewById(R.id.tv_login_join);
-        chk_auto = findViewById(R.id.switch_login_autologin);
+        switch_login_autologin = findViewById(R.id.switch_login_autologin);
         SharedPreferences preferences = getPreferences(LoginActivity.MODE_PRIVATE);
-        tiedt_id.setText(preferences.getString("id" , ""));
-        tiedt_pw.setText(preferences.getString("pw" , ""));
+        tiedt_login_id.setText(preferences.getString("id" , ""));
+        tiedt_login_pw.setText(preferences.getString("pw" , ""));
         loginName = findViewById(R.id.tv_main_header_login);
         pwFind = findViewById(R.id.tv_login_pwFind);
 
@@ -89,16 +90,16 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //로그인버튼 클릭
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        btn_login_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( tiedt_id.getText().toString().trim().length() < 1 ) {
+                if( tiedt_login_id.getText().toString().trim().length() < 1 ) {
                     Toast.makeText(LoginActivity.this, "아이디를 입력하세요.", Toast.LENGTH_SHORT).show();
-                    tiedt_id.requestFocus();
+                    tiedt_login_id.requestFocus();
                     return;
-                }else if(tiedt_pw.getText().toString().trim().length() < 1){
+                }else if(tiedt_login_pw.getText().toString().trim().length() < 1){
                     Toast.makeText(LoginActivity.this, "비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
-                    tiedt_pw.requestFocus();
+                    tiedt_login_pw.requestFocus();
                     return;
                 }else{
                     UserDAO dao = new UserDAO(LoginActivity.this);
@@ -106,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                         checkAutoLogin();
                         goMain();
                     }else{
-                        chk_auto.setChecked(false);
+                        switch_login_autologin.setChecked(false);
                         checkAutoLogin();
                     }
                 }
@@ -272,14 +273,15 @@ public class LoginActivity extends AppCompatActivity {
     //자동로그인
     public void checkAutoLogin(){
         SharedPreferences preferences = getPreferences(LoginActivity.MODE_PRIVATE);
+        //SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        if(chk_auto.isChecked()){
-            editor.putString("id" , tiedt_id.getText().toString());
-            editor.putString("pw" , tiedt_pw.getText().toString());
+
+        if(switch_login_autologin.isChecked()){
+            editor.putString("id" , tiedt_login_id.getText().toString());
+            editor.putString("pw" , tiedt_login_pw.getText().toString());
         }else{
             editor.clear(); //전체지우기
         }
         editor.apply();
     }
-
 }
