@@ -9,84 +9,70 @@
     android:orientation="vertical"
     android:background="#fff">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:layout_marginTop="-30dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:text="AnaFor QR"
-                android:textSize="31dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
+                android:text="AnaFor QR"
                 android:textColor="#696aad"
-                android:textStyle="bold"
-                android:layout_weight="3"/>
+                android:textSize="31dp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tv_pill_main_camera"
-                    android:layout_width="0dp"
-                    android:layout_weight="6"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="left"
                     android:text="처방전 QR 코드 촬영"
+                    android:textColor="#696aad"
                     android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="#696aad"
-                    android:gravity="left"/>
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_box_alarm_edit"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="100dp"
-                    android:textStyle="bold"
-                    android:textSize="16dp"
-                    android:textColor="#696aad"
-                    android:text="편집"/>
+
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#B6B6B6"/>
+    <TextView
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"/>
+
         <TextView
-            android:layout_marginTop="5dp"
+            android:id="@+id/tv_pill_main_none"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="등록된 처방전이 없습니다."
             android:textColor="#B6B6B6"
             android:textSize="18dp"
-            android:visibility="gone"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recv_select"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="7">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-    </LinearLayout>
+
 
 </LinearLayout>

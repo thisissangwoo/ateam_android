@@ -85,6 +85,9 @@
             android:name=".Hp_Hash.Hp_HashActivity"
             android:exported="false" />
         <activity
+            android:name=".pill_detail.Pill_detailActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
