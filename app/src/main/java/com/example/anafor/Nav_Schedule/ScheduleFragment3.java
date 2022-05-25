@@ -25,9 +25,11 @@ public class ScheduleFragment3 extends Fragment {
     Button btn_schedule_insert_modify;
 
     ScheduleDTO dto;
+    String schedule;
 
-    public ScheduleFragment3(ScheduleDTO dto) {
+    public ScheduleFragment3(ScheduleDTO dto, String schedule) {
         this.dto = dto;
+        this.schedule = schedule;
     }
 
     @Override
@@ -41,27 +43,21 @@ public class ScheduleFragment3 extends Fragment {
         edt_schedule_memo_modify = v.findViewById(R.id.edt_schedule_memo_modify);
         btn_schedule_insert_modify = v.findViewById(R.id.btn_schedule_insert_modify);
 
-
-
 //==================================================================================================
 
+        // 수정하기 를 눌렀을 때 기존에 작성했던 text 를 보여줌
         edt_schedule_title_modify.setText(dto.getSc_title());
         edt_schedule_memo_modify.setText(dto.getSc_memo());
 
+        // 수정 완료 버튼을 눌렀을 때
+        // 등록 부분과 마찬가지로 동일한 유효성 검사를 거친 후
+        // 마지막 else 부분에 수정한 화면을 찍어 줌
         btn_schedule_insert_modify.setOnClickListener(new View.OnClickListener() {
 
             Gson gson = new Gson();
-//            ScheduleDTO dto = new ScheduleDTO();
 
             @Override
             public void onClick(View v) {
-                dto.setSc_title(edt_schedule_title_modify.getText() + "");
-                dto.setSc_memo(edt_schedule_memo_modify.getText() + "");
-
-                AskTask task = new AskTask("/schedule_update");
-                task.addParam("dto", gson.toJson(dto));
-
-                CommonMethod.executeAskGet(task);
 
                 if(edt_schedule_title_modify.getText().toString().length() == 0 || edt_schedule_title_modify.getText().toString().equals(" ")){
                     Toast.makeText(getContext().getApplicationContext(), "제목을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -70,8 +66,15 @@ public class ScheduleFragment3 extends Fragment {
                     Toast.makeText(getContext().getApplicationContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     edt_schedule_memo_modify.requestFocus();
                 }else{
+                    dto.setSc_title(edt_schedule_title_modify.getText() + "");
+                    dto.setSc_memo(edt_schedule_memo_modify.getText() + "");
+
+                    AskTask task = new AskTask("/schedule_update");
+                    task.addParam("dto", gson.toJson(dto));
+                    CommonMethod.executeAskGet(task);
+
                     Toast.makeText(getContext().getApplicationContext(), "일정 수정 완료", Toast.LENGTH_SHORT).show();
-                    ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2());
+                    ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2(schedule));
                 }
             }
         });

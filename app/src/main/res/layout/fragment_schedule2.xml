@@ -4,11 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Hp_List.Hp_ListFragment">
+    tools:context=".Nav_Schedule.ScheduleActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recv_schedule"/>
+
+    <TextView
+        android:id="@+id/tv_schedule_not_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="등록된 일정이 없습니다."
+        android:textColor="#808080"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:textSize="15dp"/>
 
 </LinearLayout>
