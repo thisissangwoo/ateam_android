@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Hp_Review.ReviewVO;
 import com.example.anafor.R;
 
 import java.util.ArrayList;
@@ -17,9 +18,9 @@ import java.util.ArrayList;
 public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyReview>{
 
     LayoutInflater inflater;
-    ArrayList<MyReviewDTO> list;
+    ArrayList<ReviewVO> list;
 
-    public MyReviewAdapter(LayoutInflater inflater, ArrayList<MyReviewDTO> list) {
+    public MyReviewAdapter(LayoutInflater inflater,  ArrayList<ReviewVO> list) {
         this.inflater = inflater;
         this.list = list;
     }
@@ -33,12 +34,16 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
 
     @Override
     public void onBindViewHolder(@NonNull MyReview holder, int position) {
-        holder.tv_my_review_name.setText(list.get(position).getName());
-        holder.tv_my_review_date.setText(list.get(position).getDate());
-        holder.tv_my_review_content.setText(list.get(position).getContent());
-        holder.tv_my_review_survey1.setText(list.get(position).getExplanation());
-        holder.tv_my_review_survey2.setText(list.get(position).getDiagnosis());
-        holder.tv_my_review_survey3.setText(list.get(position).getKindness());
+        holder.tv_my_review_name.setText(list.get(position).getHp_name());
+        holder.tv_my_review_date.setText(list.get(position).getRev_date());
+        holder.tv_my_review_content.setText(list.get(position).getRev_text4());
+        if(list.get(position).getRev_text1()==0){
+            holder.tv_my_review_survey1.setVisibility(View.GONE);
+        }else if(list.get(position).getRev_text2()==0){
+            holder.tv_my_review_survey2.setVisibility(View.GONE);
+        }else if(list.get(position).getRev_text3()==0){
+            holder.tv_my_review_survey3.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -48,15 +53,12 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
 
     public class MyReview extends RecyclerView.ViewHolder {
 
-        View itemview;
         TextView tv_my_review_name, tv_my_review_date, tv_my_review_content,
                 tv_my_review_survey1, tv_my_review_survey2, tv_my_review_survey3;
 
         public MyReview(@NonNull View itemView) {
             super(itemView);
-            this.itemview = itemView;
-
-
+            tv_my_review_name = itemView.findViewById(R.id.tv_my_review_name);
             tv_my_review_date = itemView.findViewById(R.id.tv_my_review_date);
             tv_my_review_content = itemView.findViewById(R.id.tv_my_review_content);
             tv_my_review_survey1 = itemView.findViewById(R.id.tv_my_review_survey1);

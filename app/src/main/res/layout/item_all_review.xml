@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/tv_review_name"
@@ -37,9 +37,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="5dp">
 
         <RatingBar
+            android:layout_marginBottom="8dp"
             android:id="@+id/reviewRating"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
@@ -105,10 +106,9 @@
     </LinearLayout>
 
     <View
-        android:layout_width="382dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#ccc"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="10dp"/>
 
 </LinearLayout>
