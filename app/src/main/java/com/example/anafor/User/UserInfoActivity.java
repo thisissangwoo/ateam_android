@@ -4,6 +4,7 @@ import static android.content.res.ColorStateList.valueOf;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -34,7 +36,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
-public class UserInfoActivity extends AppCompatActivity {
+public class UserInfoActivity extends AppCompatActivity{
     private static final String TAG = "회원정보수정";
 
     TextView tv_logo,tv_logout,tv_idDelete;
@@ -45,7 +47,7 @@ public class UserInfoActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     RadioButton rdo_male, rdo_female;
     String  pwInput, pwChkInput, nameInput, telInput, birthInput, str_result ;
-    Boolean pwChk, nameChk, telChk, birthChk = false;
+    boolean pwChk = true, nameChk = true, telChk = true, birthChk = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +112,10 @@ public class UserInfoActivity extends AppCompatActivity {
 
 
         //성별체크
-        if(CommonVal.loginInfo.getUser_gender().equals("남")){
-            rdo_male.setChecked(true);
-        }else{
+        if(CommonVal.loginInfo.getUser_gender().equals("여")){
             rdo_female.setChecked(true);
+        }else{
+            rdo_male.setChecked(true);
         }
 
 
@@ -255,7 +257,6 @@ public class UserInfoActivity extends AppCompatActivity {
                 if(isChecked){
                     CommonVal.loginInfo.setUser_gender("남");
                     rdo_female.setChecked(false);
-                    str_result = "남";
                 }
             }
         });
@@ -266,7 +267,6 @@ public class UserInfoActivity extends AppCompatActivity {
                 if(isChecked){
                     CommonVal.loginInfo.setUser_gender("여");
                     rdo_male.setChecked(false);
-                    str_result = "여";
                 }
             }
         });
@@ -285,6 +285,10 @@ public class UserInfoActivity extends AppCompatActivity {
                         i.putExtra("finish", true);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         CommonVal.loginInfo = null;
+                        SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear();
+                        editor.commit();
                         startActivity(i);
                         finish();
                     }
