@@ -1,10 +1,20 @@
-package com.example.anafor.Hp_Information;
+package com.example.anafor.Hp_Review;
 
-public class ReviewVO {
+import java.io.Serializable;
+
+public class ReviewVO implements Serializable {
     int rev_num,rev_text1,rev_text2,rev_text3;
     double rev_grade;
 
-    String user_id, rev_date, hp_code, rev_text4, hp_name;
+    String user_id, rev_date, hp_code, rev_text4, hp_name,user_name;
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
 
     public String getHp_name() {
         return hp_name;

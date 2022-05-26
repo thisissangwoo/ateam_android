@@ -88,22 +88,6 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
             tv_my_choice_name = itemView.findViewById(R.id.tv_my_choice_name);
             tv_my_choice_addr = itemView.findViewById(R.id.tv_my_choice_addr);
             tv_my_choice_category = itemView.findViewById(R.id.tv_my_choice_category);
-
-        /*    itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION){
-                        AskTask task = new AskTask("detail.hp");
-                        task.addParam("code",list.get(position).getHp_code());
-                        Intent intent = new Intent(context, Hp_InformationActivity.class);
-                        Hp_infoDTO infoDTO =  gson.fromJson(CommonMethod.executeAskGet(task),Hp_infoDTO.class);
-                        intent.putExtra("infoDTO", infoDTO);
-                        Log.d("3333", "onClick: "+infoDTO.getHp_addr());
-                        context.startActivity(intent);
-                    }
-                }
-            });*/
         }
     }
 }

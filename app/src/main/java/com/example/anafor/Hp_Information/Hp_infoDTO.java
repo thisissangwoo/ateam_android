@@ -4,12 +4,80 @@ import java.io.Serializable;
 
 public class Hp_infoDTO implements Serializable {
     // 병원정보
- String hp_code, hp_name, type_code, sido_code, sido_name, sigungu_code , sigungu_name, hp_addr , hp_tel, hp_url, hp_x, hp_y;
- //진료시간정보
- String start_m, end_m, start_t, end_t, start_w, end_w, start_th, end_th, start_f, end_f, start_s, end_s, start_su, end_su,  lunch_d, lunch_w, close_su, close_ho;
+    String hp_code, hp_name, type_code, hp_addr , hp_tel, hp_url, hp_x, hp_y;
+    //진료시간정보
+    String start_m, end_m, start_t, end_t, start_w, end_w, start_th, end_th, start_f, end_f, start_s, end_s, start_su, end_su,  lunch_d, lunch_w, close_su, close_ho;
+    //총 리뷰 갯수, 해당 체크박스 선택 갯수
+    int totalcnt, survey1cnt, survey2cnt, survey3cnt;
+    double totalrate, survey1rate, survey2rate, survey3rate;
+
 
     public String getHp_code() {
         return hp_code;
+    }
+
+    public int getTotalcnt() {
+        return totalcnt;
+    }
+
+    public void setTotalcnt(int totalcnt) {
+        this.totalcnt = totalcnt;
+    }
+
+    public int getSurvey1cnt() {
+        return survey1cnt;
+    }
+
+    public void setSurvey1cnt(int survey1cnt) {
+        this.survey1cnt = survey1cnt;
+    }
+
+    public int getSurvey2cnt() {
+        return survey2cnt;
+    }
+
+    public void setSurvey2cnt(int survey2cnt) {
+        this.survey2cnt = survey2cnt;
+    }
+
+    public int getSurvey3cnt() {
+        return survey3cnt;
+    }
+
+    public void setSurvey3cnt(int survey3cnt) {
+        this.survey3cnt = survey3cnt;
+    }
+
+    public double getTotalrate() {
+        return totalrate;
+    }
+
+    public void setTotalrate(double totalrate) {
+        this.totalrate = totalrate;
+    }
+
+    public double getSurvey1rate() {
+        return survey1rate;
+    }
+
+    public void setSurvey1rate(double survey1rate) {
+        this.survey1rate = survey1rate;
+    }
+
+    public double getSurvey2rate() {
+        return survey2rate;
+    }
+
+    public void setSurvey2rate(double survey2rate) {
+        this.survey2rate = survey2rate;
+    }
+
+    public double getSurvey3rate() {
+        return survey3rate;
+    }
+
+    public void setSurvey3rate(double survey3rate) {
+        this.survey3rate = survey3rate;
     }
 
     public void setHp_code(String hp_code) {
@@ -30,38 +98,6 @@ public class Hp_infoDTO implements Serializable {
 
     public void setType_code(String type_code) {
         this.type_code = type_code;
-    }
-
-    public String getSido_code() {
-        return sido_code;
-    }
-
-    public void setSido_code(String sido_code) {
-        this.sido_code = sido_code;
-    }
-
-    public String getSido_name() {
-        return sido_name;
-    }
-
-    public void setSido_name(String sido_name) {
-        this.sido_name = sido_name;
-    }
-
-    public String getSigungu_code() {
-        return sigungu_code;
-    }
-
-    public void setSigungu_code(String sigungu_code) {
-        this.sigungu_code = sigungu_code;
-    }
-
-    public String getSigungu_name() {
-        return sigungu_name;
-    }
-
-    public void setSigungu_name(String sigungu_name) {
-        this.sigungu_name = sigungu_name;
     }
 
     public String getHp_addr() {

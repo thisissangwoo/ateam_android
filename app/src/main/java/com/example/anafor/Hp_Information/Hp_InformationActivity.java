@@ -13,18 +13,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Common.CommonVal;
+import com.example.anafor.Hp_Review.Hp_ReviewAllActivity;
+import com.example.anafor.Hp_Review.Hp_infoReviewFragment;
+import com.example.anafor.Hp_Review.ReviewVO;
 import com.example.anafor.R;
 import com.example.anafor.User.LoginActivity;
 import com.example.anafor.utils.GetDate;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Hp_InformationActivity extends AppCompatActivity {
 
@@ -32,7 +37,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
     ImageView imgv_hp_infor_back;
     TextView hp_infor_time, hp_infor_infor, hp_infor_review, tv_hp_today,tv_hp_todayTime,
             tv_hp_tlunch, tv_hp_name, tv_hp_addr , tv_hp_url, tv_hp_phone, tv_hp_wlunch,tv_hp_holi,
-            tv_hp_mon, tv_hp_tue, tv_hp_wed, tv_hp_thu, tv_hp_fri, tv_hp_sat, tv_hp_sun, tv_hp_dlunch;
+            tv_hp_mon, tv_hp_tue, tv_hp_wed, tv_hp_thu, tv_hp_fri, tv_hp_sat, tv_hp_sun, tv_hp_dlunch, tv_review_total, tv_review_rate, tv_review_more, tv_total_survey1, tv_total_survey2, tv_total_survey3;
     ScrollView hp_infor_scview;
     Button btn_review;
     ImageView imgv_heartclick;
@@ -44,6 +49,9 @@ public class Hp_InformationActivity extends AppCompatActivity {
     Gson gson;
     int flag = 0;               //상태 변수
     boolean heartclick = false; //조회 여부 확인 (default)
+    LinearProgressIndicator pro_survey1, pro_survey2, pro_survey3;
+
+    ArrayList<ReviewVO> reviewList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +97,32 @@ public class Hp_InformationActivity extends AppCompatActivity {
         tv_time[8] = findViewById(R.id.tv_hp_wlunch);                      //주말 점심시간
         tv_hp_sun = findViewById(R.id.tv_hp_sun);                            //일요일
 
+        tv_review_total = findViewById(R.id.tv_review_total);               //총 리뷰 수
+        tv_review_rate = findViewById(R.id.tv_review_rate);                  //별점 평균
+        tv_review_more = findViewById(R.id.tv_review_more);             //더보기 버튼
+
+        tv_total_survey1 =findViewById(R.id.tv_total_survey1);          //병원이 깨끗했어요
+        tv_total_survey2 = findViewById(R.id.tv_total_survey2);         //친절하게 진단해주셨어요
+        tv_total_survey3 = findViewById(R.id.tv_total_survey3);         //부대시설 만족
+
+        pro_survey1 = findViewById(R.id.pro_surevey1);
+        pro_survey2 = findViewById(R.id.pro_surevey2);
+        pro_survey3 = findViewById(R.id.pro_surevey3);
+
         writeTextView();  //전체 진료시간 출력
         writeHpInfo();      //병원 정보 출력
 
+        selectReviewtList();
+
+        //더보기 버튼 클릭시 (리뷰 리스트 출력)
+        tv_review_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                        Intent intent = new Intent(Hp_InformationActivity.this, Hp_ReviewAllActivity.class);
+                        intent.putExtra("reviewList",reviewList);
+                        startActivity(intent);
+            }
+        });
 
         //로그인이 된 경우
         if(CommonVal.loginInfo !=null) {
@@ -279,6 +310,28 @@ public class Hp_InformationActivity extends AppCompatActivity {
         return CommonMethod.executeAskGet(task);
     }
 
+    //리뷰 조회
+    public void selectReviewtList(){
+        if(infoDTO.getTotalcnt()!=0) {
+            AskTask  task = new AskTask("selectAll.review");
+            task.addParam("code",infoDTO.getHp_code());
+            reviewList = gson.fromJson(CommonMethod.executeAskGet(task), new TypeToken<ArrayList<ReviewVO>>() {}.getType());
+            tv_review_total.setText("리뷰  "+infoDTO.getTotalcnt()+" 개");             //총 리뷰 수
+            tv_total_survey1.setText("("+infoDTO.getSurvey1cnt()+")");
+            tv_total_survey2.setText("("+infoDTO.getSurvey2cnt()+")");
+            tv_total_survey3.setText("("+infoDTO.getSurvey3cnt()+")");
+            tv_review_rate.setText(infoDTO.getTotalrate()+" 점");
+            tv_review_more.setVisibility(View.VISIBLE);
+            pro_survey1.setProgressCompat((int)(infoDTO.getSurvey1rate()*100.0),false);
+            pro_survey2.setProgressCompat((int)(infoDTO.getSurvey2rate()*100.0),false);
+            pro_survey3.setProgressCompat((int)(infoDTO.getSurvey3rate()*100.0),false);
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
+        }else{
+            tv_review_more.setVisibility(View.INVISIBLE);
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -315,6 +368,12 @@ public class Hp_InformationActivity extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        selectReviewtList();
     }
 }
 
