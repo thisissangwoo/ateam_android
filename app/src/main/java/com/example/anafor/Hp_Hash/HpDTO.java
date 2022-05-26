@@ -1,9 +1,8 @@
 package com.example.anafor.Hp_Hash;
 
 public class HpDTO {
+
     String hp_code, hp_name, type_code, sido_code, sido_name, sigungu_code, sigungu_name, hp_addr ,hp_tel ,hp_url ,hp_x ,hp_y;
-
-
 
     public String getHp_code() {
         return hp_code;

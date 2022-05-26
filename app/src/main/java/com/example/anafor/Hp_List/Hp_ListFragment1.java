@@ -14,12 +14,14 @@ import android.view.ViewGroup;
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Hp_Hash.HpDTO;
+import com.example.anafor.Nav_Schedule.ScheduleDTO;
 import com.example.anafor.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Hp_ListFragment1 extends Fragment {
 
@@ -42,7 +44,7 @@ public class Hp_ListFragment1 extends Fragment {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(
                 getContext(), RecyclerView.VERTICAL, false);
 
-        //selectList(query);
+        selectList(query);
         adapter = new Hp_ListAdapter(inflater, list, getActivity());
 
         // 리사이클러뷰에 어댑터를 세팅
@@ -52,20 +54,14 @@ public class Hp_ListFragment1 extends Fragment {
         return v;
 //==================================================================================================
     }
-//    public void selectList(String query){
-//
-//        try{
-//            Gson gson = new Gson();
-//            AskTask task = new AskTask("review");
-//            task.addParam("query", query);
-//            InputStreamReader isr =  CommonMethod.executeAskGet(task);
-//            list = gson.fromJson(isr, new TypeToken<ArrayList<HpDTO>>(){}.getType());
-//            for(HpDTO vo : list){
-//                Log.d("@@@@", "onQueryTextSubmit: " + vo.getHp_name());
-//            }
-//            Log.d("hash", "onQueryTextSubmit: " + list.size());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+
+    public void selectList(String query){
+
+        Gson gson = new Gson();
+        AskTask task = new AskTask("/review");
+        task.addParam("select", query);
+        list = gson.fromJson(CommonMethod.executeAskGet(task),
+                new TypeToken<List<HpDTO>>(){}.getType());
+
+    }
 }
