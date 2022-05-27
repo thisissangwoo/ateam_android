@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Hp_ListActivity extends AppCompatActivity {
 
@@ -116,19 +117,6 @@ public class Hp_ListActivity extends AppCompatActivity {
 
     public void selectList(String query){
 
-        try{
-            Gson gson = new Gson();
-            AskTask task = new AskTask("hash");
-            task.addParam("query",query);
-            InputStreamReader isr =  CommonMethod.executeAskGet(task);
-            list = gson.fromJson(isr, new TypeToken<ArrayList<HpDTO>>(){}.getType());
-            for(HpDTO vo : list){
-                Log.d("@@@@", "onQueryTextSubmit: "+vo.getHp_name());
-            }
-            Log.d("hash", "onQueryTextSubmit: " + list.size());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

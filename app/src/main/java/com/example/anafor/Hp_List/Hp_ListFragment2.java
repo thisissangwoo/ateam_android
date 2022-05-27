@@ -17,10 +17,10 @@ import java.util.ArrayList;
 
 public class Hp_ListFragment2 extends Fragment {
 
-    ArrayList<HpDTO> list;
+    ArrayList<Hp_ListDTO> list;
     Hp_ListAdapter adapter;
 
-    public Hp_ListFragment2(ArrayList<HpDTO> list) {
+    public Hp_ListFragment2(ArrayList<Hp_ListDTO> list) {
         this.list = list;
     }
 
