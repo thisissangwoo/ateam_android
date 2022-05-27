@@ -70,7 +70,6 @@ public class Hp_ListActivity extends AppCompatActivity {
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment(query)).commit();
                 return true;
-
             }
 
             @Override
