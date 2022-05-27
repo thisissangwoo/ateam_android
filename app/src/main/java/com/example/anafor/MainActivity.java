@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ import com.example.anafor.Box_Main.Box_MainFragment;
 import com.example.anafor.Nav_MyReview.MyReviewActivity;
 import com.example.anafor.User.LoginActivity;
 import com.example.anafor.Nav_Vaccine.VaccineActivity;
+import com.example.anafor.User.UserDAO;
 import com.example.anafor.User.UserInfoActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -79,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         drawer = findViewById(R.id.drawer);
         nav_view = findViewById(R.id.nav_view);
         pic_Slid = findViewById(R.id.mainMidMenu);
+
+
 
 
         slidePic();
@@ -325,7 +329,18 @@ public class MainActivity extends AppCompatActivity {
     //로그아웃 했을때 : 로그인버튼 클릭시 로그인화면으로 intent
     @Override
     protected void onResume() {
+
         super.onResume();
+
+        SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
+        String id = preferences.getString("id" , "");
+        String pw =  preferences.getString("pw" , "");
+        if(id.length() > 3 && pw.length() > 3){
+            UserDAO dao = new UserDAO(id,pw);
+            dao.isUserLogin();
+        }
+
+
         if(CommonVal.loginInfo != null) {
             tv_login.setText(CommonVal.loginInfo.getUser_name() + "님 반갑습니다");
             tv_edit.setText("수정");
