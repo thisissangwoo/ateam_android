@@ -24,7 +24,7 @@ public class MyReviewActivity extends AppCompatActivity {
 
     ImageView imgv_myreview_back;
     RecyclerView recv_my_review_list;
-    ArrayList<ReviewVO> list = new ArrayList<>();
+    ArrayList<ReviewVO> list = null;
     TextView tv_review;
     Gson gson = new Gson();
     Context context;

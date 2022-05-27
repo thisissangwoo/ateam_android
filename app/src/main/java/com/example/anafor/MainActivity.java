@@ -157,22 +157,40 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.nav_schedule){
-                    Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
-                    startActivity(intent);
+                    if(CommonVal.loginInfo == null){
+                        alertLogin();
+                    }else{
+                        Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
+                        startActivity(intent);
+                    }
                 }else if(item.getItemId() == R.id.nav_choice){
-                    Intent intent = new Intent(MainActivity.this, ChoiceActivity.class);
-                    startActivity(intent);
+                    if(CommonVal.loginInfo == null){
+                        alertLogin();
+                    }else{
+                        Intent intent = new Intent(MainActivity.this, ChoiceActivity.class);
+                        startActivity(intent);
+                    }
                 }else if (item.getItemId() == R.id.nav_review) {
-                    Intent intent = new Intent(MainActivity.this, MyReviewActivity.class);
-                    startActivity(intent);
+                    if(CommonVal.loginInfo == null){
+                        alertLogin();
+                    }else{
+                        Intent intent = new Intent(MainActivity.this, MyReviewActivity.class);
+                        startActivity(intent);
+                    }
                 }else if(item.getItemId() == R.id.nav_information){
-                    Intent intent = new Intent(MainActivity.this, VaccineActivity.class);
-                    startActivity(intent);
+                    if(CommonVal.loginInfo == null){
+                        alertLogin();
+                    }else{
+                        Intent intent = new Intent(MainActivity.this, VaccineActivity.class);
+                        startActivity(intent);
+                    }
                 }
                 return true;
             }
         });
     }
+
+
 
     // 이미지를 보여주기 위한 리스트 추가
     public void slidePic(){

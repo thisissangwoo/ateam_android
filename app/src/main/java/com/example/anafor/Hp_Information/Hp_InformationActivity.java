@@ -19,6 +19,7 @@ import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Common.CommonVal;
 import com.example.anafor.Hp_Review.Hp_ReviewAllActivity;
 import com.example.anafor.Hp_Review.Hp_infoReviewFragment;
+import com.example.anafor.Hp_Review.ReviewTotalVO;
 import com.example.anafor.Hp_Review.ReviewVO;
 import com.example.anafor.R;
 import com.example.anafor.User.LoginActivity;
@@ -50,7 +51,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
     int flag = 0;               //상태 변수
     boolean heartclick = false; //조회 여부 확인 (default)
     LinearProgressIndicator pro_survey1, pro_survey2, pro_survey3;
-
+    ReviewTotalVO totalReview = null;
     ArrayList<ReviewVO> reviewList;
 
     @Override
@@ -302,34 +303,40 @@ public class Hp_InformationActivity extends AppCompatActivity {
 
     }
 
-    //Spring 통신
+    //Spring 통신(찜하기)
     public InputStreamReader aTask (String mapping){
         AskTask task = new AskTask(mapping);
         task.addParam("user_id", CommonVal.loginInfo.getUser_id());
-        task.addParam("hp_code", infoDTO.hp_code);
+        task.addParam("hp_code", infoDTO.getHp_code());
         return CommonMethod.executeAskGet(task);
     }
 
     //리뷰 조회
     public void selectReviewtList(){
-     /*   if(infoDTO.getTotalcnt()!=0) {
-            AskTask  task = new AskTask("selectAll.review");
+            //전체 리뷰 총합계 조회
+            AskTask task = new AskTask("total.review");
             task.addParam("code",infoDTO.getHp_code());
-            reviewList = gson.fromJson(CommonMethod.executeAskGet(task), new TypeToken<ArrayList<ReviewVO>>() {}.getType());
-            tv_review_total.setText("리뷰  "+infoDTO.getTotalcnt()+" 개");             //총 리뷰 수
-            tv_total_survey1.setText("("+infoDTO.getSurvey1cnt()+")");
-            tv_total_survey2.setText("("+infoDTO.getSurvey2cnt()+")");
-            tv_total_survey3.setText("("+infoDTO.getSurvey3cnt()+")");
-            tv_review_rate.setText(infoDTO.getTotalrate()+" 점");
-            tv_review_more.setVisibility(View.VISIBLE);
-            pro_survey1.setProgressCompat((int)(infoDTO.getSurvey1rate()*100.0),false);
-            pro_survey2.setProgressCompat((int)(infoDTO.getSurvey2rate()*100.0),false);
-            pro_survey3.setProgressCompat((int)(infoDTO.getSurvey3rate()*100.0),false);
-            getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
-        }else{
-            tv_review_more.setVisibility(View.INVISIBLE);
-            getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
-        }*/
+            totalReview = gson.fromJson(CommonMethod.executeAskGet(task),ReviewTotalVO.class);
+            if(totalReview != null){
+                tv_review_total.setText("리뷰  "+totalReview.getTotalcnt()+" 개");             //총 리뷰 수
+                tv_total_survey1.setText("("+totalReview.getSurvey1cnt()+")");
+                tv_total_survey2.setText("("+totalReview.getSurvey2cnt()+")");
+                tv_total_survey3.setText("("+totalReview.getSurvey3cnt()+")");
+                tv_review_rate.setText(totalReview.getTotalcnt()+" 점");
+                tv_review_more.setVisibility(View.VISIBLE);
+                pro_survey1.setProgressCompat((int)(totalReview.getSurvey1rate()*100.0),false);
+                pro_survey2.setProgressCompat((int)(totalReview.getSurvey2rate()*100.0),false);
+                pro_survey3.setProgressCompat((int)(totalReview.getSurvey3rate()*100.0),false);
+
+                //해당 병원 전체 리뷰 조회
+                AskTask  task2 = new AskTask("selectAll.review");
+                task2.addParam("code",infoDTO.getHp_code());
+                reviewList = gson.fromJson(CommonMethod.executeAskGet(task2), new TypeToken<ArrayList<ReviewVO>>() {}.getType());
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
+            }else{
+                tv_review_more.setVisibility(View.INVISIBLE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
+            }
     }
 
 

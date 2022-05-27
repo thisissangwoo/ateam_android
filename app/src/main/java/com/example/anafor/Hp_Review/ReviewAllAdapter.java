@@ -20,20 +20,19 @@ public class ReviewAllAdapter extends RecyclerView.Adapter<ReviewAllAdapter.View
 
 
     public ReviewAllAdapter(ArrayList<ReviewVO> reviewList, LayoutInflater inflater) {
-        this.reviewList = reviewList;
-        this.inflater = inflater;
+            this.reviewList = reviewList;
+            this.inflater = inflater;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_all_review,parent,false);
-        return new ViewHolder(view);
+            View view = inflater.inflate(R.layout.item_all_review,parent,false);
+            return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            holder.reviewRating.setIsIndicator(false);
             holder.reviewRating.setRating((float) reviewList.get(position).getRev_grade());
             holder.tv_review_content.setText(reviewList.get(position).getRev_date());
             holder.tv_review_name.setText(reviewList.get(position).getUser_name()+ "님");

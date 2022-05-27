@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
         holder.tv_my_review_name.setText(list.get(position).getHp_name());
         holder.tv_my_review_date.setText(list.get(position).getRev_date());
         holder.tv_my_review_content.setText(list.get(position).getRev_text4());
+        holder.reviewRating.setRating((float) list.get(position).getRev_grade());
         if(list.get(position).getRev_text1()==0){
             holder.tv_my_review_survey1.setVisibility(View.GONE);
         }
@@ -67,7 +69,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
 
         TextView tv_my_review_name, tv_my_review_date, tv_my_review_content,
                 tv_my_review_survey1, tv_my_review_survey2, tv_my_review_survey3;
-
+        RatingBar reviewRating;
         public MyReview(@NonNull View itemView) {
             super(itemView);
             tv_my_review_name = itemView.findViewById(R.id.tv_my_review_name);
@@ -76,7 +78,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
             tv_my_review_survey1 = itemView.findViewById(R.id.tv_my_review_survey1);
             tv_my_review_survey2 = itemView.findViewById(R.id.tv_my_review_survey2);
             tv_my_review_survey3 = itemView.findViewById(R.id.tv_my_review_survey3);
-
+            reviewRating =itemView.findViewById(R.id.reviewRating);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
