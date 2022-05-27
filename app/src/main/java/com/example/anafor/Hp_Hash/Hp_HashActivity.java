@@ -47,7 +47,7 @@ public class Hp_HashActivity extends AppCompatActivity {
         tv_hp_hash_top_gamgi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Hp_HashActivity.this, Hp_Hash_ListActivity.class);
+                Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
                 startActivity(intent);
             }
         });
@@ -55,7 +55,7 @@ public class Hp_HashActivity extends AppCompatActivity {
         tv_hp_hash_top_disk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Hp_HashActivity.this, Hp_Hash_ListActivity.class);
+                Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
                 startActivity(intent);
             }
         });
@@ -63,7 +63,7 @@ public class Hp_HashActivity extends AppCompatActivity {
         tv_hp_hash_top_biyeom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Hp_HashActivity.this, Hp_Hash_ListActivity.class);
+                Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
                 startActivity(intent);
             }
         });
