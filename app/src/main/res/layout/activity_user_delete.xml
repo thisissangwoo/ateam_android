@@ -95,9 +95,17 @@
             android:layout_margin="5dp"
             android:textSize="13dp"
             android:text="공용게시판에 등록된 댓글, 후기 등 게시물은 탈퇴후에도 삭제되지않고 유지되니 사전에 삭제후 탈퇴하시기 바랍니다." />
+        <CheckBox
+            android:id="@+id/chk_userDelete_chk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:textColor="#b6b6b6"
+            android:buttonTint="#b6b6b6"
+            android:text="안내 사항 확인 후 탈퇴에 동의합니다"/>
         <android.widget.Button
             android:id="@+id/btn_userDelete_delete"
-            android:layout_marginTop="150dp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@drawable/round_button"
