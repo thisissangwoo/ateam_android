@@ -79,7 +79,6 @@ public class Hp_MapActivity extends AppCompatActivity implements MapView.MapView
         gpsTracker = new GpsTracker(Hp_MapActivity.this);
         makeCurrentMarker();   //현재 위치 마커 찍기
         selectList(mCurrentLat,mCurrentLng,category);           //진료과목별 조회
-        Toast.makeText(Hp_MapActivity.this, mCurrentLat+"   "+mCurrentLng,Toast.LENGTH_LONG).show();
         btn_fab = findViewById(R.id.btn_fab);
         imgv_hp_map_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,9 +92,6 @@ public class Hp_MapActivity extends AppCompatActivity implements MapView.MapView
         btn_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Hp_MapActivity.this, mCurrentLat+"   "+mCurrentLng,Toast.LENGTH_LONG).show();
-                Log.d("btn_fab", "onClick: "+mCurrentLat+"      "+mCurrentLng);
-
                 makeCurrentMarker();
                 selectList(mCurrentLat, mCurrentLng, category);
             }

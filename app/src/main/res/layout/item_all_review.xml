@@ -8,17 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="10dp">
+
         <TextView
-            android:id="@+id/tv_my_review_name"
+            android:id="@+id/tv_review_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="병원 이름"
+            android:text="박천일 님"
             android:textStyle="bold"
             android:textColor="#696aad"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:layout_marginLeft="10dp"/>
-
     </LinearLayout>
 
     <LinearLayout
@@ -26,36 +26,36 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="5dp">
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RatingBar
+            android:id="@+id/reviewRating"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RatingBar
-                android:id="@+id/reviewRating"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:isIndicator="false"
-                android:progressTint="#FFC107"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="10dp"
-                android:max="5"
-                android:numStars="5"
-                android:rating="1"
-                android:stepSize="1"/>
-            <TextView
-                android:id="@+id/tv_my_review_date"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="2022.04.21"
-                android:textStyle="bold"
-                android:textColor="#c0c0c0"
-                android:textSize="15dp"
-                android:layout_marginLeft="15dp"/>
-        </LinearLayout>
+            android:isIndicator="false"
+            android:progressTint="#FFC107"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="10dp"
+            android:max="5"
+            android:numStars="5"
+            android:rating="4"
+            android:stepSize="1"/>
         <TextView
-            android:id="@+id/tv_my_review_content"
+            android:id="@+id/tv_review_date"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="2022.04.21"
+            android:textStyle="bold"
+            android:textColor="#c0c0c0"
+            android:textSize="15dp"
+            android:layout_marginLeft="15dp"/>
+    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_review_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="감기 몸살 기운이 있어서 내원 했는데\n다행히 코로나는 아니네요 !\n그리고 의사분도 매우 친절 하셨습니다."
@@ -75,33 +75,32 @@
             android:layout_marginLeft="10dp"/>
 
         <TextView
-            android:id="@+id/tv_my_review_survey1"
+            android:id="@+id/tv_review_survey1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="● 병원이 깨끗했어요"
+            android:text="● 증상을 쉽게 설명해 주셨어요."
             android:textColor="#808080"
             android:textStyle="bold"
             android:textSize="14dp"
             android:layout_marginLeft="10dp"/>
         <TextView
-            android:id="@+id/tv_my_review_survey2"
+            android:id="@+id/tv_review_survey2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="● 꼼꼼하게 진단해 주셨어요"
+            android:text="● 꼼꼼하게 진단해 주셨어요."
             android:textColor="#808080"
             android:textStyle="bold"
             android:textSize="14dp"
             android:layout_marginLeft="10dp"/>
-
         <TextView
-            android:id="@+id/tv_my_review_survey3"
+            android:id="@+id/tv_review_survey3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="● 부대시설이 만족스러웠어요"
+            android:text="● 부대시설이 만족스러웠어요."
             android:textColor="#808080"
+            android:textStyle="bold"
             android:textSize="14dp"
-            android:textStyle="bold" />
+            android:layout_marginLeft="10dp"/>
 
     </LinearLayout>
 
@@ -109,8 +108,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#ccc"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"/>
 
 </LinearLayout>

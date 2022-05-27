@@ -53,7 +53,9 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
 //        holder.imgv_my_choice_img.setImageResource(list.get(position).getImg_url());
         holder.tv_my_choice_name.setText(list.get(position).getHp_name());
         holder.tv_my_choice_addr.setText(list.get(position).getHp_addr());
-      //  holder.tv_my_choice_category.setText(list.get(position).getCategory());
+        if(list.get(position).getHp_tel()!=null){
+            holder.tv_my_choice_tel.setText(list.get(position).getHp_tel());
+        }
         holder.card_mychoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +79,7 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         View itemview;
         ImageView imgv_my_choice_img;
-        TextView tv_my_choice_name, tv_my_choice_addr, tv_my_choice_category;
+        TextView tv_my_choice_name, tv_my_choice_addr, tv_my_choice_tel;
         CardView card_mychoice;
 
         public ViewHolder(@NonNull View itemView) {
@@ -87,23 +89,7 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
             imgv_my_choice_img = itemView.findViewById(R.id.imgv_my_choice_img);
             tv_my_choice_name = itemView.findViewById(R.id.tv_my_choice_name);
             tv_my_choice_addr = itemView.findViewById(R.id.tv_my_choice_addr);
-            tv_my_choice_category = itemView.findViewById(R.id.tv_my_choice_category);
-
-        /*    itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION){
-                        AskTask task = new AskTask("detail.hp");
-                        task.addParam("code",list.get(position).getHp_code());
-                        Intent intent = new Intent(context, Hp_InformationActivity.class);
-                        Hp_infoDTO infoDTO =  gson.fromJson(CommonMethod.executeAskGet(task),Hp_infoDTO.class);
-                        intent.putExtra("infoDTO", infoDTO);
-                        Log.d("3333", "onClick: "+infoDTO.getHp_addr());
-                        context.startActivity(intent);
-                    }
-                }
-            });*/
+            tv_my_choice_tel = itemView.findViewById(R.id.tv_my_choice_tel);
         }
     }
 }

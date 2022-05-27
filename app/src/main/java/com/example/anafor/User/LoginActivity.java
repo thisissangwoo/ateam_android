@@ -294,7 +294,8 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("id" , tiedt_id.getText().toString());
             editor.putString("pw" , tiedt_pw.getText().toString());
         }else{
-            editor.clear(); //전체지우기
+
+            ; //전체지우기
         }
         editor.apply();
     }
