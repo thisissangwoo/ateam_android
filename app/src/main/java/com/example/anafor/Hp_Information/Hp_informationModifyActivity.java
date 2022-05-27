@@ -59,9 +59,11 @@ public class Hp_informationModifyActivity extends AppCompatActivity {
         reviewRating.setRating((float) rvo.getRev_grade());     //별점
         if(rvo.getRev_text1()==1){
             chk_type1.setChecked(true);
-        }else if(rvo.getRev_text2()==1){
+        }
+        if(rvo.getRev_text2()==1){
             chk_type2.setChecked(true);
-        }else if(rvo.getRev_text3()==1){
+        }
+        if(rvo.getRev_text3()==1){
             chk_type3.setChecked(true);
         }
         imgv_hp_infor_review_back.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +87,6 @@ public class Hp_informationModifyActivity extends AppCompatActivity {
                 }else if(reviewRating.getRating()==0){  //별점을 매기지 않았을때
                     Toast.makeText(Hp_informationModifyActivity.this, "별점을 입력해주세요", Toast.LENGTH_SHORT).show();
                 }else{                          //유효성 통과했을 경우 리뷰 등록
-                    Toast.makeText(getApplicationContext(), "리뷰가 수정되었습니다.", Toast.LENGTH_SHORT).show();
                     AskTask task = new AskTask("update.review");
                     GetDate getDate = new GetDate();
                     rvo.setRev_date(getDate.getCurrentDate());
@@ -97,6 +98,7 @@ public class Hp_informationModifyActivity extends AppCompatActivity {
                     cbxclick();
                     task.addParam("vo",gson.toJson(rvo));
                     CommonMethod.executeAskGet(task);
+                    Toast.makeText(getApplicationContext(), "리뷰가 수정되었습니다.", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }
             }
@@ -106,9 +108,11 @@ public class Hp_informationModifyActivity extends AppCompatActivity {
     public void cbxclick(){
         if(chk_type1.isChecked()){
             rvo.setRev_text1(1);
-        }else if(chk_type2.isChecked()){
+        }
+        if(chk_type2.isChecked()){
             rvo.setRev_text2(1);
-        }else if(chk_type3.isChecked()){
+        }
+        if(chk_type3.isChecked()){
             rvo.setRev_text3(1);
         }
     }

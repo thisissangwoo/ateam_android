@@ -41,9 +41,11 @@ public class ReviewAllAdapter extends RecyclerView.Adapter<ReviewAllAdapter.View
             holder.tv_review_date.setText(reviewList.get(position).getRev_date());
             if(reviewList.get(position).getRev_text1()==0){
                      holder.tv_review_survey1.setVisibility(View.GONE);
-                 }else if(reviewList.get(position).getRev_text2()==0){
+            }
+            if(reviewList.get(position).getRev_text2()==0){
                         holder. tv_review_survey2.setVisibility(View.GONE);
-             }else if(reviewList.get(position).getRev_text3()==1){
+             }
+            if(reviewList.get(position).getRev_text3()==1){
                         holder.tv_review_survey3.setVisibility(View.GONE);
           }
     }

@@ -103,9 +103,11 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
     public void cbxclick(){
         if(chk_type1.isChecked()==true){
             rvo.setRev_text1(1);
-        }else if(chk_type2.isChecked()==true){
+        }
+        if(chk_type2.isChecked()==true){
             rvo.setRev_text2(1);
-        }else if(chk_type3.isChecked()==true){
+        }
+        if(chk_type3.isChecked()==true){
             rvo.setRev_text3(1);
         }
     }

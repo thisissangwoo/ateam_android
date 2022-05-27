@@ -112,7 +112,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
         writeTextView();  //전체 진료시간 출력
         writeHpInfo();      //병원 정보 출력
 
-        selectReviewtList();
+        selectReviewtList();            //리뷰 정보 조회
 
         //더보기 버튼 클릭시 (리뷰 리스트 출력)
         tv_review_more.setOnClickListener(new View.OnClickListener() {
@@ -312,7 +312,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
 
     //리뷰 조회
     public void selectReviewtList(){
-        if(infoDTO.getTotalcnt()!=0) {
+     /*   if(infoDTO.getTotalcnt()!=0) {
             AskTask  task = new AskTask("selectAll.review");
             task.addParam("code",infoDTO.getHp_code());
             reviewList = gson.fromJson(CommonMethod.executeAskGet(task), new TypeToken<ArrayList<ReviewVO>>() {}.getType());
@@ -329,12 +329,13 @@ public class Hp_InformationActivity extends AppCompatActivity {
         }else{
             tv_review_more.setVisibility(View.INVISIBLE);
             getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
-        }
+        }*/
     }
 
 
     @Override
     public void onBackPressed() {
+
               //뒤로 가기 했을때 한번만 DB에 값 전달
             if(heartclick){       //원래 값이 있었을때
                 if(flag == 1){                //찜한 날짜 바꿔서 업데이트
@@ -347,7 +348,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
                     aTask("insert.heart");
                 }
             }
-            finish();
+            super.onBackPressed();
     }
     //비로그인상태일때 로그인해야 이용가능하다는 알림
     public void alertLogin(){

@@ -47,9 +47,11 @@ public class Hp_infoReviewFragment extends Fragment {
             tv_review_date.setText(reviewList.get(0).getRev_date());
             if(reviewList.get(0).getRev_text1()==0){
                 tv_review_survey1.setVisibility(View.GONE);
-            }else if(reviewList.get(0).getRev_text2()==0){
+            }
+            if(reviewList.get(0).getRev_text2()==0){
                 tv_review_survey2.setVisibility(View.GONE);
-            }else if(reviewList.get(0).getRev_text3()==0){
+            }
+            if(reviewList.get(0).getRev_text3()==0){
                 tv_review_survey3.setVisibility(View.GONE);
             }
             return v;

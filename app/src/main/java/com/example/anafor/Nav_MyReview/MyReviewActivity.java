@@ -42,9 +42,7 @@ public class MyReviewActivity extends AppCompatActivity {
                 onBackPressed();    // 바로 이전에 왔던 곳으로 이동 (마이페이지 유지)
             }
         });
-
         selectList();
-
     }
 
     public void selectList(){

@@ -3,16 +3,19 @@ package com.example.anafor.Nav_MyReview;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Hp_Information.Hp_informationModifyActivity;
 import com.example.anafor.Hp_Review.ReviewVO;
 import com.example.anafor.R;
@@ -46,9 +49,11 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
         holder.tv_my_review_content.setText(list.get(position).getRev_text4());
         if(list.get(position).getRev_text1()==0){
             holder.tv_my_review_survey1.setVisibility(View.GONE);
-        }else if(list.get(position).getRev_text2()==0){
+        }
+        if(list.get(position).getRev_text2()==0){
             holder.tv_my_review_survey2.setVisibility(View.GONE);
-        }else if(list.get(position).getRev_text3()==0){
+        }
+        if(list.get(position).getRev_text3()==0){
             holder.tv_my_review_survey3.setVisibility(View.GONE);
         }
     }
@@ -91,8 +96,13 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
                                         context.startActivity(intent);
                                         dialog.dismiss();
                                 }else if (which == 1){
-
-                                    //dialog.dismiss();
+                                    AskTask task = new AskTask("delete.review");
+                                    task.addParam("rev_num",String.valueOf(list.get(position).getRev_num()));
+                                    CommonMethod.executeAskGet(task);
+                                    Toast.makeText(context, "리뷰가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                    notifyItemRemoved(position);
+                                    list.remove(position);
+                                    dialog.dismiss();
                                 }
                             }
                         }).show();

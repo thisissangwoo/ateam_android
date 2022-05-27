@@ -17,14 +17,14 @@ public class Hp_ReviewAllActivity extends AppCompatActivity {
     ArrayList<ReviewVO> reviewList;
     RecyclerView recv_review_list;
 
-    ImageView imgv_hp_infor_back;
+    ImageView imgv_myreview_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hp_review_all);
-        imgv_hp_infor_back = findViewById(R.id.imgv_hp_infor_back);
+        imgv_myreview_back = findViewById(R.id.imgv_myreview_back);
 
-        imgv_hp_infor_back.setOnClickListener(new View.OnClickListener() {
+        imgv_myreview_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
