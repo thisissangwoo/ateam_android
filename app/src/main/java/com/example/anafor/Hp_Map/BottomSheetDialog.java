@@ -67,9 +67,9 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
                 task.addParam("place_name", place_name);
                 task.addParam("phone", phone);
                 InputStreamReader isr = CommonMethod.executeAskGet(task);
-                Intent intent = new Intent(context, Hp_InformationActivity.class);
                 Hp_infoDTO infoDTO = gson.fromJson(isr, Hp_infoDTO.class);
                 if (infoDTO != null) {                 //select 가 안 될 경우
+                    Intent intent = new Intent(context, Hp_InformationActivity.class);
                     intent.putExtra("infoDTO", infoDTO);
                     startActivity(intent);                   // Hp_InformationActivity로 이동
                 } else {

@@ -1,5 +1,7 @@
 package com.example.anafor.utils;
 
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +14,7 @@ public class GetDate {
         Date today = Calendar.getInstance().getTime();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String current = format.format(today);
+        Log.d("TAG", "getCurrentDate: "+current);
         return current;
     }
     // 오늘 요일 구하기 (일:0~ 토:6)

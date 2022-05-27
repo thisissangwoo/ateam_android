@@ -29,61 +29,55 @@
             android:id="@+id/tv_myreview_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AnaFor"
+            android:text="리뷰 관리"
             android:layout_gravity="center"
-            android:textSize="28dp"
+            android:textSize="20dp"
             android:textColor="#fff"
             android:textStyle="bold"/>
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:padding="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="2">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal">
-
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="25dp"
-                android:text="작성된 리뷰가 없습니다."
-                android:layout_marginTop="10dp"
-                android:textSize="17dp"
-                android:textColor="#B6B6B6"
-                android:layout_weight="8"
-                android:textStyle="bold"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내가 쓴 리뷰"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="15dp"
+                android:textColor="#696aad"
+                android:textStyle="bold"
+                android:textSize="18dp"/>
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/tv_nav_myreview_edit"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="편집"-->
-            <!--                android:gravity="center"-->
-            <!--                android:layout_weight="2"-->
-            <!--                android:layout_marginTop="10dp"-->
-            <!--                android:textSize="16dp"-->
-            <!--                android:textColor="#696aad"-->
-            <!--                android:textStyle="bold"/>-->
         </LinearLayout>
 
         <View
-            android:layout_width="382dp"
+            android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#ccc"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_review"
+            android:text="리뷰를 작성해보세요"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textColor="#232323"
+            android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
             android:id="@+id/recv_my_review_list"/>
-
-    </LinearLayout>
 
 </LinearLayout>

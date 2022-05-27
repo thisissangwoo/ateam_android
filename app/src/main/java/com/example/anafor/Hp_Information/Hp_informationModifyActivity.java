@@ -1,5 +1,7 @@
 package com.example.anafor.Hp_Information;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +13,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Common.CommonVal;
@@ -21,12 +21,11 @@ import com.example.anafor.R;
 import com.example.anafor.utils.GetDate;
 import com.google.gson.Gson;
 
-public class Hp_InformationReviewActivity extends AppCompatActivity {
 
+public class Hp_informationModifyActivity extends AppCompatActivity {
     ImageView imgv_hp_infor_review_back;
     Button btn_infor_review_insert;
     EditText edt_infor_review_content;
-    String hp_name, hp_code;
     TextView tv_hp_name;
     RatingBar reviewRating;         //별점
 
@@ -35,17 +34,14 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
     ReviewVO rvo;               //리뷰 저장 VO
 
     Gson gson = new Gson();
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_infor_review);
+        setContentView(R.layout.activity_hp_information_modify);
 
-        rvo = new ReviewVO();
-        Intent  intent =getIntent();
-        hp_name = intent.getStringExtra("hp_name");   //병원 이름
-        hp_code = intent.getStringExtra("hp_code");       //병원 조회 위한 병원 코드
+        Intent intent =getIntent();
+        rvo = (ReviewVO) intent.getSerializableExtra("vo");
 
         imgv_hp_infor_review_back = findViewById(R.id.imgv_hp_infor_review_back);
         btn_infor_review_insert = findViewById(R.id.btn_infor_review_insert);
@@ -57,15 +53,25 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
         chk_type3 = findViewById(R.id.chk_type3);
 
 
-        tv_hp_name.setText(hp_name);        //병원 이름
-
+        //조회한 리뷰 기존 내용 불러오기
+        tv_hp_name.setText(rvo.getHp_name());        //병원 이름
+        edt_infor_review_content.setText(rvo.getRev_text4());   //의견
+        reviewRating.setRating((float) rvo.getRev_grade());     //별점
+        if(rvo.getRev_text1()==1){
+            chk_type1.setChecked(true);
+        }
+        if(rvo.getRev_text2()==1){
+            chk_type2.setChecked(true);
+        }
+        if(rvo.getRev_text3()==1){
+            chk_type3.setChecked(true);
+        }
         imgv_hp_infor_review_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        
         // 리뷰 작성 등록(insert)을 위한 값이 없을 때 또는 내용 없이 공백일 때 유무의 유효성 검사 후
         // 다시 작성을 해야하는 부분에 포커스 주기
         // 유효성 검사를 거친 후 통과가 되면 등록 되었다는 Toast 를 띄워줌과 동시에
@@ -79,13 +85,10 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
                     edt_infor_review_content.requestFocus();
                     return;
                 }else if(reviewRating.getRating()==0){  //별점을 매기지 않았을때
-                        Toast.makeText(Hp_InformationReviewActivity.this, "별점을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Hp_informationModifyActivity.this, "별점을 입력해주세요", Toast.LENGTH_SHORT).show();
                 }else{                          //유효성 통과했을 경우 리뷰 등록
-                    Toast.makeText(getApplicationContext(), "소중한 리뷰 감사합니다.", Toast.LENGTH_SHORT).show();
-                    AskTask task = new AskTask("insert.review");
-                    rvo.setHp_code(hp_code);
+                    AskTask task = new AskTask("update.review");
                     GetDate getDate = new GetDate();
-                    rvo.setUser_id(CommonVal.loginInfo.getUser_id());
                     rvo.setRev_date(getDate.getCurrentDate());
                     rvo.setRev_text1(0);
                     rvo.setRev_text2(0);
@@ -95,21 +98,22 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
                     cbxclick();
                     task.addParam("vo",gson.toJson(rvo));
                     CommonMethod.executeAskGet(task);
+                    Toast.makeText(getApplicationContext(), "리뷰가 수정되었습니다.", Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }
             }
         });
     }
+    //체크박스 클릭여부 확인
     public void cbxclick(){
-        if(chk_type1.isChecked()==true){
+        if(chk_type1.isChecked()){
             rvo.setRev_text1(1);
         }
-        if(chk_type2.isChecked()==true){
+        if(chk_type2.isChecked()){
             rvo.setRev_text2(1);
         }
-        if(chk_type3.isChecked()==true){
+        if(chk_type3.isChecked()){
             rvo.setRev_text3(1);
         }
     }
-
 }
