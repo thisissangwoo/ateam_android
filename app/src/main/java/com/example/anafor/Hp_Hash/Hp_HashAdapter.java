@@ -17,12 +17,12 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
 
     LayoutInflater inflater;
     ArrayList<HpDTO> list;
-    Context context;
 
-    public Hp_HashAdapter(LayoutInflater inflater, ArrayList<HpDTO> list, Context context) {
+
+    public Hp_HashAdapter(LayoutInflater inflater, ArrayList<HpDTO> list ) {
         this.inflater = inflater;
         this.list = list;
-        this.context = context;
+
     }
 
     @NonNull
@@ -47,10 +47,8 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
         View itemview;
         TextView tv_hp_hash_top_gamgi;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemview = itemView;
