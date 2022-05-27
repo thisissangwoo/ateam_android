@@ -49,8 +49,11 @@ public class Hp_ListActivity extends AppCompatActivity {
         search_text = findViewById(R.id.search_text);
         schv_hp_hash_search =findViewById(R.id.schv_hp_hash_search);
 
+
         Intent intent = getIntent();
+       // query = intent.getStringExtra("gamgi");
         query = intent.getStringExtra("query");
+
 
         imgv_hp_list_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +61,7 @@ public class Hp_ListActivity extends AppCompatActivity {
                 onBackPressed();    // 바로 이전에 왔던 곳으로 이동 (마이페이지 유지)
             }
         });
+
 
         // 검색 버튼 누를 때 호출
         // 검색 keyword가 Hp_name 값에 있을 경우

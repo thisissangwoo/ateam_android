@@ -44,11 +44,13 @@ public class Hp_HashActivity extends AppCompatActivity {
             }
         });
 
-        tv_hp_hash_top_gamgi.setOnClickListener(new View.OnClickListener() {
+        /*tv_hp_hash_top_gamgi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
+                intent.putExtra("query", "감기");
                 startActivity(intent);
+
             }
         });
 
@@ -66,7 +68,7 @@ public class Hp_HashActivity extends AppCompatActivity {
                 Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
         schv_hp_hash_search.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override

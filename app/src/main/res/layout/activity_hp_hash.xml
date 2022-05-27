@@ -63,7 +63,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-
+<!--RecyclerView로 바꾸고 item이 TextView -->
 
             <TextView
                 android:id="@+id/tv_hp_hash_top_gamgi"
