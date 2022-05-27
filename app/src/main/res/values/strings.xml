@@ -38,6 +38,7 @@
         <item>11월</item>
         <item>12월</item>
     </string-array>
+    <string name="title_activity_hp_hash_list">Hp_Hash_ListActivity</string>
 
 
 </resources>

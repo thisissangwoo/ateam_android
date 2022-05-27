@@ -32,7 +32,7 @@ public class Hp_ListAdapter extends RecyclerView.Adapter<Hp_ListAdapter.ViewHold
     Context context;
     HpDTO dto;
     Gson gson = new Gson();
-    
+
     public ArrayList<HpDTO> getList() {
         return list;
     }

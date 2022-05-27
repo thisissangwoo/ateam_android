@@ -19,11 +19,9 @@ import java.util.ArrayList;
 public class Hp_HashActivity extends AppCompatActivity {
 
     ImageView imgv_hp_hash_back;
-    Button btn_hp_hash_head, btn_hp_hash_bone, btn_hp_hash_teeth;
+    TextView tv_hp_hash_top_gamgi, tv_hp_hash_top_disk, tv_hp_hash_top_biyeom, search_text;
     SearchView schv_hp_hash_search;
-    TextView search_text;
     ArrayList<HpDTO> dtos;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +30,12 @@ public class Hp_HashActivity extends AppCompatActivity {
         dtos = new ArrayList<>();
 
         imgv_hp_hash_back = findViewById(R.id.imgv_hp_hash_back);
-        btn_hp_hash_head = findViewById(R.id.btn_hp_hash_head);
-        btn_hp_hash_bone = findViewById(R.id.btn_hp_hash_bone);
-        btn_hp_hash_teeth = findViewById(R.id.btn_hp_hash_teeth);
+        tv_hp_hash_top_gamgi = findViewById(R.id.tv_hp_hash_top_gamgi);
+        tv_hp_hash_top_disk = findViewById(R.id.tv_hp_hash_top_disk);
+        tv_hp_hash_top_biyeom = findViewById(R.id.tv_hp_hash_top_biyeom);
         search_text = findViewById(R.id.search_text);
 
         schv_hp_hash_search = findViewById(R.id.schv_hp_hash_search);
-
 
         imgv_hp_hash_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +44,29 @@ public class Hp_HashActivity extends AppCompatActivity {
             }
         });
 
+        tv_hp_hash_top_gamgi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        tv_hp_hash_top_disk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tv_hp_hash_top_biyeom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         schv_hp_hash_search.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
@@ -73,7 +92,6 @@ public class Hp_HashActivity extends AppCompatActivity {
 
                 // DB에서 받은 값을 리스트로 출력 > new Activity 로 넘겨 출력
 
-
                 return true;
             }
 
@@ -82,5 +100,10 @@ public class Hp_HashActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+
     }
+
+
 }
