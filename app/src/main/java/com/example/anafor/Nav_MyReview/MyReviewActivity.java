@@ -1,5 +1,6 @@
 package com.example.anafor.Nav_MyReview;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,11 +27,12 @@ public class MyReviewActivity extends AppCompatActivity {
     ArrayList<ReviewVO> list = new ArrayList<>();
     TextView tv_review;
     Gson gson = new Gson();
-
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myreview);
+        context = this;
         tv_review=findViewById(R.id.tv_review);
         imgv_myreview_back = findViewById(R.id.imgv_myreview_back);
         recv_my_review_list = findViewById(R.id.recv_my_review_list);
@@ -43,7 +45,6 @@ public class MyReviewActivity extends AppCompatActivity {
 
         selectList();
 
-
     }
 
     public void selectList(){
@@ -53,9 +54,15 @@ public class MyReviewActivity extends AppCompatActivity {
         if(list.size()==0){
             tv_review.setVisibility(View.VISIBLE);
         }else{
-            MyReviewAdapter adapter = new MyReviewAdapter(getLayoutInflater(), list);
+            MyReviewAdapter adapter = new MyReviewAdapter(getLayoutInflater(), list,context);
             recv_my_review_list.setAdapter(adapter);
             recv_my_review_list.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        selectList();
     }
 }

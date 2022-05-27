@@ -1,6 +1,8 @@
 package com.example.anafor.Nav_MyReview;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Hp_Information.Hp_informationModifyActivity;
 import com.example.anafor.Hp_Review.ReviewVO;
 import com.example.anafor.R;
 
@@ -19,10 +23,13 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
 
     LayoutInflater inflater;
     ArrayList<ReviewVO> list;
+    ReviewVO vo;
+    Context context;
 
-    public MyReviewAdapter(LayoutInflater inflater,  ArrayList<ReviewVO> list) {
+    public MyReviewAdapter(LayoutInflater inflater, ArrayList<ReviewVO> list, Context context) {
         this.inflater = inflater;
         this.list = list;
+        this.context = context;
     }
 
     @NonNull
@@ -77,9 +84,12 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
                             public void onClick(DialogInterface dialog, int which) {
                                 // setSingleChoiceItems 2개인 각각의 아이템 중
                                 // 0 번째 == 수정, 1 번째 == 삭제
-                                if (which == 0){
-
-                                    //dialog.dismiss();
+                                if (which == 0){            //수정 눌렀을때 수정 액티비티로 이동
+                                        Intent intent = new Intent(context, Hp_informationModifyActivity.class);
+                                        vo = list.get(position);
+                                        intent.putExtra("vo",vo);
+                                        context.startActivity(intent);
+                                        dialog.dismiss();
                                 }else if (which == 1){
 
                                     //dialog.dismiss();
