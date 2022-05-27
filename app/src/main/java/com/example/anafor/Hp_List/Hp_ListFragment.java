@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class Hp_ListFragment extends Fragment {
 
-    ArrayList<HpDTO> list;
+    ArrayList<Hp_ListDTO> list;
     Hp_ListAdapter adapter;
     String query;
 
@@ -60,8 +60,8 @@ public class Hp_ListFragment extends Fragment {
             task.addParam("query", query);
             InputStreamReader isr =  CommonMethod.executeAskGet(task);
             list = gson.fromJson(isr, new TypeToken<ArrayList<HpDTO>>(){}.getType());
-            for(HpDTO vo : list){
-                Log.d("@@@@", "onQueryTextSubmit: "+ vo.getHp_name());
+            for(Hp_ListDTO vo : list){
+                Log.d("@@@@", "onQueryTextSubmit: "+ vo.getHP_NAME());
             }
             Log.d("basic", "onQueryTextSubmit: " + list.size());
         } catch (Exception e) {

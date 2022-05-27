@@ -25,7 +25,7 @@ import java.util.List;
 
 public class Hp_ListFragment1 extends Fragment {
 
-    ArrayList<HpDTO> list;
+    ArrayList<Hp_ListDTO> list;
     Hp_ListAdapter adapter;
     String query;
 
