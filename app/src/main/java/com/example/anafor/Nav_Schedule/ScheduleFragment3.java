@@ -30,7 +30,7 @@ public class ScheduleFragment3 extends Fragment {
     public ScheduleFragment3(ScheduleDTO dto, String schedule) {
         this.dto = dto;
         this.schedule = schedule;
-    }
+    }// ScheduleFragment3
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,13 +45,14 @@ public class ScheduleFragment3 extends Fragment {
 
 //==================================================================================================
 
-        // 수정하기 를 눌렀을 때 기존에 작성했던 text 를 보여줌
+        // 수정하기 를 눌렀을 때 기존에 작성했던 Text 를 setText 로 보여줌
         edt_schedule_title_modify.setText(dto.getSc_title());
         edt_schedule_memo_modify.setText(dto.getSc_memo());
 
         // 수정 완료 버튼을 눌렀을 때
         // 등록 부분과 마찬가지로 동일한 유효성 검사를 거친 후
-        // 마지막 else 부분에 수정한 화면을 찍어 줌
+        // 마지막 else 부분에 DB 와 통신을 하고
+        // 수정한 화면을 찍어 줌
         btn_schedule_insert_modify.setOnClickListener(new View.OnClickListener() {
 
             Gson gson = new Gson();
@@ -75,9 +76,11 @@ public class ScheduleFragment3 extends Fragment {
 
                     Toast.makeText(getContext().getApplicationContext(), "일정 수정 완료", Toast.LENGTH_SHORT).show();
                     ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2(schedule));
-                }
-            }
-        });
+                }// if
+            }// onClick
+        });// setOnClickListener
+
         return v;
-    }
-}
+
+    }// onCreateView
+}// class ScheduleFragment3

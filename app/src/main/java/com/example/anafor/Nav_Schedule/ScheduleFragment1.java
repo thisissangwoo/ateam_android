@@ -28,7 +28,7 @@ public class ScheduleFragment1 extends Fragment {
 
     public ScheduleFragment1(String schedule) {
         this.schedule = schedule;
-    }
+    }// ScheduleFragment1
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +44,10 @@ public class ScheduleFragment1 extends Fragment {
         tv_schedule_diary_date = v.findViewById(R.id.tv_schedule_diary_date);
 
 //==================================================================================================
+        
+        // 일정 등록 버튼을 눌렀을 때, 유효성 검사를 거친 후
+        // insert 되는 과정에서 마지막 else 부분에서 DB 와 통신(연결) 을 하고
+        // 등록이 되게끔 처리하였음
         btn_schedule_insert_schedule.setOnClickListener(new View.OnClickListener() {
 
             Gson gson = new Gson();
@@ -68,11 +72,11 @@ public class ScheduleFragment1 extends Fragment {
                     CommonMethod.executeAskGet(task);
                     Toast.makeText(getContext().getApplicationContext(), "일정 등록 완료", Toast.LENGTH_SHORT).show();
                     ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2(schedule));
-                }
+                }// if
 
-            }
-        });
+            }// onClick
+        });// setOnClickListener
         return v;
 //==================================================================================================
-    }
-}
+    }// onCreateView
+}// class ScheduleFragment1

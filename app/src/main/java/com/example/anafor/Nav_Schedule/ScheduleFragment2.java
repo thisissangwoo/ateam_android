@@ -2,7 +2,6 @@ package com.example.anafor.Nav_Schedule;
 
 import android.os.Bundle;
 
-import androidx.collection.ArraySet;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,9 +18,6 @@ import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
-
-import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +31,7 @@ public class ScheduleFragment2 extends Fragment {
 
     public ScheduleFragment2(String schedule) {
         this.schedule = schedule;
-    }
+    }// ScheduleFragment2
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +42,7 @@ public class ScheduleFragment2 extends Fragment {
         tv_schedule_not_data = v.findViewById(R.id.tv_schedule_not_data);
         RecyclerView recv_schedule = v.findViewById(R.id.recv_schedule);
 
-        // 리사이클러뷰의 진행 방향을 가로로 할 건지 세로로 할 건지 정하는 코드
+        // 리사이클러뷰의 진행 방향을 가로로 할 건지 세로로 할 건지 정하는 부분
         RecyclerView.LayoutManager manager = new LinearLayoutManager(
                 getContext(), RecyclerView.VERTICAL, false);
 
@@ -59,23 +55,14 @@ public class ScheduleFragment2 extends Fragment {
         ArrayList<ScheduleDTO> list = gson.fromJson(CommonMethod.executeAskGet(task),
                 new TypeToken<List<ScheduleDTO>>(){}.getType());
 
-
         // 내가 선택한 날짜와 DB 의 날짜가 같을 때
-        // 그 날짜에 맞는 리스트를 뿌려주는 로직
+        // 그 날짜에 맞는 리스트를 뿌려줌
         ArrayList<ScheduleDTO> selectdate = new ArrayList<>();
         for (ScheduleDTO scheduleDTO : list) {
             if (scheduleDTO.getSc_date().equals(schedule)) {
                 selectdate.add(scheduleDTO);
-            }
-
-        }
-
-        // 선택한 selectdate 의 사이즈가 0 일 때
-        // "등록된 일정이 없습니다"(TextView) 보여지게 처리
-        if (selectdate.size() < 0) {
-            tv_schedule_not_data.setVisibility(View.VISIBLE);
-        }
-
+            }// if
+        }// for
 
         adapter = new ScheduleAdapter(inflater, selectdate, getActivity(),schedule);
 
@@ -83,8 +70,7 @@ public class ScheduleFragment2 extends Fragment {
         recv_schedule.setAdapter(adapter);
         recv_schedule.setLayoutManager(manager);
 
-
         return v;
 //==================================================================================================
-    }
-}
+    }// onCreateView
+}// class ScheduleFragment2
