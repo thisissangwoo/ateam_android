@@ -103,7 +103,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
                                     CommonMethod.executeAskGet(task);
                                     Toast.makeText(context, "리뷰가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                     notifyItemRemoved(position);
-                                    list.remove(position);
+                                 //   list.remove(position);
                                     dialog.dismiss();
                                 }
                             }

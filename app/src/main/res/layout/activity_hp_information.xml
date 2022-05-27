@@ -800,7 +800,8 @@
                     android:textSize="18dp" />
 
                 <TextView
-                    android:id="@+id/tv_review_more"
+                    android:visibility="invisible"
+                    android:id="@+id/tv_review_mbtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
