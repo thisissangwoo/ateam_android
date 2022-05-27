@@ -38,6 +38,7 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tv_hp_hash_top_gamgi.setText(list.get(position).getText());
+
     }
 
     @Override
