@@ -1,6 +1,7 @@
 package com.example.anafor.Hp_Hash;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Hp_List.Hp_ListActivity;
 import com.example.anafor.R;
 
 import java.util.ArrayList;
@@ -54,6 +56,13 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
             this.itemview = itemView;
 
             tv_hp_hash_top_gamgi = itemView.findViewById(R.id.tv_hp_hash_top_gamgi);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //아이템 클릭시 이동
+                }
+            });
+
         }
     }
 }
