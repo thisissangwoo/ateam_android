@@ -20,7 +20,7 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
 
     LayoutInflater inflater;
     ArrayList<HpDTO> list;
-
+    Context context;
 
     public Hp_HashAdapter(LayoutInflater inflater, ArrayList<HpDTO> list ) {
         this.inflater = inflater;
@@ -75,6 +75,12 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     Log.d("TAG", "onClick: " + list.get(position).getText());
+
+                    Intent intent = new Intent(context , Hp_ListActivity.class);
+                    intent.putExtra("query", list.get(position).getText());
+                    context.startActivity(intent);
+                    //db에서 처리 하면됨
+
                 }
             });
         }
