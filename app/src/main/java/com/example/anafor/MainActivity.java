@@ -212,9 +212,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
     // 사진 슬라이드 구동
     private void fllipperImages(int image) {
         ImageView imageView = new ImageView(this);
+
+        pic_Slid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, VaccineActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // 가져온 사진을 채움
         imageView.setBackgroundResource(image);

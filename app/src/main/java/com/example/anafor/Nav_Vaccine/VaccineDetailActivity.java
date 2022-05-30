@@ -20,7 +20,7 @@ public class VaccineDetailActivity extends AppCompatActivity {
 
     LinearLayout container_vaccine_detail;
     ImageView a1, imgv_vaccine_detail_back;
-    String a = null;
+    int number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +37,19 @@ public class VaccineDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
         changeFragment(new VaccineDetailFragment1());
-
         Intent intent = getIntent();
-        a = (String) intent.getSerializableExtra("1");
-        if (a == "1"){
+        number = intent.getIntExtra("1", 0);
+
+        if (number == 1){
             changeFragment(new VaccineDetailFragment2());
+        }else if (number == 2){
+            changeFragment(new VaccineDetailFragment3());
+        }else if (number == 3){
+            changeFragment(new VaccineDetailFragment4());
+        }else if (number == 4){
+            changeFragment(new VaccineDetailFragment5());
         }
-
-
-
-
 
     }
     public void changeFragment(Fragment fragment){   /* 플래그먼트가 바뀌면서 */

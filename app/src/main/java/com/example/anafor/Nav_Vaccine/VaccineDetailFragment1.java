@@ -1,5 +1,9 @@
 package com.example.anafor.Nav_Vaccine;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,9 +25,11 @@ public class VaccineDetailFragment1 extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_vaccine_detail1, container, false);
 
+
         a1 = v.findViewById(R.id.a1);
         a2 = v.findViewById(R.id.a2);
 
         return v;
     }
+
 }
