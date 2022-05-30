@@ -2,6 +2,7 @@ package com.example.anafor.Hp_Hash;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +40,9 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tv_hp_hash_top_gamgi.setText(list.get(position).getText());
+        holder.bind(holder,position);
 
+        //holder.tv_hp_hash_top_gamgi.setText(list.get(position).getText());
     }
 
     @Override
@@ -50,19 +52,31 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         View itemview;
-        TextView tv_hp_hash_top_gamgi;
+        TextView tv_hp_hash_top;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemview = itemView;
+            tv_hp_hash_top = itemView.findViewById(R.id.tv_hp_hash_top);
 
-            tv_hp_hash_top_gamgi = itemView.findViewById(R.id.tv_hp_hash_top_gamgi);
+
+        }
+        public void bind(@NonNull ViewHolder holder, int position){
+            tv_hp_hash_top.setText(list.get(position).getText());
+           // holder.tv_hp_hash_top_gamgi.setText(list.get(position).getText());
+        /*
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //아이템 클릭시 이동
+                    Log.d("TAG", "onClick: " + list.get());
+                }
+            });*/
+            holder.tv_hp_hash_top.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("TAG", "onClick: " + list.get(position).getText());
                 }
             });
-
         }
     }
 }
