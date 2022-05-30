@@ -1,6 +1,7 @@
 package com.example.anafor.Hp_Review;
 
 public class ReviewTotalVO {
+
 	int totalcnt, survey1cnt, survey2cnt, survey3cnt;
 	double totalrate, survey1rate, survey2rate, survey3rate;
 
