@@ -31,6 +31,8 @@ public class VaccineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vaccine);
 
+        context = this;
+
         rec_view = findViewById(R.id.rec_view);
         imgv_vaccine_back = findViewById(R.id.imgv_vaccine_back);
         tv_vaccine_logo = findViewById(R.id.tv_vaccine_logo);
@@ -64,7 +66,4 @@ public class VaccineActivity extends AppCompatActivity {
 
     }
 
-    public void changeFragment(Fragment frag){
-        getSupportFragmentManager().beginTransaction().replace(R.id.container_vaccine, frag).commit();
-    }// changeFragment
 }

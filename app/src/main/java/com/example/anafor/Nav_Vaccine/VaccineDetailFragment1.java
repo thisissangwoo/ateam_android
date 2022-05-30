@@ -15,11 +15,6 @@ public class VaccineDetailFragment1 extends Fragment {
 
     ImageView a1, a2;
 
-    String vaccine;
-
-    public VaccineDetailFragment1(VaccineDTO vaccineDTO, String vaccine) {
-        this.vaccine = vaccine;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -15,9 +15,11 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Hp_List.Hp_ListActivity;
 import com.example.anafor.Nav_Schedule.ScheduleActivity;
 import com.example.anafor.Nav_Schedule.ScheduleFragment3;
 import com.example.anafor.R;
+import com.example.anafor.pill_detail.Pill_detailActivity;
 
 import java.util.ArrayList;
 
@@ -70,10 +72,14 @@ public class VaccineAdapter extends RecyclerView.Adapter<VaccineAdapter.ViewHold
 //        holder.card_back.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                if (position == 0){
 //                    Intent intent = new Intent(context, VaccineDetailActivity.class);
+//
 //                    context.startActivity(intent);
-//                }
+//
+//                    if (list.get(position) == 0){
+//                        intent.putExtra("1", list.get(position).getClass());
+//                    }
+//                    //풋엑스트라 첫번째가 백신 0번
 //            }
 //        });
     }
@@ -95,17 +101,21 @@ public class VaccineAdapter extends RecyclerView.Adapter<VaccineAdapter.ViewHold
             vacc_eng = itemView.findViewById(R.id.vacc_eng);
             vacc_content = itemView.findViewById(R.id.vacc_content);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int position = getAdapterPosition();
-//                    if (position == 0){
-//                        ((VaccineActivity) context).changeFragment(new VaccineDetailFragment1(list.get(position), vaccine));
-//                    } else if (position == 1){
-//                        ((VaccineActivity) context).changeFragment(new VaccineDetailFragment2(list.get(position), vaccine));
-//                    }
-//                }
-//            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Intent intent = new Intent(context, VaccineDetailActivity.class);
+
+                    context.startActivity(intent);
+
+                    if (position == 1){
+                        intent.putExtra("1", list.get(position).getClass());
+                    }
+                    //풋엑스트라 첫번째가 백신 0번
+
+                }
+            });
         }
 
         // 배너 컬러 적용
