@@ -2,7 +2,10 @@ package com.example.anafor.Hp_Hash;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.anafor.Hp_List.Hp_ListActivity;
+import com.example.anafor.Hp_List.Hp_ListAdapter;
 import com.example.anafor.R;
 
 import java.util.ArrayList;
@@ -19,54 +23,39 @@ import java.util.ArrayList;
 public class Hp_HashActivity extends AppCompatActivity {
 
     ImageView imgv_hp_hash_back;
-    TextView tv_hp_hash_top_gamgi, tv_hp_hash_top_disk, tv_hp_hash_top_biyeom, search_text;
+    TextView search_text;
     SearchView schv_hp_hash_search;
-    ArrayList<HpDTO> dtos;
+    ArrayList<HpDTO> list;
+    Hp_HashAdapter adapter;
+    RecyclerView recv_hp_hash;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hp_hash);
-        dtos = new ArrayList<>();
+        list = new ArrayList<>();
 
         imgv_hp_hash_back = findViewById(R.id.imgv_hp_hash_back);
-        tv_hp_hash_top_gamgi = findViewById(R.id.tv_hp_hash_top_gamgi);
-
+        recv_hp_hash = findViewById(R.id.recv_hp_hash);
         search_text = findViewById(R.id.search_text);
 
         schv_hp_hash_search = findViewById(R.id.schv_hp_hash_search);
+
+
+        list.add(new HpDTO("비염"));
+        list.add(new HpDTO("감기"));
+        list.add(new HpDTO("디스크"));
+
+        adapter = new Hp_HashAdapter(getLayoutInflater(), list);
+        // 리사이클러뷰에 어댑터를 세팅
+        recv_hp_hash.setAdapter(adapter);
+        recv_hp_hash.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
         imgv_hp_hash_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();    // 바로 이전에 왔던 곳으로 이동 (마이페이지 유지)
-            }
-        });
-
-        tv_hp_hash_top_gamgi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
-
-                startActivity(intent);
-            }
-        });
-
-        tv_hp_hash_top_disk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
-                String disk = "";
-                intent.putExtra("query", disk);
-                startActivity(intent);
-            }
-        });
-
-        tv_hp_hash_top_biyeom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -102,5 +91,8 @@ public class Hp_HashActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+
     }
 }
