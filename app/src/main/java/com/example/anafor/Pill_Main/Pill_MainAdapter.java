@@ -67,7 +67,7 @@ public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        holder.tv_pill_main_name.setText(list.get( position).getUser_id());
+        holder.tv_pill_main_name.setText(list.get( position).getHp_name());
         holder.tv_pill_main_date.setText(list.get( position).getPill_date());
 
         holder.itemview.setOnClickListener(new View.OnClickListener() {

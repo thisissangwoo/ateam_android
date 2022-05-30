@@ -70,6 +70,8 @@ public class Pill_MainFragment extends Fragment {
         Gson gson = new Gson();
         AskTask task = new AskTask("/select");
         task.addParam("user_id", CommonVal.loginInfo.getUser_id());
+
+
         list = gson.fromJson(CommonMethod.executeAskGet(task), new TypeToken<ArrayList<Pill_MainDTO>>() {
         }.getType());
         if (list.size() == 0) {
