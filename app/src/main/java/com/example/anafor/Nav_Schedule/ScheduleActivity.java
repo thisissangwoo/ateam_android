@@ -49,6 +49,7 @@ public class ScheduleActivity extends AppCompatActivity {
     ImageView imgv_my_allim_back;
     TextView tv_schedule_insert, tv_schedule_diary_date;
     LinearLayout container_schedule;
+    ArrayList<CalendarDay> dates = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class ScheduleActivity extends AppCompatActivity {
         }); // setOnClickListener
 
         calendarView = findViewById(R.id.calendarview);
-
+        
         // 최소, 최대의 월 를
         // minusMonths, plusMonths 로 표현해줌
         calendarView.state()
@@ -94,35 +95,13 @@ public class ScheduleActivity extends AppCompatActivity {
         // 월, 일을 한글로 보이게 설정 => Strings 참고
         calendarView.setTitleFormatter(new MonthArrayTitleFormatter(getResources().getTextArray(R.array.custom_months)));
         calendarView.setWeekDayFormatter(new ArrayWeekDayFormatter(getResources().getTextArray(R.array.custom_weekdays)));
-
-        // 특정일에 파란색 점을 찍기 위하여
-        // 필요한 데이터를 DB 에서 조회를 해옴
-        Gson gson = new Gson();
-        AskTask task = new AskTask("/schedule_select");
-        task.addParam("select", "admin");
-        ArrayList<ScheduleDTO> selectdate = gson.fromJson(CommonMethod.executeAskGet(task),
-                new TypeToken<List<ScheduleDTO>>(){}.getType());
-
-        ArrayList<CalendarDay> dates = new ArrayList<>();
-        // selectdate 의 size 가 0 이 아닐 때 점을 찍어줌
-        if (selectdate.size() != 0){
-           // ex) 2022년 5월 20일을 substring 으로 공백, 한글 년, 월, 일을 trim 처리 하였음
-           // 이 과정을 Eclipse 에서 테스트를 거친 코드를 가지고와서 적용 시켰음
-           // dates.add 를 통해 년 월 일에 맞게 점을 찍어주도록 하였음
-            for (ScheduleDTO dto: selectdate) {
-                String dateData = dto.getSc_date();
-                int year , month , day ;
-                year = Integer.parseInt( dateData.substring(0,4));
-                month =  Integer.parseInt( dateData.substring( dateData.indexOf("년")+1,dateData.indexOf("월") ).trim() );
-                day =  Integer.parseInt( dateData.substring( dateData.indexOf("월")+1,dateData.indexOf("일") ).trim() );
-                dates.add(CalendarDay.from(year,month,day));
-            } // for
-        } // if
+        
+        select();   // 조회를 반복적으로 사용하기 위해 메소드를 만들어서 사용했음
 
         // addDecorators 를 이용해서 일요일, 토요일에 색상을 주고,
         // 특정일에 선택이 되게끔 데이터 넘김
         calendarView.addDecorators(new SundayDecorator(), new SaturdayDecorator(), new EventDecorator(Color.RED, dates,this));
-        
+
         // 처음에는 오늘 날짜를 선택되게 해주었음
         calendarView.setSelectedDate(CalendarDay.today());
 
@@ -138,7 +117,9 @@ public class ScheduleActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_schedule, new ScheduleFragment2(tv_schedule_diary_date.getText() + "")).commit();
             }// onDateSelected
         });// setOnDateChangedListener
+
     }// onCreate
+
 
     // 일요일 모양주기
     public class SundayDecorator implements DayViewDecorator {
@@ -157,6 +138,8 @@ public class ScheduleActivity extends AppCompatActivity {
 
         }// decorate
     }// SundayDecorator
+
+
 
     // 토요일 모양주기
     public class SaturdayDecorator implements DayViewDecorator {
@@ -204,5 +187,36 @@ public class ScheduleActivity extends AppCompatActivity {
     public void changeFragment(Fragment frag){
         getSupportFragmentManager().beginTransaction().replace(R.id.container_schedule, frag).commit();
     }// changeFragment
+
+    // 특정일에 파란색 점을 찍기 위하여
+    // 필요한 데이터를 DB 에서 조회를 해옴
+    public void select() {
+        Gson gson = new Gson();
+        AskTask task = new AskTask("/schedule_select");
+        task.addParam("select", "admin");
+        ArrayList<ScheduleDTO> selectdate = gson.fromJson(CommonMethod.executeAskGet(task),
+                new TypeToken<List<ScheduleDTO>>() {
+                }.getType());
+
+        // selectdate 의 size 가 0 이 아닐 때 점을 찍어줌
+        if (selectdate.size() != 0) {
+            // ex) 2022년 5월 20일을 substring 으로 공백, 한글 년, 월, 일을 trim 처리 하였음
+            // 이 과정을 Eclipse 에서 테스트를 거친 코드를 가지고와서 적용 시켰음
+            // dates.add 를 통해 년 월 일에 맞게 점을 찍어주도록 하였음
+            for (ScheduleDTO dto : selectdate) {
+                String dateData = dto.getSc_date();
+                int year, month, day;
+                year = Integer.parseInt(dateData.substring(0, 4));
+                month = Integer.parseInt(dateData.substring(dateData.indexOf("년") + 1, dateData.indexOf("월")).trim());
+                day = Integer.parseInt(dateData.substring(dateData.indexOf("월") + 1, dateData.indexOf("일")).trim());
+                dates.add(CalendarDay.from(year, month, day));
+            } // for
+        } // if
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        select();
+    }
 
 }// class ScheduleActivity
