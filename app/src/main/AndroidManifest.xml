@@ -19,6 +19,9 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Nav_Vaccine.VaccineDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".Hp_Information.Hp_informationModifyActivity"
             android:exported="false" />
         <activity
