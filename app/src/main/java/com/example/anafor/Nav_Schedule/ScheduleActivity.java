@@ -95,17 +95,24 @@ public class ScheduleActivity extends AppCompatActivity {
         // 월, 일을 한글로 보이게 설정 => Strings 참고
         calendarView.setTitleFormatter(new MonthArrayTitleFormatter(getResources().getTextArray(R.array.custom_months)));
         calendarView.setWeekDayFormatter(new ArrayWeekDayFormatter(getResources().getTextArray(R.array.custom_weekdays)));
-        
+
         select();   // 조회를 반복적으로 사용하기 위해 메소드를 만들어서 사용했음
 
-        // addDecorators 를 이용해서 일요일, 토요일에 색상을 주고,
+        // addDecorators 를 이용해서 일요일, 토요일에 색상을 주고
         // 특정일에 선택이 되게끔 데이터 넘김
         calendarView.addDecorators(new SundayDecorator(), new SaturdayDecorator(), new EventDecorator(Color.RED, dates,this));
 
         // 처음에는 오늘 날짜를 선택되게 해주었음
         calendarView.setSelectedDate(CalendarDay.today());
 
-        // 원하는 날짜를 클릭시 setText 로 date 찍어주는 이벤트
+        // 첫 화면 들어갔을 때 오늘 날짜로 데이터가 있으면
+        // 그에 해댕하는 데이터를 보여주게 끔 처리
+        tv_schedule_diary_date.setText(String.format(LocalDate.now().getYear() + "년 " +LocalDate.now().getMonthValue() + "월 " + LocalDate.now().getDayOfMonth() + "일 " ));
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_schedule, new ScheduleFragment2(tv_schedule_diary_date.getText() + "")).commit();
+
+        // 원하는 날짜를 클릭시 setText 로 date 를 찍어주는 이벤트와
+        // 그에 맞는 데이터를 조회하는 부분인 fragment2 로 넘겨주고
+        // 해당하는 데이터를 뿌려주게끔 하였음
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @SuppressLint("ResourceType")
             @Override
@@ -117,7 +124,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_schedule, new ScheduleFragment2(tv_schedule_diary_date.getText() + "")).commit();
             }// onDateSelected
         });// setOnDateChangedListener
-
+        
     }// onCreate
 
 
@@ -138,7 +145,6 @@ public class ScheduleActivity extends AppCompatActivity {
 
         }// decorate
     }// SundayDecorator
-
 
 
     // 토요일 모양주기
@@ -181,12 +187,35 @@ public class ScheduleActivity extends AppCompatActivity {
         @Override
         public void decorate(DayViewFacade view) {
             view.addSpan(new DotSpan(10, Color.BLUE)); // 날자 밑에 점
+
         }// decorate
     }// EventDecorator
 
+
+    public class RemoveDecorator implements DayViewDecorator {
+        private final HashSet<CalendarDay> dates;
+
+        public RemoveDecorator(Collection<CalendarDay> dates) {
+            this.dates = new HashSet<>(dates);
+        }
+
+        @Override
+        public boolean shouldDecorate(CalendarDay day) {
+            return dates.contains(day);
+            // also tried with just
+            // return false;
+        }
+
+        @Override
+        public void decorate(DayViewFacade view) {
+            // TODO: what to do?
+        }
+    }
     public void changeFragment(Fragment frag){
+        select();
         getSupportFragmentManager().beginTransaction().replace(R.id.container_schedule, frag).commit();
     }// changeFragment
+
 
     // 특정일에 파란색 점을 찍기 위하여
     // 필요한 데이터를 DB 에서 조회를 해옴
@@ -201,7 +230,7 @@ public class ScheduleActivity extends AppCompatActivity {
         // selectdate 의 size 가 0 이 아닐 때 점을 찍어줌
         if (selectdate.size() != 0) {
             // ex) 2022년 5월 20일을 substring 으로 공백, 한글 년, 월, 일을 trim 처리 하였음
-            // 이 과정을 Eclipse 에서 테스트를 거친 코드를 가지고와서 적용 시켰음
+            // 이 과정을 Eclipse 에서 테스트를 거친 후 코드를 가지고와서 적용 시켰음
             // dates.add 를 통해 년 월 일에 맞게 점을 찍어주도록 하였음
             for (ScheduleDTO dto : selectdate) {
                 String dateData = dto.getSc_date();
@@ -210,6 +239,8 @@ public class ScheduleActivity extends AppCompatActivity {
                 month = Integer.parseInt(dateData.substring(dateData.indexOf("년") + 1, dateData.indexOf("월")).trim());
                 day = Integer.parseInt(dateData.substring(dateData.indexOf("월") + 1, dateData.indexOf("일")).trim());
                 dates.add(CalendarDay.from(year, month, day));
+              //  calendarView.removeDecorators();
+                calendarView.addDecorators(new SundayDecorator(), new SaturdayDecorator(), new EventDecorator(Color.RED, dates,this));
             } // for
         } // if
     }
