@@ -4,7 +4,7 @@ import com.example.anafor.User.UserVO;
 
 public class CommonVal {
 
-    public static String HTTP_IP = "http://192.168.0.43"; //192.168.226.33
+    public static String HTTP_IP = "http://192.168.0.16"; //192.168.226.33
     public static String SVRPATH = "/anafor/";
     public static UserVO loginInfo = null; // 해당하는 static멤버가 null이라면 로그인이 안된상태.
     //Spring의 세션과 똑같음 ( == 안드 프로그램 종료시 static메모리에 날아감 )
