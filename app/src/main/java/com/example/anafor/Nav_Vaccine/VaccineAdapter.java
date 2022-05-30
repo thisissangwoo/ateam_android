@@ -42,6 +42,7 @@ public class VaccineAdapter extends RecyclerView.Adapter<VaccineAdapter.ViewHold
     };
     /*ArrayList*/
 
+
     public VaccineAdapter(ArrayList<VaccineDTO> list, LayoutInflater inflater, Context context, String vaccine) {
         this.list = list;
         this.inflater = inflater;
@@ -69,19 +70,16 @@ public class VaccineAdapter extends RecyclerView.Adapter<VaccineAdapter.ViewHold
         holder.vacc_eng.setText(list.get(position).getVacc_eng());
         holder.vacc_content.setText(list.get(position).getVacc_content());
 
-//        holder.card_back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                    Intent intent = new Intent(context, VaccineDetailActivity.class);
-//
-//                    context.startActivity(intent);
-//
-//                    if (list.get(position) == 0){
-//                        intent.putExtra("1", list.get(position).getClass());
-//                    }
-//                    //풋엑스트라 첫번째가 백신 0번
-//            }
-//        });
+        holder.card_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, VaccineDetailActivity.class);
+                intent.putExtra("1", position);
+                context.startActivity(intent);
+
+                    //풋엑스트라 첫번째가 백신 0번
+            }
+        });
     }
 
     @Override
@@ -101,17 +99,12 @@ public class VaccineAdapter extends RecyclerView.Adapter<VaccineAdapter.ViewHold
             vacc_eng = itemView.findViewById(R.id.vacc_eng);
             vacc_content = itemView.findViewById(R.id.vacc_content);
 
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    Intent intent = new Intent(context, VaccineDetailActivity.class);
 
-                    context.startActivity(intent);
-
-                    if (position == 1){
-                        intent.putExtra("1", list.get(position).getClass());
-                    }
                     //풋엑스트라 첫번째가 백신 0번
 
                 }
@@ -126,5 +119,6 @@ public class VaccineAdapter extends RecyclerView.Adapter<VaccineAdapter.ViewHold
 
           }
         }
+
     }
 }

@@ -16,14 +16,14 @@
             android:id="@+id/s1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/a1"
+            android:src="@drawable/h1"
             android:scaleType="fitXY"/>
 
         <ImageView
             android:id="@+id/a2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/a2"
+            android:src="@drawable/h2"
             android:scaleType="fitXY"/>
 
     </LinearLayout>
