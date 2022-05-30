@@ -15,11 +15,7 @@ import com.example.anafor.R;
 public class VaccineDetailFragment2 extends Fragment {
 
     ImageView b1, b2;
-    String vaccine;
 
-    public VaccineDetailFragment2(VaccineDTO vaccineDTO, String vaccine) {
-        this.vaccine = vaccine;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
