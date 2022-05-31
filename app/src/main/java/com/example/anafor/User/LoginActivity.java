@@ -177,7 +177,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (oAuthToken != null){
                     Log.d(TAG,"카카오 토큰이 있음. 로그인 정보를 뺴오면 됨");
                     getKakaoProfile();
-                    goMain();
                 }else{
                     Log.d(TAG,"카카오 토큰이 없음." + throwable.toString());
                 }
@@ -220,10 +219,9 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "onSuccess 이름: " + nidProfileResponse.getProfile().getName());
                 Log.d(TAG, "onSuccess 이메일: " + nidProfileResponse.getProfile().getEmail());
                 Log.d(TAG, "onSuccess 전화번호: " + nidProfileResponse.getProfile().getMobile());
-
+                tiedt_id.setText(null);
+                tiedt_pw.setText(null);
                 socialLogin(nidProfileResponse.getProfile().getEmail());
-
-               // goMain();
             }
 
             @Override
@@ -295,20 +293,19 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("id" , tiedt_id.getText().toString());
             editor.putString("pw" , tiedt_pw.getText().toString());
         }else{
-
-            ; //전체지우기
+            editor.clear();
         }
         editor.apply();
     }
 
     //1. 소셜로그인 시 회원 아이디에 없으면, 이메일을 가지고 회원가입 화면으로 이동 => 나머지 정보를 입력받고 회원가입 시킴.!
     public void socialLogin(String user_id){
-        UserDAO dao = new UserDAO(tiedt_id.getText().toString(),tiedt_pw.getText().toString());
+        UserDAO dao = new UserDAO(user_id);
         Intent intent = null;
         if(dao.isSocialLogin() ){
             intent = new Intent(LoginActivity.this , MainActivity.class);
         }else{
-            intent = new Intent(LoginActivity.this , JoinActivity.class);
+            intent = new Intent(LoginActivity.this , SocialJoinActivity.class);
             intent.putExtra("user_id"  , user_id);
         }
         startActivity(intent);
