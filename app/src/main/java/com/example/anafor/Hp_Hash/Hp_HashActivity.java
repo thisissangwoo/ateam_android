@@ -28,6 +28,7 @@ public class Hp_HashActivity extends AppCompatActivity {
     ArrayList<HpDTO> list;
     Hp_HashAdapter adapter;
     RecyclerView recv_hp_hash;
+    Context context;
 
 
     @Override
@@ -35,7 +36,7 @@ public class Hp_HashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hp_hash);
         list = new ArrayList<>();
-
+        context = this;
         imgv_hp_hash_back = findViewById(R.id.imgv_hp_hash_back);
         recv_hp_hash = findViewById(R.id.recv_hp_hash);
         search_text = findViewById(R.id.search_text);
@@ -47,7 +48,7 @@ public class Hp_HashActivity extends AppCompatActivity {
         list.add(new HpDTO("감기"));
         list.add(new HpDTO("디스크"));
 
-        adapter = new Hp_HashAdapter(getLayoutInflater(), list);
+        adapter = new Hp_HashAdapter(getLayoutInflater(), list, context);
         // 리사이클러뷰에 어댑터를 세팅
         recv_hp_hash.setAdapter(adapter);
         recv_hp_hash.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));

@@ -22,10 +22,10 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
     ArrayList<HpDTO> list;
     Context context;
 
-    public Hp_HashAdapter(LayoutInflater inflater, ArrayList<HpDTO> list ) {
+    public Hp_HashAdapter(LayoutInflater inflater, ArrayList<HpDTO> list, Context context) {
         this.inflater = inflater;
         this.list = list;
-
+        this.context = context;
     }
 
     @NonNull
@@ -78,6 +78,8 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
 
                     Intent intent = new Intent(context , Hp_ListActivity.class);
                     intent.putExtra("query", list.get(position).getText());
+                    intent.putExtra("beyum", "이비인후과");
+                    intent.putExtra("gamgi", "내과");
                     context.startActivity(intent);
                     //db에서 처리 하면됨
 
