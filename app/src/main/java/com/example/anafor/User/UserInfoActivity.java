@@ -46,7 +46,7 @@ public class UserInfoActivity extends AppCompatActivity{
     Button btn_edit;
     RadioGroup radioGroup;
     RadioButton rdo_male, rdo_female;
-    String  pwInput, pwChkInput, nameInput, telInput, birthInput, str_result ;
+    String  pwInput, pwChkInput, nameInput, telInput, birthInput;
     boolean pwChk = true, nameChk = true, telChk = true, birthChk = true;
 
     @Override
@@ -101,15 +101,29 @@ public class UserInfoActivity extends AppCompatActivity{
 
         //회원정보 가져오기
         tiedt_id.setText(CommonVal.loginInfo.getUser_id());
-        tiedt_pw.setText(CommonVal.loginInfo.getUser_pw());
-        tiedt_pwChk.setText(CommonVal.loginInfo.getUser_pw());
+        if (!(CommonVal.loginInfo.getUser_pw()== null)){
+            tiedt_pw.setText(CommonVal.loginInfo.getUser_pw());
+            tiedt_pwChk.setText(CommonVal.loginInfo.getUser_pw());
+        }else{
+            tiedt_pw.setText(null);
+            tiedt_pwChk.setText(null);
+        }
+
         tiedt_name.setText(CommonVal.loginInfo.getUser_name());
-        tiedt_tel.setText(CommonVal.loginInfo.getUser_tel());
+
+        if (!(CommonVal.loginInfo.getUser_tel()==null)){
+            tiedt_tel.setText(CommonVal.loginInfo.getUser_tel());
+        }else{
+            tiedt_tel.setText(null);
+        }
 
         //생년월일 정규식
-        String match = "[^\uAC00-\uD7A30-9a-zA-Z]";
-        tiedt_birth.setText(CommonVal.loginInfo.getUser_birth().replaceAll(match, ""));
-
+        if (!(CommonVal.loginInfo.getUser_birth()==null)){
+            String match = "[^\uAC00-\uD7A30-9a-zA-Z]";
+            tiedt_birth.setText(CommonVal.loginInfo.getUser_birth().replaceAll(match, ""));
+        }else{
+            tiedt_birth.setText(null);
+        }
 
         //성별체크
         if(CommonVal.loginInfo.getUser_gender().equals("여")){
