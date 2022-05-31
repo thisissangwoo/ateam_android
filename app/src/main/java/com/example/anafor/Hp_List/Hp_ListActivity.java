@@ -31,11 +31,11 @@ public class Hp_ListActivity extends AppCompatActivity {
     TabLayout hp_list_tab_layout;
     ImageView imgv_hp_list_back;
     SearchView schv_hp_hash_search;
-    String query="";
+    String query;
     TextView search_text;
     ArrayList<HpDTO> list = new ArrayList<>();
     RecyclerView recv_hp_list_hplist;
-
+    String hash = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class Hp_ListActivity extends AppCompatActivity {
         Intent intent = getIntent();
 //        query = intent.getStringExtra("gamgi");
         query = intent.getStringExtra("query");
-
+        hash = intent.getStringExtra("text");
 
         imgv_hp_list_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +73,7 @@ public class Hp_ListActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 search_text.setText(query + " 에 대한 검색 결과입니다.");
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment(query)).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment(query,hash)).commit();
                 return true;
             }
 
@@ -90,16 +90,16 @@ public class Hp_ListActivity extends AppCompatActivity {
         hp_list_tab_layout.addTab(hp_list_tab_layout.newTab().setText("리뷰 많은순").setId(1));
 
         // 화면을 띄우자마자 리스트를 보여주기 위하여 적용
-        getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment(query)).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment(query,hash)).commit();
 
         // 탭을 Select 했을 때 Position 번지 수를 주고 각자 다른 프래그먼트의 리스트를 띄우도록 함
         hp_list_tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment(query)).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment(query,hash)).commit();
                 }else if (tab.getPosition() == 1) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment1(query)).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_list, new Hp_ListFragment1(query, hash)).commit();
                 }
             }
 
@@ -126,6 +126,6 @@ public class Hp_ListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        selectList(query);
+
     }
 }
