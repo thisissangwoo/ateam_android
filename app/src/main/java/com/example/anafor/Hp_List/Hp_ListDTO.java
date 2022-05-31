@@ -5,7 +5,6 @@ public class Hp_ListDTO {
     private int imgv_url;
     private String hp_code, hp_name, type_code, sido_code, sido_name, sigungu_code, sigungu_name, hp_addr, hp_tel, hp_url, hp_x, hp_y;
 
-
     public int getImgv_url() {
         return imgv_url;
     }

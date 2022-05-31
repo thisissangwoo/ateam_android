@@ -1,5 +1,6 @@
 package com.example.anafor.Hp_Information;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,7 +40,9 @@ public class Hp_InformationActivity extends AppCompatActivity {
     ImageView imgv_hp_infor_back;
     TextView hp_infor_time, hp_infor_infor, hp_infor_review, tv_hp_today,tv_hp_todayTime,
             tv_hp_tlunch, tv_hp_name, tv_hp_addr , tv_hp_url, tv_hp_phone, tv_hp_wlunch,tv_hp_holi,
-            tv_hp_mon, tv_hp_tue, tv_hp_wed, tv_hp_thu, tv_hp_fri, tv_hp_sat, tv_hp_sun, tv_hp_dlunch, tv_review_total, tv_review_rate, tv_review_more, tv_total_survey1, tv_total_survey2, tv_total_survey3;
+            tv_hp_mon, tv_hp_tue, tv_hp_wed, tv_hp_thu, tv_hp_fri, tv_hp_sat, tv_hp_sun, tv_hp_dlunch,
+            tv_review_total, tv_review_rate, tv_review_mbtn, tv_total_survey1, tv_total_survey2, tv_total_survey3;
+
     ScrollView hp_infor_scview;
     Button btn_review;
     ImageView imgv_heartclick;
@@ -52,7 +55,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
     int flag = 0;               //상태 변수
     boolean heartclick = false; //조회 여부 확인 (default)
     LinearProgressIndicator pro_survey1, pro_survey2, pro_survey3;
-    ReviewTotalVO totalReview = null;
+    ReviewTotalVO totalReview ;
     ArrayList<ReviewVO> reviewList;
 
     @Override
@@ -103,7 +106,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
 
         tv_review_total = findViewById(R.id.tv_review_total);               //총 리뷰 수
         tv_review_rate = findViewById(R.id.tv_review_rate);                  //별점 평균
-        tv_review_more = findViewById(R.id.tv_review_more);             //더보기 버튼
+        tv_review_mbtn = findViewById(R.id.tv_review_mbtn);             //더보기 버튼
 
         tv_total_survey1 =findViewById(R.id.tv_total_survey1);          //병원이 깨끗했어요
         tv_total_survey2 = findViewById(R.id.tv_total_survey2);         //친절하게 진단해주셨어요
@@ -113,13 +116,14 @@ public class Hp_InformationActivity extends AppCompatActivity {
         pro_survey2 = findViewById(R.id.pro_surevey2);
         pro_survey3 = findViewById(R.id.pro_surevey3);
 
+        tv_review_mbtn.setVisibility(View.GONE);
         writeTextView();  //전체 진료시간 출력
         writeHpInfo();      //병원 정보 출력
 
         selectReviewtList();            //리뷰 정보 조회
 
         //더보기 버튼 클릭시 (리뷰 리스트 출력)
-        tv_review_more.setOnClickListener(new View.OnClickListener() {
+        tv_review_mbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                         Intent intent = new Intent(Hp_InformationActivity.this, Hp_ReviewAllActivity.class);
@@ -208,7 +212,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
                     Intent intent = new Intent(Hp_InformationActivity.this, Hp_InformationReviewActivity.class);
                     intent.putExtra("hp_name",infoDTO.getHp_name());
                     intent.putExtra("hp_code",infoDTO.getHp_code());
-                    startActivity(intent);
+                    startActivityForResult(intent , 100);
                 }else{
                     alertLogin();
                 }
@@ -321,25 +325,23 @@ public class Hp_InformationActivity extends AppCompatActivity {
             task.addParam("code",infoDTO.getHp_code());
             totalReview = gson.fromJson(CommonMethod.executeAskGet(task),ReviewTotalVO.class);
             if(totalReview != null){
+                AskTask  task2 = new AskTask("selectAll.review");
+                task2.addParam("code",infoDTO.getHp_code());
+                reviewList = gson.fromJson(CommonMethod.executeAskGet(task2), new TypeToken<ArrayList<ReviewVO>>() {}.getType());
                 tv_review_total.setText("리뷰  "+totalReview.getTotalcnt()+" 개");             //총 리뷰 수
                 tv_total_survey1.setText("("+totalReview.getSurvey1cnt()+")");
                 tv_total_survey2.setText("("+totalReview.getSurvey2cnt()+")");
                 tv_total_survey3.setText("("+totalReview.getSurvey3cnt()+")");
-                tv_review_rate.setText(totalReview.getTotalcnt()+" 점");
-                tv_review_more.setVisibility(View.VISIBLE);
+                tv_review_rate.setText(totalReview.getTotalrate()+" 점");
+                tv_review_mbtn.setVisibility(View.VISIBLE);
                 pro_survey1.setProgressCompat((int)(totalReview.getSurvey1rate()*100.0),false);
                 pro_survey2.setProgressCompat((int)(totalReview.getSurvey2rate()*100.0),false);
                 pro_survey3.setProgressCompat((int)(totalReview.getSurvey3rate()*100.0),false);
-
                 //해당 병원 전체 리뷰 조회
-                AskTask  task2 = new AskTask("selectAll.review");
-                task2.addParam("code",infoDTO.getHp_code());
-                reviewList = gson.fromJson(CommonMethod.executeAskGet(task2), new TypeToken<ArrayList<ReviewVO>>() {}.getType());
-                getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
             }else{
-                tv_review_more.setVisibility(View.INVISIBLE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
+                tv_review_mbtn.setVisibility(View.INVISIBLE);
             }
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
     }
 
 
@@ -381,10 +383,14 @@ public class Hp_InformationActivity extends AppCompatActivity {
         builder.show();
     }
 
+
+
     @Override
-    protected void onResume() {
-        super.onResume();
-        selectReviewtList();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100 && resultCode == RESULT_OK){
+            selectReviewtList();
+        }
     }
 }
 
