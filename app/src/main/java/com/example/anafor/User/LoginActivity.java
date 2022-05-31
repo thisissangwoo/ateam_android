@@ -221,9 +221,9 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "onSuccess 이메일: " + nidProfileResponse.getProfile().getEmail());
                 Log.d(TAG, "onSuccess 전화번호: " + nidProfileResponse.getProfile().getMobile());
 
+                socialLogin(nidProfileResponse.getProfile().getEmail());
 
-
-                goMain();
+               // goMain();
             }
 
             @Override
@@ -253,6 +253,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(account != null){
                     Log.d(TAG, "onSuccess 이름: "+account.getProfile().getNickname());
                     Log.d(TAG, "onSuccess 이메일: "+account.getEmail());
+                    socialLogin(account.getEmail());
                 }
             }
             return null;
@@ -298,6 +299,20 @@ public class LoginActivity extends AppCompatActivity {
             ; //전체지우기
         }
         editor.apply();
+    }
+
+    //1. 소셜로그인 시 회원 아이디에 없으면, 이메일을 가지고 회원가입 화면으로 이동 => 나머지 정보를 입력받고 회원가입 시킴.!
+    public void socialLogin(String user_id){
+        UserDAO dao = new UserDAO(tiedt_id.getText().toString(),tiedt_pw.getText().toString());
+        Intent intent = null;
+        if(dao.isSocialLogin() ){
+            intent = new Intent(LoginActivity.this , MainActivity.class);
+        }else{
+            intent = new Intent(LoginActivity.this , JoinActivity.class);
+            intent.putExtra("user_id"  , user_id);
+        }
+        startActivity(intent);
+        finish();
     }
 
 }

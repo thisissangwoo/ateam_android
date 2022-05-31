@@ -52,7 +52,7 @@ public class Hp_ListActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-       // query = intent.getStringExtra("gamgi");
+//        query = intent.getStringExtra("gamgi");
         query = intent.getStringExtra("query");
 
 
