@@ -2,7 +2,15 @@ package com.example.anafor.Hp_Hash;
 
 public class HpDTO {
 
-    private String text;
+    private String text, name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getText() {
         return text;
@@ -12,7 +20,8 @@ public class HpDTO {
         this.text = text;
     }
 
-    public HpDTO(String text) {
+    public HpDTO(String text, String name) {
         this.text = text;
+        this.name = name;
     }
 }

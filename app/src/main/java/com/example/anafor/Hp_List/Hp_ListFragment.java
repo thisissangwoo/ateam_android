@@ -26,7 +26,7 @@ public class Hp_ListFragment extends Fragment {
     ArrayList<Hp_ListDTO> list;
     Hp_ListAdapter adapter;
     String query;
-    String hash;
+    String hash = null;
 
 
     public Hp_ListFragment(String query, String hash) {
@@ -62,10 +62,12 @@ public class Hp_ListFragment extends Fragment {
         try{
             Gson gson = new Gson();
             AskTask task = new AskTask("basic");
-            if ( !hash.equals("")){
-                task.addParam("query", hash);
-            }else{
+            Log.d("aaa", "selectList: " + hash);
+
+            if ( hash == null){
                 task.addParam("query", query);
+            }else{
+                task.addParam("query", hash);
             }
             InputStreamReader isr =  CommonMethod.executeAskGet(task);
             list = gson.fromJson(isr, new TypeToken<ArrayList<Hp_ListDTO>>(){}.getType());

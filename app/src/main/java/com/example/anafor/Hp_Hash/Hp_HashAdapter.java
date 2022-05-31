@@ -78,8 +78,9 @@ public class Hp_HashAdapter extends RecyclerView.Adapter<Hp_HashAdapter.ViewHold
 
                     Intent intent = new Intent(context , Hp_ListActivity.class);
                     intent.putExtra("query", list.get(position).getText());
-                    intent.putExtra("beyum", "이비인후과");
-                    intent.putExtra("gamgi", "내과");
+                    intent.putExtra("text", list.get(position).getName());
+
+
                     context.startActivity(intent);
                     //db에서 처리 하면됨
 

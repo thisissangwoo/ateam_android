@@ -31,7 +31,7 @@ public class Hp_ListActivity extends AppCompatActivity {
     TabLayout hp_list_tab_layout;
     ImageView imgv_hp_list_back;
     SearchView schv_hp_hash_search;
-    String query="";
+    String query;
     TextView search_text;
     ArrayList<HpDTO> list = new ArrayList<>();
     RecyclerView recv_hp_list_hplist;
@@ -54,8 +54,7 @@ public class Hp_ListActivity extends AppCompatActivity {
         Intent intent = getIntent();
 //        query = intent.getStringExtra("gamgi");
         query = intent.getStringExtra("query");
-        hash = intent.getStringExtra("gamgi");
-        hash = intent.getStringExtra("beyum");
+        hash = intent.getStringExtra("text");
 
         imgv_hp_list_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -44,9 +44,9 @@ public class Hp_HashActivity extends AppCompatActivity {
         schv_hp_hash_search = findViewById(R.id.schv_hp_hash_search);
 
 
-        list.add(new HpDTO("비염"));
-        list.add(new HpDTO("감기"));
-        list.add(new HpDTO("디스크"));
+        list.add(new HpDTO("비염", "이비인후과"));
+        list.add(new HpDTO("감기", "내과"));
+        list.add(new HpDTO("디스크", "신경외과"));
 
         adapter = new Hp_HashAdapter(getLayoutInflater(), list, context);
         // 리사이클러뷰에 어댑터를 세팅
