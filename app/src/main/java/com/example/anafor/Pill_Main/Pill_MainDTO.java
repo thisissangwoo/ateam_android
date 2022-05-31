@@ -5,7 +5,16 @@ import java.io.Serializable;
 public class Pill_MainDTO implements Serializable {
 
     private int pill_code, pill_code1, pill_code2, pill_code3;
-    private String user_id, hp_code, pill_date;
+    private String user_id, hp_code, pill_date, hp_name;
+
+    public String getHp_name() {
+        return hp_name;
+    }
+
+    public void setHp_name(String hp_name) {
+        this.hp_name = hp_name;
+    }
+
     public int getPill_code() {
         return pill_code;
     }

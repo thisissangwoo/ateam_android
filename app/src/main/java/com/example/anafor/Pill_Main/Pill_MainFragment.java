@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Common.CommonVal;
+import com.example.anafor.MainActivity;
 import com.example.anafor.Pill_QRcode.Pill_QRcodeActivity;
 import com.example.anafor.R;
 import com.example.anafor.pill_detail.Pill_detailActivity;
@@ -54,8 +55,10 @@ public class Pill_MainFragment extends Fragment {
         tv_pill_main_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Pill_QRcodeActivity.class);
-                startActivity(intent);
+                MainActivity activity = (MainActivity) getActivity();
+                activity.showQr();
+               // Intent intent = new Intent(getContext(), Pill_QRcodeActivity.class);
+               // startActivity(intent);
 
             }
         });
@@ -67,13 +70,15 @@ public class Pill_MainFragment extends Fragment {
         Gson gson = new Gson();
         AskTask task = new AskTask("/select");
         task.addParam("user_id", CommonVal.loginInfo.getUser_id());
+
+
         list = gson.fromJson(CommonMethod.executeAskGet(task), new TypeToken<ArrayList<Pill_MainDTO>>() {
         }.getType());
         if (list.size() == 0) {
             tv_pill_main_none.setVisibility(View.VISIBLE);
             recv_select.setVisibility(View.GONE);
         } else {
-            adapter = new Pill_MainAdapter(getLayoutInflater(), list, getContext());
+            adapter = new Pill_MainAdapter(getLayoutInflater(), list, getContext(), this);
             recv_select.setAdapter(adapter);
             recv_select.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         }

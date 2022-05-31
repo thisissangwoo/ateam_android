@@ -57,6 +57,7 @@ public class MemberSelect extends AsyncTask<Void, Void, InputStreamReader> {
             // builder에 문자열 및 데이터 추가하기
             builder.addTextBody("query", query, ContentType.create("Multipart/related", "UTF-8"));
 
+
             // 전송
             // 전송 url : 우리가 수정해야 하는 부분
             String postURL = CommonVal.HTTP_IP + "/anafor/hash";

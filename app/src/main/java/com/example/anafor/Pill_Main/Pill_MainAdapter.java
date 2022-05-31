@@ -33,6 +33,15 @@ public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.View
     ArrayList<Pill_MainDTO> list;
     Context context;
     Pill_MainDTO dto;
+    Pill_MainFragment fragment;
+
+    public Pill_MainAdapter(LayoutInflater inflater, ArrayList<Pill_MainDTO> list, Context context, Pill_MainFragment fragment) {
+        this.inflater = inflater;
+        this.list = list;
+        this.context = context;
+        this.fragment = fragment;
+    }
+
     public Pill_MainAdapter(LayoutInflater inflater, ArrayList<Pill_MainDTO> list, Context context) {
         this.inflater = inflater;
         this.list = list;
@@ -58,7 +67,7 @@ public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        holder.tv_pill_main_name.setText(list.get( position).getUser_id());
+        holder.tv_pill_main_name.setText(list.get( position).getHp_name());
         holder.tv_pill_main_date.setText(list.get( position).getPill_date());
 
         holder.itemview.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +122,7 @@ public class Pill_MainAdapter extends RecyclerView.Adapter<Pill_MainAdapter.View
                                     task.addParam("dto", gson.toJson(dto));
                                     CommonMethod.executeAskGet(task);
 
+                                    fragment.selectList();
                                     Toast.makeText(context.getApplicationContext(), "해당 처방전이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 }
