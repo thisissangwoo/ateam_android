@@ -1,8 +1,6 @@
 package com.example.anafor.User;
 
-import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
@@ -42,5 +40,22 @@ public class UserDAO {
             return false;
         }
     }
+    // 비밀번호를 제외한 id 만 조회
+    public boolean isSocialLogin(){
+        AskTask task = new AskTask("/social");
+        task.addParam("user_id", id);
+        InputStreamReader isr = CommonMethod.executeAskGet(task);
+        Gson gson = new Gson();
+        UserVO vo = gson.fromJson(isr, UserVO.class);
 
+        if (vo != null){
+            CommonVal.loginInfo= vo;
+            Log.d(TAG, "isUserLoginName: " + vo.getUser_name());
+
+            return true;
+        }else{
+
+            return false;
+        }
+    }
 }
