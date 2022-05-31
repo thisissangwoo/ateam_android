@@ -65,9 +65,9 @@ public class Hp_ListAdapter extends RecyclerView.Adapter<Hp_ListAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int i) {
 
         if (list.size() != 0){
-            holder.tv_hp_list_name.setText(list.get(i).getHP_NAME());
-            holder.tv_hp_list_addr.setText(list.get(i).getHP_ADDR());
-            holder.tv_hp_list_kategorie.setText(list.get(i).getHP_TEL());
+            holder.tv_hp_list_name.setText(list.get(i).getHp_name());
+            holder.tv_hp_list_addr.setText(list.get(i).getHp_addr());
+            holder.tv_hp_list_kategorie.setText(list.get(i).getHp_tel());
 
 
             holder.hp_list_reviewchoic.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +75,7 @@ public class Hp_ListAdapter extends RecyclerView.Adapter<Hp_ListAdapter.ViewHold
                 public void onClick(View v) {
                     AskTask task = new AskTask("detail.hp");
                     dto = list.get(i);
-                    task.addParam("code", list.get(i).getHP_CODE());
+                    task.addParam("code", list.get(i).getHp_code());
                     Intent intent = new Intent(context, Hp_InformationActivity.class);
                     Hp_infoDTO infoDTO =  gson.fromJson(CommonMethod.executeAskGet(task),Hp_infoDTO.class);
                     intent.putExtra("infoDTO", infoDTO);
@@ -88,6 +88,7 @@ public class Hp_ListAdapter extends RecyclerView.Adapter<Hp_ListAdapter.ViewHold
 
     @Override
     public int getItemCount() {
+
         if (list.size() == 0){
             return 1;
         }
