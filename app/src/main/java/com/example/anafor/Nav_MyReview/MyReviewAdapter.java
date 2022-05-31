@@ -23,7 +23,7 @@ import com.example.anafor.R;
 
 import java.util.ArrayList;
 
-public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyReview>{
+public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyReview> {
 
     LayoutInflater inflater;
     ArrayList<ReviewVO> list;
@@ -49,14 +49,20 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
         holder.tv_my_review_date.setText(list.get(position).getRev_date());
         holder.tv_my_review_content.setText(list.get(position).getRev_text4());
         holder.reviewRating.setRating((float) list.get(position).getRev_grade());
-        if(list.get(position).getRev_text1()==0){
+        if (list.get(position).getRev_text1() == 0) {
             holder.tv_my_review_survey1.setVisibility(View.GONE);
+        }else{
+            holder.tv_my_review_survey1.setVisibility(View.VISIBLE);
         }
-        if(list.get(position).getRev_text2()==0){
+        if (list.get(position).getRev_text2() == 0) {
             holder.tv_my_review_survey2.setVisibility(View.GONE);
+        }else{
+            holder.tv_my_review_survey2.setVisibility(View.VISIBLE);
         }
-        if(list.get(position).getRev_text3()==0){
+        if (list.get(position).getRev_text3() == 0) {
             holder.tv_my_review_survey3.setVisibility(View.GONE);
+        }else{
+            holder.tv_my_review_survey3.setVisibility(View.VISIBLE);
         }
     }
 
@@ -70,6 +76,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
         TextView tv_my_review_name, tv_my_review_date, tv_my_review_content,
                 tv_my_review_survey1, tv_my_review_survey2, tv_my_review_survey3;
         RatingBar reviewRating;
+
         public MyReview(@NonNull View itemView) {
             super(itemView);
             tv_my_review_name = itemView.findViewById(R.id.tv_my_review_name);
@@ -78,10 +85,10 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
             tv_my_review_survey1 = itemView.findViewById(R.id.tv_my_review_survey1);
             tv_my_review_survey2 = itemView.findViewById(R.id.tv_my_review_survey2);
             tv_my_review_survey3 = itemView.findViewById(R.id.tv_my_review_survey3);
-            reviewRating =itemView.findViewById(R.id.reviewRating);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            reviewRating = itemView.findViewById(R.id.reviewRating);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
+                public boolean onLongClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION){
                         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
@@ -92,24 +99,23 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
                                 // setSingleChoiceItems 2개인 각각의 아이템 중
                                 // 0 번째 == 수정, 1 번째 == 삭제
                                 if (which == 0){            //수정 눌렀을때 수정 액티비티로 이동
-                                        Intent intent = new Intent(context, Hp_informationModifyActivity.class);
-                                        vo = list.get(position);
-                                        intent.putExtra("vo",vo);
-                                        context.startActivity(intent);
-                                        dialog.dismiss();
+                                    Intent intent = new Intent(context, Hp_informationModifyActivity.class);
+                                    vo = list.get(position);
+                                    intent.putExtra("vo",vo);
+                                    context.startActivity(intent);
+                                    dialog.dismiss();
                                 }else if (which == 1){
                                     AskTask task = new AskTask("delete.review");
                                     task.addParam("rev_num",String.valueOf(list.get(position).getRev_num()));
                                     CommonMethod.executeAskGet(task);
                                     Toast.makeText(context, "리뷰가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                     notifyItemRemoved(position);
-                                 //   list.remove(position);
                                     dialog.dismiss();
                                 }
                             }
                         }).show();
                     }
-                    return;
+                    return false;
                 }
             });
         }

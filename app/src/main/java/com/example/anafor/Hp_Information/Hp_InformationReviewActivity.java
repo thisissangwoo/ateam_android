@@ -95,11 +95,13 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
                     cbxclick();
                     task.addParam("vo",gson.toJson(rvo));
                     CommonMethod.executeAskGet(task);
-                    onBackPressed();
+                    setResult(RESULT_OK);
+                    finish();
                 }
             }
         });
     }
+
     public void cbxclick(){
         if(chk_type1.isChecked()==true){
             rvo.setRev_text1(1);
@@ -111,5 +113,6 @@ public class Hp_InformationReviewActivity extends AppCompatActivity {
             rvo.setRev_text3(1);
         }
     }
+
 
 }

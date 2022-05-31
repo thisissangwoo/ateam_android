@@ -58,10 +58,10 @@ public class Hp_ListFragment extends Fragment {
             Gson gson = new Gson();
             AskTask task = new AskTask("basic");
             task.addParam("query", query);
-            InputStreamReader isr =  CommonMethod.executeAskGet(task);
-            list = gson.fromJson(isr, new TypeToken<ArrayList<HpDTO>>(){}.getType());
+            InputStreamReader isr =  CommonMethod.executeAskGet(task);list = gson.fromJson(isr, new TypeToken<ArrayList<Hp_ListDTO>>(){}.getType());
+
             for(Hp_ListDTO vo : list){
-                Log.d("@@@@", "onQueryTextSubmit: "+ vo.getHP_NAME());
+                Log.d("@@@@", "onQueryTextSubmit: "+ vo.getHp_name());
             }
             Log.d("basic", "onQueryTextSubmit: " + list.size());
         } catch (Exception e) {

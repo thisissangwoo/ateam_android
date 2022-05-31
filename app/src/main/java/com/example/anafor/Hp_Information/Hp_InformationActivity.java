@@ -1,5 +1,6 @@
 package com.example.anafor.Hp_Information;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -211,7 +212,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
                     Intent intent = new Intent(Hp_InformationActivity.this, Hp_InformationReviewActivity.class);
                     intent.putExtra("hp_name",infoDTO.getHp_name());
                     intent.putExtra("hp_code",infoDTO.getHp_code());
-                    startActivity(intent);
+                    startActivityForResult(intent , 100);
                 }else{
                     alertLogin();
                 }
@@ -382,10 +383,14 @@ public class Hp_InformationActivity extends AppCompatActivity {
         builder.show();
     }
 
+
+
     @Override
-    protected void onResume() {
-        super.onResume();
-        selectReviewtList();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100 && resultCode == RESULT_OK){
+            selectReviewtList();
+        }
     }
 }
 
