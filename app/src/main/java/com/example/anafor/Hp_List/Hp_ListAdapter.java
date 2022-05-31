@@ -88,6 +88,7 @@ public class Hp_ListAdapter extends RecyclerView.Adapter<Hp_ListAdapter.ViewHold
 
     @Override
     public int getItemCount() {
+
         if (list.size() == 0){
             return 1;
         }

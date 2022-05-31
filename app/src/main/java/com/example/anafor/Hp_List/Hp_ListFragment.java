@@ -26,10 +26,15 @@ public class Hp_ListFragment extends Fragment {
     ArrayList<Hp_ListDTO> list;
     Hp_ListAdapter adapter;
     String query;
+    String hash = null;
 
-    public Hp_ListFragment(String query) {
+
+    public Hp_ListFragment(String query, String hash) {
         this.query = query;
+        this.hash = hash;
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,9 +62,15 @@ public class Hp_ListFragment extends Fragment {
         try{
             Gson gson = new Gson();
             AskTask task = new AskTask("basic");
-            task.addParam("query", query);
-            InputStreamReader isr =  CommonMethod.executeAskGet(task);list = gson.fromJson(isr, new TypeToken<ArrayList<Hp_ListDTO>>(){}.getType());
+            Log.d("aaa", "selectList: " + hash);
 
+            if ( hash == null){
+                task.addParam("query", query);
+            }else{
+                task.addParam("query", hash);
+            }
+            InputStreamReader isr =  CommonMethod.executeAskGet(task);
+            list = gson.fromJson(isr, new TypeToken<ArrayList<Hp_ListDTO>>(){}.getType());
             for(Hp_ListDTO vo : list){
                 Log.d("@@@@", "onQueryTextSubmit: "+ vo.getHp_name());
             }
@@ -68,4 +79,7 @@ public class Hp_ListFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+
+
 }

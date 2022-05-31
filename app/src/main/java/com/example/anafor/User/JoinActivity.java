@@ -50,16 +50,6 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
-        Intent intent = getIntent();
-        intent.getSerializableExtra("user_id");
-        // 유효성검사 강제 통과 , user_id는 enable= false <= , 이메일 검증도 하면 좋음
-
-
-
-
-
-
-
         //Button 아이디 찾기
         btn_idChk = findViewById(R.id.btn_join_idChek);
         btn_code = findViewById(R.id.btn_join_emailCode);
@@ -140,7 +130,7 @@ public class JoinActivity extends AppCompatActivity {
                             Log.d(TAG, "onClick: " + idChk);
 
                             if(idChk==true) {
-                                til_id.setHelperText("사용 가능한 이메일입니다");
+                                til_id.setHelperText("이메일인증 버튼을 눌러주세요");
                                 til_id.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
                                 til_id.setError(null);
                                 btn_code.setEnabled(true);
@@ -395,7 +385,10 @@ public class JoinActivity extends AppCompatActivity {
 
                 Toast.makeText(JoinActivity.this, "아나포 회원가입을 축하합니다", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(JoinActivity.this,LoginActivity.class);
+                intent.putExtra("finish", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
     }

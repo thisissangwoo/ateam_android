@@ -18,6 +18,10 @@ public class UserDAO {
         this.pw = pw;
     }
 
+    public UserDAO(String id) {
+        this.id = id;
+    }
+
     public boolean isUserLogin(){
         Log.d(TAG,"onClick: ");
         AskTask task = new AskTask("login");
@@ -47,14 +51,11 @@ public class UserDAO {
         InputStreamReader isr = CommonMethod.executeAskGet(task);
         Gson gson = new Gson();
         UserVO vo = gson.fromJson(isr, UserVO.class);
-
         if (vo != null){
             CommonVal.loginInfo= vo;
             Log.d(TAG, "isUserLoginName: " + vo.getUser_name());
-
             return true;
         }else{
-
             return false;
         }
     }
