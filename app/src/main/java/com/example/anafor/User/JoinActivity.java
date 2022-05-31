@@ -50,6 +50,16 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
+        Intent intent = getIntent();
+        intent.getSerializableExtra("user_id");
+        // 유효성검사 강제 통과 , user_id는 enable= false <= , 이메일 검증도 하면 좋음
+
+
+
+
+
+
+
         //Button 아이디 찾기
         btn_idChk = findViewById(R.id.btn_join_idChek);
         btn_code = findViewById(R.id.btn_join_emailCode);
