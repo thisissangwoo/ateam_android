@@ -48,11 +48,14 @@ import com.example.anafor.User.LoginActivity;
 import com.example.anafor.Nav_Vaccine.VaccineActivity;
 import com.example.anafor.User.UserDAO;
 import com.example.anafor.User.UserInfoActivity;
+import com.example.anafor.User.UserVO;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -398,10 +401,16 @@ public class MainActivity extends AppCompatActivity {
 
         if(CommonVal.loginInfo != null) {
             tv_login.setText(CommonVal.loginInfo.getUser_name() + "님 반갑습니다");
-            tv_edit.setText("수정");
+            tv_edit.setText("정보수정");
             tv_edit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    AskTask task = new AskTask("edit");
+                    task.addParam("user_id",CommonVal.loginInfo.getUser_id());
+                    InputStreamReader isr = CommonMethod.executeAskGet(task);
+                    Gson gson = new Gson();
+                    UserVO vo = gson.fromJson(isr, UserVO.class);
+                    CommonVal.loginInfo= vo;
                     Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
                     startActivity(intent);
                 }

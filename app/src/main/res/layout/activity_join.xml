@@ -104,7 +104,7 @@
                     android:id="@+id/btn_join_idChek"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#FCFBFD"
+                    android:backgroundTint="#e0e0e0"
                     android:textColor="@color/Anafor"
                     android:text="중복확인"/>
             </LinearLayout>
@@ -132,15 +132,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:inputType="textEmailAddress"
-                        android:maxLength="50"
+                        android:inputType="phone"
+                        android:maxLength="6"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <android.widget.Button
                     android:id="@+id/btn_join_emailCode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#FCFBFD"
+                    android:backgroundTint="#e0e0e0"
                     android:textColor="@color/Anafor"
                     android:text="이메일인증"/>
             </LinearLayout>
