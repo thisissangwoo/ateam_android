@@ -45,8 +45,8 @@ public class Box_AlarmActivity extends AppCompatActivity {
         });
 
         recv_box_alarm = findViewById(R.id.recv_box_alarm);
-        list.add(new Box_AlarmDTO(R.drawable.chigwa, "오후 3시 치통약 먹기",
-                "3 번 칸에 약 보관 중", "15 : 00 PM"));
+
+        // ask
 
         Box_AlarmAdapter adapter = new Box_AlarmAdapter(getLayoutInflater(), list);
 

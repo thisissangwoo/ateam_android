@@ -6,20 +6,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
+import com.example.anafor.Common.CommonVal;
 import com.example.anafor.Hp_Information.Hp_InformationActivity;
 import com.example.anafor.Hp_Information.Hp_InformationReviewActivity;
 import com.example.anafor.R;
+import com.google.gson.Gson;
 
 public class Box_Alarm_detailActivity extends AppCompatActivity {
 
     ImageView imgv_box_detail_back;
-    Button btn_box_alarm_location1, btn_box_alarm_location2, btn_box_alarm_location3, btn_box_alarm_location4,
-            btn_box_detail_cancel, btn_box_detail_insert;
+    Button btn_box_detail_cancel, btn_box_detail_insert;
     EditText edt_box_alarm_content, edt_box_alarm_day, edt_box_alarm_time, edt_box_alarm_minute;
+    CheckBox btn_box_alarm_location1, btn_box_alarm_location2, btn_box_alarm_location3, btn_box_alarm_location4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,6 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
         btn_box_detail_cancel = findViewById(R.id.btn_box_detail_cancel);
         btn_box_detail_insert = findViewById(R.id.btn_box_detail_insert);
         edt_box_alarm_content = findViewById(R.id.edt_box_alarm_content);
-        edt_box_alarm_day = findViewById(R.id.edt_box_alarm_day);
         edt_box_alarm_time = findViewById(R.id.edt_box_alarm_time);
         edt_box_alarm_minute = findViewById(R.id.edt_box_alarm_minute);
 
@@ -57,15 +61,16 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
         // 유효성 검사를 거친 후 통과가 되면 등록 되었다는 Toast 를 띄워줌과 동시에
         // 이 전 화면(Box_AlarmActivity)으로 넘어가게끔 intent 처리
         btn_box_detail_insert.setOnClickListener(new View.OnClickListener() {
+
+            Gson gson = new Gson();
+            Box_AlarmDTO dto = new Box_AlarmDTO();
+
+
             @Override
             public void onClick(View v) {
                 if (edt_box_alarm_content.getText().toString().length() == 0 || edt_box_alarm_content.getText().toString().equals(" ")){
                     Toast.makeText(getApplicationContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     edt_box_alarm_content.requestFocus();
-
-                }else if(edt_box_alarm_day.getText().toString().length() == 0 || edt_box_alarm_day.getText().toString().equals(" ")){
-                    Toast.makeText(getApplicationContext(), "요일을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    edt_box_alarm_day.requestFocus();
 
                 }else if(edt_box_alarm_time.getText().toString().length() == 0 || edt_box_alarm_time.getText().toString().equals(" ")){
                     Toast.makeText(getApplicationContext(), "시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -75,11 +80,34 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "분을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     edt_box_alarm_minute.requestFocus();
 
-                }else if(edt_box_alarm_day.getText().toString().length() == 0 || edt_box_alarm_day.getText().toString().equals(" ")){
-                    Toast.makeText(getApplicationContext(), "요일을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    edt_box_alarm_day.requestFocus();
-
                 }else{
+
+                    AskTask task = new AskTask("/iot_insert");
+                    //1번이 선택 됐을 때 date 1 에 담아야함 시간을
+                    if (btn_box_alarm_location1.isChecked()){
+                        dto.setCase_date1(edt_box_alarm_time.getText() + "시" + edt_box_alarm_minute.getText() + "분");
+                        dto.setMemo(edt_box_alarm_content.getText() + "");
+                        dto.setCase_num1(1);
+                        dto.setUser_id(CommonVal.loginInfo.getUser_id());
+
+                    }else if (btn_box_alarm_location2.isChecked()) {
+                        dto.setCase_date2(edt_box_alarm_time.getText() + "/" + edt_box_alarm_minute.getText());
+                        dto.setMemo(edt_box_alarm_content.getText() + "");
+                        dto.setCase_num2(1);
+                        dto.setUser_id(CommonVal.loginInfo.getUser_id());
+                    }else if (btn_box_alarm_location3.isChecked()) {
+                        dto.setCase_date3(edt_box_alarm_time.getText() + "/" + edt_box_alarm_minute.getText());
+                        dto.setMemo(edt_box_alarm_content.getText() + "");
+                        dto.setCase_num3(1);
+                        dto.setUser_id(CommonVal.loginInfo.getUser_id());
+                    }else if (btn_box_alarm_location4.isChecked()) {
+                        dto.setCase_date4(edt_box_alarm_time.getText() + "/" + edt_box_alarm_minute.getText());
+                        dto.setMemo(edt_box_alarm_content.getText() + "");
+                        dto.setCase_num4(1);
+                        dto.setUser_id(CommonVal.loginInfo.getUser_id());
+                    }
+                    task.addParam("iot_insert", gson.toJson(dto));
+                    CommonMethod.executeAskGet(task);
                     Toast.makeText(getApplicationContext(), "알람이 등록되었습니다.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Box_Alarm_detailActivity.this, Box_AlarmActivity.class);
                     startActivity(intent);
