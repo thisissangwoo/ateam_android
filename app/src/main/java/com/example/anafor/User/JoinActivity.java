@@ -30,12 +30,13 @@ import com.google.gson.Gson;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class JoinActivity extends AppCompatActivity {
     private static final String TAG = "회원가입";
 
-    TextView tv_logo;
     ImageView back;
     Button btn_idChk, btn_code, btn_join;
     TextInputLayout til_id,til_code,til_pw,til_pwChk,til_name,til_birth,til_tel;
@@ -77,16 +78,6 @@ public class JoinActivity extends AppCompatActivity {
         radioGroup = findViewById(R.id.radioGroup);
         rdo_male = findViewById(R.id.rdoBtn_join_male);
         rdo_female = findViewById(R.id.rdoBtn_join_female);
-
-        //메인액티비티 이동
-        tv_logo = findViewById(R.id.tv_join_anaforlogo);
-        tv_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(JoinActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //뒤로가기
         back = findViewById(R.id.imgv_join_back);
@@ -308,20 +299,47 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 birthInput = tiedt_birth.getText().toString();
-                SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyyMMdd"); //검증할 날짜 포맷 설정
-                dateFormatParser.setLenient(false); //false일경우 처리시 입력한 값이 잘못된 형식일 시 오류가 발생
+                Date nowDate = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd"); //검증할 날짜 포맷 설정
+                String strNowDate = format.format(nowDate);
+
+                format.setLenient(false); //false일경우 처리시 입력한 값이 잘못된 형식일 시 오류가 발생
                 try {
-                    dateFormatParser.parse(birthInput); //대상 값 포맷에 적용되는지 확인
-                    til_birth.setHelperText("");
-                    til_birth.setError(null);
-                    birthChk = true;
-                } catch (ParseException e) {
+                    format.parse(birthInput); //대상 값 포맷에 적용되는지 확인
+                    String startAge = CommonMethod.AddDate(strNowDate,-14,0,0);
+                    format.parse(startAge);
+                    String endAge = CommonMethod.AddDate(strNowDate,-100,0,0);
+                    format.parse(endAge);
+
+                    if (birthInput.compareTo(startAge) <= 0 && birthInput.compareTo(endAge) >= 0){
+                        til_birth.setHelperText("");
+                        til_birth.setError(null);
+                        birthChk = true;
+                    }else if(birthInput.compareTo(endAge) < 0){
+                        til_birth.setError("정말이세요?");
+                        birthChk = false;
+                    }else if(birthInput.compareTo(startAge) > 0 && birthInput.compareTo(strNowDate) <= 0){
+                        til_birth.setHelperText(null);
+                        til_birth.setError("만14세 미만은 가입 할수 없습니다");
+                        birthChk = false;
+                    }else if(birthInput.compareTo(strNowDate) > 0){
+                        til_birth.setHelperText(null);
+                        til_birth.setError("미래에서 오셨군요^^");
+                        birthChk = false;
+                    }else{
+                        til_birth.setHelperText(null);
+                        til_birth.setError("가입할수 없는 나이입니다 죄송합니다");
+                        birthChk = false;
+                    }
+                } catch (Exception e) {
                     e.printStackTrace();
                     til_birth.setError("생년월일 입력하세요 예)19950101");
                     birthChk = false;
                 }
+
             }
         });
+
 
         // 7. 성별
         str_result = "남";

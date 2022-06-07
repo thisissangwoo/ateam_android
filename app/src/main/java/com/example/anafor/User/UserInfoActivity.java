@@ -34,12 +34,14 @@ import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class UserInfoActivity extends AppCompatActivity{
     private static final String TAG = "회원정보수정";
 
-    TextView tv_logo,tv_logout,tv_idDelete;
+    TextView tv_logout,tv_idDelete;
     ImageView back;
     TextInputLayout til_id,til_pw,til_pwChk,til_name,til_birth,til_tel;
     TextInputEditText tiedt_id,tiedt_pw,tiedt_pwChk,tiedt_name,tiedt_birth,tiedt_tel;
@@ -79,16 +81,6 @@ public class UserInfoActivity extends AppCompatActivity{
         tv_logout = findViewById(R.id.tv_userInfo_logout);
         tv_idDelete = findViewById(R.id.tv_userInfo_idDelete);
         btn_edit = findViewById(R.id.btn_userInfo_edit);
-
-        //로고클릭
-        tv_logo = findViewById(R.id.tv_userInfo_anaforlogo);
-        tv_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserInfoActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //뒤로가기
         back = findViewById(R.id.imgv_userInfo_back);
@@ -249,18 +241,44 @@ public class UserInfoActivity extends AppCompatActivity{
             @Override
             public void afterTextChanged(Editable s) {
                 birthInput = tiedt_birth.getText().toString();
-                SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyyMMdd"); //검증할 날짜 포맷 설정
-                dateFormatParser.setLenient(false); //false일경우 처리시 입력한 값이 잘못된 형식일 시 오류가 발생
+                Date nowDate = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd"); //검증할 날짜 포맷 설정
+                String strNowDate = format.format(nowDate);
+
+                format.setLenient(false); //false일경우 처리시 입력한 값이 잘못된 형식일 시 오류가 발생
                 try {
-                    dateFormatParser.parse(birthInput); //대상 값 포맷에 적용되는지 확인
-                    til_birth.setHelperText("");
-                    til_birth.setError(null);
-                    birthChk = true;
-                } catch (ParseException e) {
+                    format.parse(birthInput); //대상 값 포맷에 적용되는지 확인
+                    String startAge = CommonMethod.AddDate(strNowDate,-14,0,0);
+                    format.parse(startAge);
+                    String endAge = CommonMethod.AddDate(strNowDate,-100,0,0);
+                    format.parse(endAge);
+
+                    if (birthInput.compareTo(startAge) <= 0 && birthInput.compareTo(endAge) >= 0){
+                        til_birth.setHelperText("");
+                        til_birth.setError(null);
+                        birthChk = true;
+                    }else if(birthInput.compareTo(endAge) < 0){
+                        til_birth.setError("정말이세요?");
+                        birthChk = false;
+                    }else if(birthInput.compareTo(startAge) > 0 && birthInput.compareTo(strNowDate) <= 0){
+                        til_birth.setHelperText(null);
+                        til_birth.setError("만14세 미만은 아나포를 이용할수 없습니다");
+                        birthChk = false;
+                    }else if(birthInput.compareTo(strNowDate) > 0){
+                        til_birth.setHelperText(null);
+                        til_birth.setError("미래에서 오셨군요^^");
+                        birthChk = false;
+                    }else{
+                        til_birth.setHelperText(null);
+                        til_birth.setError("가입할수 없는 나이입니다 죄송합니다");
+                        birthChk = false;
+                    }
+                } catch (Exception e) {
                     e.printStackTrace();
                     til_birth.setError("생년월일 입력하세요 예)19950101");
                     birthChk = false;
                 }
+
             }
         });
 
@@ -374,6 +392,7 @@ public class UserInfoActivity extends AppCompatActivity{
             }
         });
     }
+
 }
 
 

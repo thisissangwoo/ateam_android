@@ -39,7 +39,7 @@
                     android:id="@+id/tv_main_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Anafor"
+                    android:text="AnaFor"
                     android:layout_gravity="center"
                     android:textSize="28dp"
                     android:textColor="#fff"

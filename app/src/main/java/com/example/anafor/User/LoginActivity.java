@@ -143,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess() {
                 Log.d(TAG,"onSuccess: " + NaverIdLoginSDK.INSTANCE.getAccessToken());
                 Log.d(TAG,"onSuccess: " + NaverIdLoginSDK.INSTANCE.getRefreshToken());
-                
                 getNaverProfile(); //프로필메소드 호출
             }
 
@@ -177,6 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (oAuthToken != null){
                     Log.d(TAG,"카카오 토큰이 있음. 로그인 정보를 뺴오면 됨");
                     getKakaoProfile();
+
                 }else{
                     Log.d(TAG,"카카오 토큰이 없음." + throwable.toString());
                 }
