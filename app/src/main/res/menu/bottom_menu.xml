@@ -5,21 +5,21 @@
 
     <item
         android:id="@+id/btm_home"
-        android:icon="@android:drawable/presence_online"
+        android:icon="@drawable/ic_baseline_home_24"
         android:enabled="true"
         app:showAsAction="ifRoom"
         android:title="홈"/>
 
     <item
         android:id="@+id/btm_cheobang"
-        android:icon="@android:drawable/presence_online"
+        android:icon="@drawable/pill"
         android:enabled="true"
         app:showAsAction="ifRoom"
         android:title="처방전"/>
 
     <item
         android:id="@+id/btm_yagtong"
-        android:icon="@android:drawable/presence_online"
+        android:icon="@drawable/ic_baseline_medication_24"
         android:enabled="true"
         app:showAsAction="ifRoom"
         android:title="약통"/>
