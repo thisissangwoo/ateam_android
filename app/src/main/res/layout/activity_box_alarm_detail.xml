@@ -102,17 +102,6 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/edt_box_alarm_day"
-                    android:layout_gravity="center"
-                    android:layout_width="100dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:hint="요일"
-                    android:background="@drawable/edt_st"
-                    android:layout_weight="1"/>
-
-                <EditText
                     android:id="@+id/edt_box_alarm_time"
                     android:layout_gravity="center"
                     android:layout_width="100dp"
