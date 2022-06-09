@@ -30,5 +30,6 @@ public class WebMapActivity extends AppCompatActivity {
         mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);           //브라우저 캐시 허용 여부
         mWebSettings.setDomStorageEnabled(true);                                //로컬 저장소 허용 여부
         webView.loadUrl("http://192.168.0.34/anafor/iotmobilemap");
+        webView.setWebChromeClient(new WebChromeClient());
     }
 }
