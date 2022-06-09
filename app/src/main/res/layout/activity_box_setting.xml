@@ -113,6 +113,7 @@
                     android:textColor="#696aad"/>
 
                 <Switch
+                    android:id="@+id/iot_sound"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:switchMinWidth="55dp"
@@ -195,6 +196,7 @@
                     android:textColor="#696aad"/>
 
                 <Switch
+                    android:id="@+id/iot_bluetooth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:switchMinWidth="55dp"
