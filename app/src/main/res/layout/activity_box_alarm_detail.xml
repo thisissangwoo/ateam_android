@@ -97,31 +97,41 @@
                 android:text="시간 설정"/>
 
             <LinearLayout
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="150dp"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/edt_box_alarm_time"
+                <TimePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_width="100dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:hint="시"
-                    android:background="@drawable/edt_st"
-                    android:layout_weight="1"/>
+                    android:timePickerMode="spinner"
+                    android:id="@+id/time_picker" />
 
-                <EditText
-                    android:id="@+id/edt_box_alarm_minute"
-                    android:layout_gravity="center"
-                    android:layout_width="100dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:hint="분"
-                    android:background="@drawable/edt_st"
-                    android:layout_weight="1"/>
+
+
+                <!-- <EditText
+                     android:id="@+id/edt_box_alarm_time"
+                     android:layout_gravity="center"
+                     android:layout_width="100dp"
+                     android:layout_height="35dp"
+                     android:layout_marginRight="10dp"
+                     android:layout_marginLeft="10dp"
+                     android:hint="시"
+                     android:background="@drawable/edt_st"
+                     android:layout_weight="1"/>
+
+                 <EditText
+                     android:id="@+id/edt_box_alarm_minute"
+                     android:layout_gravity="center"
+                     android:layout_width="100dp"
+                     android:layout_height="35dp"
+                     android:layout_marginRight="10dp"
+                     android:layout_marginLeft="10dp"
+                     android:hint="분"
+                     android:background="@drawable/edt_st"
+                     android:layout_weight="1"/>-->
 
             </LinearLayout>
 
@@ -252,10 +262,10 @@
                         android:layout_weight="1">
 
                         <Button
-                            android:id="@+id/btn_box_detail_cancel"
+                            android:id="@+id/btn_box_detail_blue"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="취소"
+                            android:text="블루투스연결"
                             android:textColor="#696aad"
                             android:textSize="18dp"
                             android:backgroundTint="#ccc"/>
@@ -279,10 +289,15 @@
                             android:backgroundTint="#ccc"/>
 
 
+
+
+
                     </LinearLayout>
 
 
                 </LinearLayout>
+
+
 
             </LinearLayout>
 
