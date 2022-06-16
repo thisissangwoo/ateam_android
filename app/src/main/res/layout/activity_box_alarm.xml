@@ -64,7 +64,7 @@
             <TextView
                 android:id="@+id/tv_box_alarm_insert"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="30dp"
                 android:text="알람 설정하기"
                 android:layout_marginTop="10dp"
                 android:textSize="18dp"
