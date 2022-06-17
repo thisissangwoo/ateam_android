@@ -45,6 +45,7 @@ public class MyReviewActivity extends AppCompatActivity {
         selectList();
     }
 
+    //리뷰 조회
     public void selectList(){
         AskTask task = new AskTask("selectMy.review");
         task.addParam("user_id",CommonVal.loginInfo.getUser_id());

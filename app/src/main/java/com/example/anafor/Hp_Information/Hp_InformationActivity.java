@@ -132,10 +132,10 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
         pro_survey3 = findViewById(R.id.pro_surevey3);
 
         tv_review_mbtn.setVisibility(View.GONE);
-        writeTextView();  //전체 진료시간 출력
-        writeHpInfo();      //병원 정보 출력
-        initView();
-        selectReviewtList();            //리뷰 정보 조회
+        writeTextView();                        //전체 진료시간 출력
+        writeHpInfo();                          //병원 정보 출력
+        initView();                                 //카카오 맵 상세 정보
+        selectReviewtList();                //리뷰 정보 조회
 
         //더보기 버튼 클릭시 (리뷰 리스트 출력)
         tv_review_mbtn.setOnClickListener(new View.OnClickListener() {
@@ -223,13 +223,13 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
         btn_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(CommonVal.loginInfo != null){
+                if(CommonVal.loginInfo != null){            //로그인 상태
                     Intent intent = new Intent(Hp_InformationActivity.this, Hp_InformationReviewActivity.class);
-                    intent.putExtra("hp_name",infoDTO.getHp_name());
-                    intent.putExtra("hp_code",infoDTO.getHp_code());
+                    intent.putExtra("hp_name",infoDTO.getHp_name()); //병원 이름
+                    intent.putExtra("hp_code",infoDTO.getHp_code());    //병원 코드 
                     startActivityForResult(intent , 100);
                 }else{
-                    alertLogin();
+                    alertLogin();                           //비로그인 상태일때
                 }
 
             }
@@ -253,6 +253,7 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
             }
         }
 
+        //전제 진료시간 출력
         int cnt = 0;
         for(int i = 0; i<9; i++){
             if(i<6){               //월~토요일
@@ -426,6 +427,7 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
     public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
         
     }
+
     //마커 말풍선 클릭했을때
     @Override
     public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
@@ -480,6 +482,8 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
 
     }
 
+    
+    //처음에 맵 시작하는 함수
     public void initView(){
 
         KakaoMapView = new MapView(this);
@@ -489,7 +493,7 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
         mCurrentLat = gpsTracker.getLatitude();
         mCurrentLng = gpsTracker.getLongitude();
         KakaoMapView.setPOIItemEventListener(this);
-        if(infoDTO.getHp_x() != null && infoDTO.getHp_y()!=null){
+        if(infoDTO.getHp_x() != null && infoDTO.getHp_y()!=null){       //병원의 좌표가 null이 아닐때 마커를 찍음
             MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(Double.parseDouble(infoDTO.getHp_y()),Double.parseDouble(infoDTO.getHp_x()));
             KakaoMapView.setMapCenterPoint(mapPoint,true);  //지도 중심점 병원 좌표로
             KakaoMapView.setZoomLevel(1,true); //값이 작을수록 더 확대됨

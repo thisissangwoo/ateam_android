@@ -34,19 +34,24 @@ public class ReviewAllAdapter extends RecyclerView.Adapter<ReviewAllAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.reviewRating.setRating((float) reviewList.get(position).getRev_grade());
-            holder.tv_review_content.setText(reviewList.get(position).getRev_date());
             holder.tv_review_name.setText(reviewList.get(position).getUser_name()+ "님");
             holder.tv_review_content.setText(reviewList.get(position).getRev_text4());
             holder.tv_review_date.setText(reviewList.get(position).getRev_date());
             if(reviewList.get(position).getRev_text1()==0){
                      holder.tv_review_survey1.setVisibility(View.GONE);
+            }else{
+                holder.tv_review_survey1.setVisibility(View.VISIBLE);
             }
             if(reviewList.get(position).getRev_text2()==0){
-                        holder. tv_review_survey2.setVisibility(View.GONE);
-             }
+                        holder.tv_review_survey2.setVisibility(View.GONE);
+             }else{
+                holder.tv_review_survey2.setVisibility(View.VISIBLE);
+            }
             if(reviewList.get(position).getRev_text3()==1){
                         holder.tv_review_survey3.setVisibility(View.GONE);
-          }
+          }else{
+                holder.tv_review_survey3.setVisibility(View.VISIBLE);
+            }
     }
 
     @Override
@@ -64,7 +69,7 @@ public class ReviewAllAdapter extends RecyclerView.Adapter<ReviewAllAdapter.View
             tv_review_name = itemview.findViewById(R.id.tv_review_name);
             tv_review_date = itemview.findViewById(R.id.tv_review_date);
             tv_review_content = itemview.findViewById(R.id.tv_review_content);
-            tv_review_survey1 = itemview.findViewById(R.id.tv_review_survey2);
+            tv_review_survey1 = itemview.findViewById(R.id.tv_review_survey1);
             tv_review_survey3 = itemview.findViewById(R.id.tv_review_survey3);
             tv_review_survey2 = itemview.findViewById(R.id.tv_review_survey2);
             tv_review_date = itemview.findViewById(R.id.tv_review_date);
