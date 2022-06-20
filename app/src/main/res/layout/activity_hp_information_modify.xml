@@ -41,7 +41,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="30dp"
+        app:cardCornerRadius="10dp"
         app:cardUseCompatPadding="true"
         android:elevation="30dp">
 
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:text="00병원"
-                android:textSize="24dp"
+                android:textSize="22dp"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="#696aad"/>

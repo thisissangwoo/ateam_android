@@ -28,6 +28,9 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Box_Main.WebMapActivity"
+            android:exported="false" />
+        <activity
             android:name=".User.SocialJoinActivity"
             android:exported="false" />
         <activity
