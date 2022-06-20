@@ -19,6 +19,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
@@ -84,6 +85,11 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
     //푸시알림=================================================
     private TimePicker timePicker;
 
+
+    CountDownTimer CDT;
+    int drugCount = 0;
+    Handler handler;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +99,7 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
 
         registerReceiver(broadcastReceiver, new IntentFilter("sendData"));
 
+        handler = new Handler();
 
 
         timePicker=(TimePicker)findViewById(R.id.time_picker);
@@ -394,7 +401,7 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
     }
 
     public void beginListenForData() {
-        final Handler handler = new Handler();
+
         readBufferPosition = 0;                 // 버퍼 내 수신 문자 저장 위치.
         readBuffer = new byte[1024];            // 수신 버퍼.
         Log.d("beginListenForData", "1");
@@ -411,7 +418,7 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                     // InputStream.available() : 다른 스레드에서 blocking 하기 전까지 읽은 수 있는 문자열 개수를 반환함.
                     int byteAvailable = mInputStream.available();   // 수신 데이터 확인
 
-                    Log.d("byteAvailable", byteAvailable+"");
+                    Log.d("byteAvailable", byteAvailable + "");
 
                     if (byteAvailable > 0) {                        // 데이터가 수신된 경우.
                         byte[] packetBytes = new byte[byteAvailable];
@@ -425,6 +432,7 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                         for (int i = 0; i < byteAvailable; i++) {
                             byte b = packetBytes[i];
                             if (b == mCharDelimiter) {
+
                                 Log.d("b", "b if : " + (int) b);
 //                                readBuffer[readBufferPosition++] = b;
                                 byte[] encodedBytes = new byte[readBufferPosition];
@@ -451,24 +459,61 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                                         String tempData =  data.substring(0, 1);
                                         Log.d("tempData", tempData);
 
-                                        if(tempData.equals("c")){
-                                            Log.d("Main"," 거실에 등 상태는 켜진상태입니다");
-                                        }else if(tempData.equals("b")){
-                                            Log.d("Main"," 거실에 등 상태는 꺼진상태입니다");
+                                        if(tempData.equals("p")){
+                                            CDT.cancel();
+                                            Log.d("Main","약을 먹었습니다.");
+
+                                        }else if(tempData.equals("n")){
+                                            CDT = new CountDownTimer(600 * 1000, 60 * 1000) {
+                                                public void onTick(long millisUntilFinished) {
+
+                                                    //반복실행할 구문
+                                                    sendData("a");         // 상태 확인문자 우노보드로 보내기
+                                                    try {
+                                                        Thread.sleep(1000); // 잠시대기
+                                                    } catch (InterruptedException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    beginListenForData();
+                                                }
+                                                public void onFinish() {
+                                                    //마지막에 실행할 구문
+                                                    CDT.cancel();
+                                                    drugCount++;
+                                                    if(drugCount >= 3){
+                                                        CDT.cancel();
+                                                        drugCount = 0;
+                                                    }else{
+                                                        //반복실행할 구문
+                                                        sendData("g");         // 상태 확인문자 우노보드로 보내기
+                                                        try {
+                                                            Thread.sleep(1000); // 잠시대기
+                                                        } catch (InterruptedException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                        beginListenForData();
+                                                    }
+
+                                                }
+                                            }.start();
+
+                                            Log.d("Main","약을 아직 먹지 않았습니다.");
+
                                         }
 
-                                        if(tempData.equals("e")){
-                                            Log.d("Main","가스렌지 상태는 꺼진상태입니다");
-                                        }else if(tempData.equals("f")){
-                                            Log.d("Main","가스렌지  상태는 켜진상태입니다");
-                                        }
+
                                     }
 
                                 });
+
+                                break;
+
                             } else {
                                 readBuffer[readBufferPosition++] = b;
                                 Log.d("b", "b else : " + (int) b + " / readBufferPosition : " + readBufferPosition);
                             }
+
+
                         }
                     }
 
