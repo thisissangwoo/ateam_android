@@ -3,6 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.anafor">
 
+    //알람 노티피케이션
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <!--BLUETOOTH : 커넥션 요구, 커넥션 수락, 데이터 전송 등의 블루투스 통신을 하기 위해 필요한 권한
+   BLUETOOTH_ADMIN : 디바이스 검색 시작, 블루투스 설정을 조작하기 위해 필요-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 카카오맵 api -->
@@ -131,6 +140,8 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="8b43a4029fe7a1169d57ad185993d4f0" />
+
+        <receiver android:name=".Box_Alarm.AlarmReceiver"/>
     </application>
 
 </manifest>

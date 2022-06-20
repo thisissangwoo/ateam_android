@@ -104,9 +104,10 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 idInput = tiedt_id.getText().toString();
-                if(!idInput.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(idInput).matches()) {
+                if(!idInput.isEmpty() && Pattern.matches("^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$",idInput)) {
                     til_id.setHelperText("중복확인 버튼을 눌러주세요");
                     til_id.setError(null);
+                    btn_idChk.setEnabled(true);
                     btn_idChk.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -124,10 +125,12 @@ public class JoinActivity extends AppCompatActivity {
                                 til_id.setHelperText("이메일인증 버튼을 눌러주세요");
                                 til_id.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
                                 til_id.setError(null);
+                                btn_idChk.setEnabled(true);
                                 btn_code.setEnabled(true);
                             }else{
                                 til_id.setError("등록된 이메일입니다 다시 입력하세요");
                                 til_id.setHelperText(null);
+                                btn_idChk.setEnabled(true);
                                 btn_code.setEnabled(false);
                                 idChk = false;
                             }
@@ -136,6 +139,7 @@ public class JoinActivity extends AppCompatActivity {
                 }else{
                     til_id.setError("아이디는 이메일 형식으로 입력해주세요");
                     til_id.setHelperText(null);
+                    btn_idChk.setEnabled(false);
                     btn_code.setEnabled(false);
                     idChk = false;
                 }
@@ -185,6 +189,7 @@ public class JoinActivity extends AppCompatActivity {
         });
 
 
+
         // 2.비밀번호
         tiedt_pw.addTextChangedListener(new TextWatcher() {
             @Override
@@ -198,7 +203,8 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 pwInput = tiedt_pw.getText().toString();
-                if(!pwInput.isEmpty() && Pattern.matches("^[a-zA-Z0-9]{8,16}$", pwInput)){
+                String pwPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z[0-9]]{8,16}$";
+                if(!pwInput.isEmpty() && Pattern.matches(pwPattern, pwInput)){
                     til_pw.setHelperText("사용 가능한 비밀번호입니다.");
                     til_pw.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
                     pwChk = true;
@@ -213,6 +219,7 @@ public class JoinActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         // 3.비밀번호확인
         tiedt_pwChk.addTextChangedListener(new TextWatcher() {
@@ -274,7 +281,7 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 telInput = tiedt_tel.getText().toString();
-                if (!telInput.isEmpty() && Pattern.matches("\\d{11}", telInput)) {
+                if (!telInput.isEmpty() && Pattern.matches("^01([0|1|6|7|8|9])([0-9]{3,4})([0-9]{4})$", telInput)) {
                     til_tel.setHelperText(" ");
                     til_tel.setError(null);
                     telChk = true;
@@ -411,4 +418,3 @@ public class JoinActivity extends AppCompatActivity {
         });
     }
 }
-
