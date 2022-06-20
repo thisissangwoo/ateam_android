@@ -59,6 +59,7 @@ public class ChoiceActivity extends AppCompatActivity {
         list = gson.fromJson(CommonMethod.executeAskGet(task),new TypeToken<ArrayList<ChoiceDTO>>(){}.getType());
         if(list.size()==0){
             tv_heart.setVisibility(View.VISIBLE);
+            recv_my_choice_list.setVisibility(View.INVISIBLE);
         }else{
             adapter = new ChoiceAdapter(getLayoutInflater(), list,context);
             recv_my_choice_list.setAdapter(adapter);

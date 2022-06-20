@@ -65,7 +65,7 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
     int flag = 0;               //상태 변수
     boolean heartclick = false; //조회 여부 확인 (default)
     LinearProgressIndicator pro_survey1, pro_survey2, pro_survey3;
-    ReviewTotalVO totalReview ;
+    ReviewTotalVO totalReview = null ;
     ArrayList<ReviewVO> reviewList;
     MapView KakaoMapView;
     ViewGroup mMapViewContainer;
@@ -355,7 +355,7 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
                 pro_survey3.setProgressCompat((int)(totalReview.getSurvey3rate()*100.0),false);
                 //해당 병원 전체 리뷰 조회
             }else{
-                tv_review_mbtn.setVisibility(View.INVISIBLE);
+                tv_review_mbtn.setVisibility(View.GONE);
             }
         getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
     }

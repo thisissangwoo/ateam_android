@@ -52,6 +52,7 @@ public class MyReviewActivity extends AppCompatActivity {
         list = gson.fromJson(CommonMethod.executeAskGet(task),new TypeToken<ArrayList<ReviewVO>>(){}.getType());
         if(list.size()==0){
             tv_review.setVisibility(View.VISIBLE);
+            recv_my_review_list.setVisibility(View.INVISIBLE);
         }else{
             MyReviewAdapter adapter = new MyReviewAdapter(getLayoutInflater(), list,context);
             recv_my_review_list.setAdapter(adapter);
