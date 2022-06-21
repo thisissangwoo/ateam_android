@@ -72,17 +72,6 @@
                 android:layout_weight="8"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/tv_box_alarm_edit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="편집"
-                android:gravity="center"
-                android:layout_weight="2"
-                android:layout_marginTop="10dp"
-                android:textSize="16dp"
-                android:textColor="#696aad"
-                android:textStyle="bold"/>
         </LinearLayout>
 
         <View
@@ -91,11 +80,18 @@
             android:background="#ccc"
             android:layout_marginTop="8dp"/>
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/swipe">
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/recv_box_alarm"/>
 
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TimePicker;
@@ -38,6 +39,7 @@ import com.example.anafor.Hp_Information.Hp_InformationActivity;
 import com.example.anafor.Hp_Information.Hp_InformationReviewActivity;
 import com.example.anafor.MainActivity;
 import com.example.anafor.R;
+import com.example.anafor.User.UserVO;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
@@ -50,12 +52,16 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Box_Alarm_detailActivity extends AppCompatActivity {
-
+    
+    private static final String TAG = "알람저장";
+    
     ImageView imgv_box_detail_back;
     Button btn_box_detail_blue, btn_box_detail_insert;
-    EditText edt_box_alarm_content, edt_box_alarm_day, edt_box_alarm_time, edt_box_alarm_minute;
+    EditText edt_box_alarm_content;
     CheckBox btn_box_alarm_location1, btn_box_alarm_location2, btn_box_alarm_location3, btn_box_alarm_location4;
-    Context context;
+    String case_number,box_time,box_minute,case_time;
+    IoTVO vo;
+
     //블루투스======================================
     private ActivityResultLauncher<Void> overlayPermissionLauncher;
 
@@ -84,6 +90,7 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
 
     //푸시알림=================================================
     private TimePicker timePicker;
+    private Object UserVO;
 
 
     CountDownTimer CDT;
@@ -96,8 +103,8 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_alarm_detail);
 
-
         registerReceiver(broadcastReceiver, new IntentFilter("sendData"));
+
 
         handler = new Handler();
 
@@ -111,8 +118,6 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
         btn_box_detail_blue = findViewById(R.id.btn_box_detail_blue);
         btn_box_detail_insert = findViewById(R.id.btn_box_detail_insert);
         edt_box_alarm_content = findViewById(R.id.edt_box_alarm_content);
-        //edt_box_alarm_time = findViewById(R.id.edt_box_alarm_time);
-        //edt_box_alarm_minute = findViewById(R.id.edt_box_alarm_minute);
 
         imgv_box_detail_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +140,100 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
 
         //알람시간에 보내기=================================================================================
 
+        btn_box_alarm_location1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    case_number="1";
+                    btn_box_alarm_location2.setChecked(false);
+                    btn_box_alarm_location3.setChecked(false);
+                    btn_box_alarm_location4.setChecked(false);
+                }
+            }
+        });
+
+        btn_box_alarm_location2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    case_number="2";
+                    btn_box_alarm_location1.setChecked(false);
+                    btn_box_alarm_location3.setChecked(false);
+                    btn_box_alarm_location4.setChecked(false);
+                }
+            }
+        });
+
+        btn_box_alarm_location3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    case_number="3";
+                    btn_box_alarm_location1.setChecked(false);
+                    btn_box_alarm_location2.setChecked(false);
+                    btn_box_alarm_location4.setChecked(false);
+                }
+            }
+        });
+
+        btn_box_alarm_location4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    case_number="4";
+                    btn_box_alarm_location1.setChecked(false);
+                    btn_box_alarm_location2.setChecked(false);
+                    btn_box_alarm_location3.setChecked(false);
+                }
+            }
+        });
+
+
+        //시간설정
+        timePicker.setIs24HourView(false);
+
+        timePicker.setHour(0);
+        timePicker.setMinute(0);
+        case_time = "오전00시00분";
+
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                //캘린더
+                Calendar calendar = Calendar.getInstance();
+                //타임피커에서 설정한 시간을 캘린더에 저장
+                hourOfDay=timePicker.getHour();
+                minute = timePicker.getMinute();
+                calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                calendar.set(Calendar.MINUTE,minute);
+                String ampm = "오전";
+
+                if (hourOfDay > 12) {
+                    hourOfDay = hourOfDay - 12;
+                    ampm = "오후";
+                    if (hourOfDay <= 10) {
+                        box_time = "0" + hourOfDay;
+                    }
+                }else if(hourOfDay == 12){
+                    box_time = hourOfDay+"";
+                    ampm ="오후";
+                }else{
+                    ampm = "오전";
+                    if (hourOfDay <=10){
+                        box_time = "0"+ hourOfDay;
+                    }
+                }
+
+                if (minute >= 10)
+                    box_minute = minute + "";
+                else
+                    box_minute = "0" + minute;
+
+                case_time =  ampm + box_time + "시" + box_minute + "분";
+            }
+        });
+
+
 
         //권한 허용 부분 저장 버튼 클릭
         btn_box_detail_insert.setOnClickListener(v -> {
@@ -144,71 +243,28 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
             }else{
                 Toast.makeText(Box_Alarm_detailActivity.this, "권한을 허용해주세요.", Toast.LENGTH_SHORT).show();
             }
-        });
 
+            //유효성검사
+            if (edt_box_alarm_content.getText().toString().length() == 0 || edt_box_alarm_content.getText().toString().equals(" ")) {
+                Toast.makeText(getApplicationContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                edt_box_alarm_content.requestFocus();
+            }else if(case_time == null){
+                Toast.makeText(getApplicationContext(), "시간을 설정해주세요.", Toast.LENGTH_SHORT).show();
+            }else if(case_number == null){
+                Toast.makeText(getApplicationContext(), "알약의 위치를 지정해주세요.", Toast.LENGTH_SHORT).show();
+            }else{
+                AskTask task = new AskTask("/iot_insert");
+                task.addParam("user_id", CommonVal.loginInfo.getUser_id());
+                task.addParam("memo",edt_box_alarm_content.getText().toString());
+                task.addParam("case_num",case_number);
+                task.addParam("case_time",case_time);
+                CommonMethod.executeAskGet(task);
 
-
-
-        /*btn_box_detail_insert.setOnClickListener(new View.OnClickListener() {
-
-            Gson gson = new Gson();
-            Box_AlarmDTO dto = new Box_AlarmDTO();
-
-
-
-
-
-
-
-            @Override
-            public void onClick(View v) {
-                if (edt_box_alarm_content.getText().toString().length() == 0 || edt_box_alarm_content.getText().toString().equals(" ")){
-                    Toast.makeText(getApplicationContext(), "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    edt_box_alarm_content.requestFocus();
-
-                }else if(edt_box_alarm_time.getText().toString().length() == 0 || edt_box_alarm_time.getText().toString().equals(" ")){
-                    Toast.makeText(getApplicationContext(), "시간을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    edt_box_alarm_time.requestFocus();
-
-                }else if(edt_box_alarm_minute.getText().toString().length() == 0 || edt_box_alarm_minute.getText().toString().equals(" ")){
-                    Toast.makeText(getApplicationContext(), "분을 입력해주세요.", Toast.LENGTH_SHORT).show();
-                    edt_box_alarm_minute.requestFocus();
-
-                }else{
-
-                    AskTask task = new AskTask("/iot_insert");
-                    //1번이 선택 됐을 때 date 1 에 담아야함 시간을
-                    if (btn_box_alarm_location1.isChecked()){
-                        dto.setCase_date1(edt_box_alarm_time.getText() + "시" + edt_box_alarm_minute.getText() + "분");
-                        dto.setMemo(edt_box_alarm_content.getText() + "");
-                        dto.setCase_num1(1);
-                        dto.setUser_id(CommonVal.loginInfo.getUser_id());
-
-                    }else if (btn_box_alarm_location2.isChecked()) {
-                        dto.setCase_date2(edt_box_alarm_time.getText() + "/" + edt_box_alarm_minute.getText());
-                        dto.setMemo(edt_box_alarm_content.getText() + "");
-                        dto.setCase_num2(1);
-                        dto.setUser_id(CommonVal.loginInfo.getUser_id());
-                    }else if (btn_box_alarm_location3.isChecked()) {
-                        dto.setCase_date3(edt_box_alarm_time.getText() + "/" + edt_box_alarm_minute.getText());
-                        dto.setMemo(edt_box_alarm_content.getText() + "");
-                        dto.setCase_num3(1);
-                        dto.setUser_id(CommonVal.loginInfo.getUser_id());
-                    }else if (btn_box_alarm_location4.isChecked()) {
-                        dto.setCase_date4(edt_box_alarm_time.getText() + "/" + edt_box_alarm_minute.getText());
-                        dto.setMemo(edt_box_alarm_content.getText() + "");
-                        dto.setCase_num4(1);
-                        dto.setUser_id(CommonVal.loginInfo.getUser_id());
-                    }
-                    task.addParam("iot_insert", gson.toJson(dto));
-                    CommonMethod.executeAskGet(task);
-                    Toast.makeText(getApplicationContext(), "알람이 등록되었습니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Box_Alarm_detailActivity.this, Box_AlarmActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(Box_Alarm_detailActivity.this, Box_AlarmActivity.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "알람이 등록되었습니다.", Toast.LENGTH_SHORT).show();
             }
-        });*/
-
+        });
     }//OnCreate
 
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -266,7 +322,7 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                     AlarmManager.INTERVAL_DAY, alarmIntent);
 
-            Toast.makeText(Box_Alarm_detailActivity.this,"알람이 저장되었습니다.",Toast.LENGTH_LONG).show();
+/*            Toast.makeText(Box_Alarm_detailActivity.this,"알람이 저장되었습니다.",Toast.LENGTH_LONG).show();*/
         }//if
 
     }//setAlarm
@@ -572,6 +628,5 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
     }
 
 /////Bluethooth/////////////////////////////////////////////////////////////////
-
 
 }
