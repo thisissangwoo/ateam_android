@@ -61,18 +61,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginLeft="13dp"
             android:layout_marginRight="13dp"/>
-
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_review"
-            android:text="리뷰를 작성해보세요"
-            android:gravity="center"
-            android:textSize="20dp"
-            android:textColor="#232323"
-            android:visibility="gone"/>
-
+    
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
