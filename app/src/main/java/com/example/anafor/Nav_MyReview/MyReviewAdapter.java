@@ -30,6 +30,14 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
     ReviewVO vo;
     Context context;
 
+    public ArrayList<ReviewVO> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<ReviewVO> list) {
+        this.list = list;
+    }
+
     public MyReviewAdapter(LayoutInflater inflater, ArrayList<ReviewVO> list, Context context) {
         this.inflater = inflater;
         this.list = list;

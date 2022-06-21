@@ -344,23 +344,26 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
                 AskTask  task2 = new AskTask("selectAll.review");
                 task2.addParam("code",infoDTO.getHp_code());
                 reviewList = gson.fromJson(CommonMethod.executeAskGet(task2), new TypeToken<ArrayList<ReviewVO>>() {}.getType());
-                tv_review_total.setText("리뷰  "+totalReview.getTotalcnt()+" 개");             //총 리뷰 수
-                tv_total_survey1.setText("("+totalReview.getSurvey1cnt()+")");
-                tv_total_survey2.setText("("+totalReview.getSurvey2cnt()+")");
-                tv_total_survey3.setText("("+totalReview.getSurvey3cnt()+")");
-                tv_review_rate.setText(totalReview.getTotalrate()+" 점");
-                tv_review_mbtn.setVisibility(View.VISIBLE);
-                pro_survey1.setProgressCompat((int)(totalReview.getSurvey1rate()*100.0),false);
-                pro_survey2.setProgressCompat((int)(totalReview.getSurvey2rate()*100.0),false);
-                pro_survey3.setProgressCompat((int)(totalReview.getSurvey3rate()*100.0),false);
-                //해당 병원 전체 리뷰 조회
-            }else{
-                tv_review_mbtn.setVisibility(View.GONE);
+                countReview();            //해당 병원 전체 리뷰 조회
             }
         getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
     }
-
-
+    public void countReview(){
+        tv_review_total.setText("리뷰  "+totalReview.getTotalcnt()+" 개");             //총 리뷰 수
+        tv_total_survey1.setText("("+totalReview.getSurvey1cnt()+")");
+        tv_total_survey2.setText("("+totalReview.getSurvey2cnt()+")");
+        tv_total_survey3.setText("("+totalReview.getSurvey3cnt()+")");
+        tv_review_rate.setText(totalReview.getTotalrate()+" 점");
+        pro_survey1.setProgressCompat((int)(totalReview.getSurvey1rate()*100.0),false);
+        pro_survey2.setProgressCompat((int)(totalReview.getSurvey2rate()*100.0),false);
+        pro_survey3.setProgressCompat((int)(totalReview.getSurvey3rate()*100.0),false);
+        if(totalReview.getTotalcnt() == 0){                 //더보기 버튼 숨김 처리
+            tv_review_mbtn.setVisibility(View.GONE);
+        }else{
+            tv_review_mbtn.setVisibility(View.VISIBLE);
+        }
+    }
+    
     @Override
     public void onBackPressed() {
 
