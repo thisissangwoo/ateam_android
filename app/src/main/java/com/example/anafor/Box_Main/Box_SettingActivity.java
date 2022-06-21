@@ -1,17 +1,8 @@
 package com.example.anafor.Box_Main;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,7 +10,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.anafor.R;
 
@@ -33,6 +24,7 @@ import java.util.UUID;
 public class Box_SettingActivity extends AppCompatActivity {
 
     ImageView imgv_box_setting_back;
+    TextView tv_iotmap;                     //웹뷰로 이동할 텍스트뷰
     Switch iot_bluetooth, iot_sound;
 
 
@@ -42,6 +34,14 @@ public class Box_SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_setting);
+        tv_iotmap = findViewById(R.id.tv_iotmap);
+        tv_iotmap.setOnClickListener(new View.OnClickListener() {   //클릭시 웹뷰로 이동
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Box_SettingActivity.this, WebMapActivity.class);
+                startActivity(intent);
+            }
+        });
 
         imgv_box_setting_back = findViewById(R.id.imgv_box_setting_back);
         iot_bluetooth = findViewById(R.id.iot_bluetooth);
