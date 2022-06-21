@@ -59,7 +59,8 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
     Button btn_box_detail_blue, btn_box_detail_insert;
     EditText edt_box_alarm_content;
     CheckBox btn_box_alarm_location1, btn_box_alarm_location2, btn_box_alarm_location3, btn_box_alarm_location4;
-    String case_number,box_minute,case_time;
+    String case_number,box_time,box_minute,case_time;
+    IoTVO vo;
 
     //블루투스======================================
     private ActivityResultLauncher<Void> overlayPermissionLauncher;
@@ -188,6 +189,12 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
         });
 
 
+        //시간설정
+        timePicker.setIs24HourView(false);
+
+        timePicker.setHour(0);
+        timePicker.setMinute(0);
+        case_time = "오전00시00분";
 
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
@@ -199,13 +206,22 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                 minute = timePicker.getMinute();
                 calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
                 calendar.set(Calendar.MINUTE,minute);
-                String ampm;
+                String ampm = "오전";
 
-                if (hourOfDay >= 12){
-                    hourOfDay = hourOfDay-12;
-                    ampm = "pm";
+                if (hourOfDay > 12) {
+                    hourOfDay = hourOfDay - 12;
+                    ampm = "오후";
+                    if (hourOfDay <= 10) {
+                        box_time = "0" + hourOfDay;
+                    }
+                }else if(hourOfDay == 12){
+                    box_time = hourOfDay+"";
+                    ampm ="오후";
                 }else{
-                    ampm = "am";
+                    ampm = "오전";
+                    if (hourOfDay <=10){
+                        box_time = "0"+ hourOfDay;
+                    }
                 }
 
                 if (minute >= 10)
@@ -213,7 +229,7 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                 else
                     box_minute = "0" + minute;
 
-                case_time = hourOfDay + "시" + box_minute + "분" + ampm;
+                case_time =  ampm + box_time + "시" + box_minute + "분";
             }
         });
 

@@ -39,7 +39,7 @@ public class Box_Alarm_modifyActivity extends Activity{
     TimePicker time_picker_boxAlarm;
     CheckBox checkBox_boxAlarm_number1,checkBox_boxAlarm_number2,checkBox_boxAlarm_number3,checkBox_boxAlarm_number4;
     Button btn_boxAlarm_delete,btn_boxAlarm_modify;
-    String case_num,box_time,box_minute,case_time;
+    String case_num,box_time,box_minute,case_time,ampm;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -90,7 +90,24 @@ public class Box_Alarm_modifyActivity extends Activity{
         //시간설정
         time_picker_boxAlarm.setIs24HourView(false);
         case_time = vo.getCase_time();
-        Log.d(TAG, "onCreate: "+case_time);
+        Log.d(TAG, "원래저장된시간 : " + case_time);
+
+        ampm =  case_time.substring(0,2);
+        int h = Integer.parseInt(case_time.substring(2,4));
+        int m = Integer.parseInt(case_time.substring(5,7));
+
+        Log.d(TAG, "ampm: " + ampm);
+        Log.d(TAG, "h: " + h);
+        Log.d(TAG, "m: " + m);
+
+        if (ampm.equals("오후")){
+            if (h !=12){
+                h = h+ 12;
+            }
+        }
+
+        time_picker_boxAlarm.setHour(h);
+        time_picker_boxAlarm.setMinute(m);
 
         //위치설정
         checkBox_boxAlarm_number1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -150,17 +167,18 @@ public class Box_Alarm_modifyActivity extends Activity{
                 hourOfDay=time_picker_boxAlarm.getHour();
                 minute = time_picker_boxAlarm.getMinute();
                 calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                calendar.set(Calendar.MINUTE,minute);
-                String ampm;
 
-                if (hourOfDay >= 12){
-                    hourOfDay = hourOfDay-12;
-                    ampm = "pm";
-                    if (hourOfDay <=10){
-                        box_time = "0"+ hourOfDay;
+                if (hourOfDay > 12) {
+                    hourOfDay = hourOfDay - 12;
+                    ampm = "오후";
+                    if (hourOfDay <= 10) {
+                        box_time = "0" + hourOfDay;
                     }
+                }else if(hourOfDay == 12){
+                    box_time = hourOfDay+"";
+                    ampm ="오후";
                 }else{
-                    ampm = "am";
+                    ampm = "오전";
                     if (hourOfDay <=10){
                         box_time = "0"+ hourOfDay;
                     }
@@ -171,7 +189,7 @@ public class Box_Alarm_modifyActivity extends Activity{
                 else
                     box_minute = "0" + minute;
 
-                case_time = box_time + "시" + box_minute + "분" + ampm;
+                case_time = ampm + box_time + "시" + box_minute + "분";
 
             }
         });

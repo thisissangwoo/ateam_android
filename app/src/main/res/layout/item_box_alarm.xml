@@ -32,31 +32,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="칸 번호 : "
+                        android:text="약 메모 : "
                         android:textColor="#000"
                         android:gravity="right"
                         android:textSize="15dp"/>
                     <TextView
-                        android:id="@+id/tv_box_alarm_number"
+                        android:id="@+id/tv_box_alarm_memo"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="2"
-                        android:text="1번"
+                        android:text="비타민,루테인"
                         android:textColor="#000"
                         android:textSize="15dp"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -79,21 +79,20 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="약 메모 : "
+                        android:text="칸 번호 : "
                         android:textColor="#000"
                         android:gravity="right"
                         android:textSize="15dp"/>
                     <TextView
-                        android:id="@+id/tv_box_alarm_memo"
+                        android:id="@+id/tv_box_alarm_number"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="2"
-                        android:text="비타민,루테인"
+                        android:text="1번"
                         android:textColor="#000"
                         android:textSize="15dp"/>
                 </LinearLayout>
