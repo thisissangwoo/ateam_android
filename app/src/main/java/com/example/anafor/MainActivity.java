@@ -153,7 +153,11 @@ public class MainActivity extends AppCompatActivity {
 
                 }else if (item.getItemId() == R.id.btm_yagtong){
                     pic_Slid.setVisibility(View.GONE);
-                    changeFragment(new Box_MainFragment());
+                    if(CommonVal.loginInfo == null){
+                        alertLogin();
+                    }else {
+                        changeFragment(new Box_MainFragment());
+                    }
                 }
                 return true;
             }
