@@ -1,6 +1,10 @@
 package com.example.anafor.Box_Alarm;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anafor.R;
@@ -18,25 +23,51 @@ import java.util.ArrayList;
 public class Box_AlarmAdapter extends RecyclerView.Adapter<Box_AlarmAdapter.ViewHolder>{
 
     LayoutInflater inflater;
-    ArrayList<Box_AlarmDTO> list;
+    ArrayList<IoTVO> list;
+    Context context;
 
-    public Box_AlarmAdapter(LayoutInflater inflater, ArrayList<Box_AlarmDTO> list) {
+    public ArrayList<IoTVO> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<IoTVO> list) {
+        this.list = list;
+    }
+
+    public Box_AlarmAdapter(LayoutInflater inflater, ArrayList<IoTVO> list, Context context) {
         this.inflater = inflater;
         this.list = list;
+        this.context = context;
+    }
+
+    public Box_AlarmAdapter(LayoutInflater inflater, ArrayList<IoTVO> list) {
+        this.inflater = inflater;
+        this.list = list;
+    }
+
+    public Box_AlarmAdapter(LayoutInflater inflater) {
+        this.inflater = inflater;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = inflater.inflate(R.layout.item_box_alarm, parent, false);
-        return new ViewHolder(itemView);
+        return new ViewHolder(inflater.inflate(R.layout.item_box_alarm, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tv_box_alarm_title.setText(list.get(position).getMemo());
-        holder.tv_box_alarm_location.setText(list.get(position).getCase_num1());
-        holder.tv_box_alarm_date.setText(list.get(position).getCase_date1());
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        holder.tv_box_alarm_number.setText(list.get(position).getCase_num());
+        holder.tv_box_alarm_time.setText(list.get(position).getCase_time());
+        holder.tv_box_alarm_memo.setText(list.get(position).getMemo());
+        holder.card_box_alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,Box_Alarm_modifyActivity.class);
+                intent.putExtra("vo",  list.get(position));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -47,42 +78,17 @@ public class Box_AlarmAdapter extends RecyclerView.Adapter<Box_AlarmAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        View itemview;
-        TextView tv_box_alarm_title, tv_box_alarm_location, tv_box_alarm_date;
+        TextView tv_box_alarm_number,tv_box_alarm_time,tv_box_alarm_memo;
+        ImageView imgv_box_alarm_pill;
+        CardView card_box_alarm;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.itemview = itemView;
-
-            tv_box_alarm_title = itemview.findViewById(R.id.tv_box_alarm_title);
-            tv_box_alarm_location = itemview.findViewById(R.id.tv_box_alarm_location);
-            tv_box_alarm_date = itemview.findViewById(R.id.tv_box_alarm_date);
-            int count, checked;
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                        builder.setTitle("원하시는 항목을 선택해주세요.");
-                        builder.setSingleChoiceItems(new String[]{"수정", "삭제"}, 2, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // setSingleChoiceItems 2개인 각각의 아이템 중
-                                // 0 번째 == 수정, 1 번째 == 삭제
-                                if (which == 0){
-
-                                    dialog.dismiss();
-                                }else if (which == 1){
-
-                                    dialog.dismiss();
-                                }
-                            }
-                        }).show();
-                    }
-                    return;
-                }
-            });
+            this.tv_box_alarm_number = itemView.findViewById(R.id.tv_box_alarm_number);
+            this.tv_box_alarm_time = itemView.findViewById(R.id.tv_box_alarm_time);
+            this.tv_box_alarm_memo = itemView.findViewById(R.id.tv_box_alarm_memo);
+            this.imgv_box_alarm_pill = itemView.findViewById(R.id.imgv_box_alarm_pill);
+            this.card_box_alarm = itemView.findViewById(R.id.card_box_alarm);
         }
     }
 }
