@@ -88,10 +88,10 @@ public class Box_Alarm_modifyActivity extends Activity{
         }
 
         //시간설정
-        time_picker_boxAlarm.setIs24HourView(false);
+        time_picker_boxAlarm.setIs24HourView(true);
         case_time = vo.getCase_time();
         Log.d(TAG, "원래저장된시간 : " + case_time);
-
+/*
         ampm =  case_time.substring(0,2);
         int h = Integer.parseInt(case_time.substring(2,4));
         int m = Integer.parseInt(case_time.substring(5,7));
@@ -104,7 +104,10 @@ public class Box_Alarm_modifyActivity extends Activity{
             if (h !=12){
                 h = h+ 12;
             }
-        }
+        }*/
+
+        int h = Integer.parseInt(case_time.substring(0,2));
+        int m = Integer.parseInt(case_time.substring(3,5));
 
         time_picker_boxAlarm.setHour(h);
         time_picker_boxAlarm.setMinute(m);
@@ -167,8 +170,9 @@ public class Box_Alarm_modifyActivity extends Activity{
                 hourOfDay=time_picker_boxAlarm.getHour();
                 minute = time_picker_boxAlarm.getMinute();
                 calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                calendar.set(Calendar.MINUTE,minute);
 
-                if (hourOfDay > 12) {
+/*                if (hourOfDay > 12) {
                     hourOfDay = hourOfDay - 12;
                     ampm = "오후";
                     if (hourOfDay <= 10) {
@@ -182,6 +186,12 @@ public class Box_Alarm_modifyActivity extends Activity{
                     if (hourOfDay <=10){
                         box_time = "0"+ hourOfDay;
                     }
+                }*/
+
+                if (hourOfDay >= 10){
+                    box_time = hourOfDay + "";
+                }else {
+                    box_time = "0" + hourOfDay;
                 }
 
                 if (minute >= 10)
@@ -189,8 +199,8 @@ public class Box_Alarm_modifyActivity extends Activity{
                 else
                     box_minute = "0" + minute;
 
-                case_time = ampm + box_time + "시" + box_minute + "분";
-
+                case_time = box_time + "시" + box_minute + "분";
+                Log.d(TAG, "case_time : " + case_time);
             }
         });
 
@@ -222,7 +232,10 @@ public class Box_Alarm_modifyActivity extends Activity{
                     task.addParam("case_time",case_time);
                     CommonMethod.executeAskGet(task);
                     Intent intent = new Intent(Box_Alarm_modifyActivity.this, Box_AlarmActivity.class);
+                    intent.putExtra("finish", true);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    finish();
                     Toast.makeText(Box_Alarm_modifyActivity.this, "수정되었습니다", Toast.LENGTH_SHORT).show();
                 }
             }

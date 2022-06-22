@@ -190,11 +190,11 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
 
 
         //시간설정
-        timePicker.setIs24HourView(false);
+        timePicker.setIs24HourView(true);
 
         timePicker.setHour(0);
         timePicker.setMinute(0);
-        case_time = "오전00시00분";
+        case_time = "00시00분";
 
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
@@ -206,11 +206,14 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                 minute = timePicker.getMinute();
                 calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
                 calendar.set(Calendar.MINUTE,minute);
-                String ampm = "오전";
+
+
+/*                String ampm = "오전";
+
 
                 if (hourOfDay > 12) {
                     hourOfDay = hourOfDay - 12;
-                    ampm = "오후";
+                   ampm = "오후";
                     if (hourOfDay <= 10) {
                         box_time = "0" + hourOfDay;
                     }
@@ -223,13 +226,21 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                         box_time = "0"+ hourOfDay;
                     }
                 }
+*/
 
-                if (minute >= 10)
+                if (hourOfDay >= 10){
+                    box_time = hourOfDay + "";
+                }else {
+                    box_time = "0" + hourOfDay;
+                }
+
+                if (minute >= 10) {
                     box_minute = minute + "";
-                else
+                }else {
                     box_minute = "0" + minute;
+                }
 
-                case_time =  ampm + box_time + "시" + box_minute + "분";
+                case_time = box_time+ "시" + box_minute + "분";
             }
         });
 
@@ -261,7 +272,10 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                 CommonMethod.executeAskGet(task);
 
                 Intent intent = new Intent(Box_Alarm_detailActivity.this, Box_AlarmActivity.class);
+                intent.putExtra("finish", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
                 Toast.makeText(getApplicationContext(), "알람이 등록되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
