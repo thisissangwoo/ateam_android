@@ -208,7 +208,7 @@ public class Box_Alarm_modifyActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Gson gson = new Gson();
-                String data = gson.toJson(vo.getBox_id());
+                String data = gson.toJson(vo.getNo());
                 AskTask task = new AskTask("iot_delete");
                 task.addParam("box_id", data);
                 CommonMethod.executeAskGet(task);
@@ -229,7 +229,7 @@ public class Box_Alarm_modifyActivity extends Activity{
                     edt_boxAlarm_content.requestFocus();
                 }else {
                     AskTask task = new AskTask("iot_modify");
-                    task.addParam("box_id", vo.getBox_id() + "");
+                    task.addParam("box_id", vo.getNo() + "");
                     task.addParam("memo", edt_boxAlarm_content.getText().toString());
                     task.addParam("case_num", case_num);
                     task.addParam("case_time",case_time);
