@@ -140,19 +140,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
 
                     <LinearLayout
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <CheckBox
                             android:id="@+id/checkBox_boxAlarm_number1"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:background="#696aad"
                             android:textColor="@color/white"
                             android:text="1번"/>
@@ -163,13 +164,13 @@
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <CheckBox
                             android:id="@+id/checkBox_boxAlarm_number2"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:background="#696aad"
                             android:textColor="@color/white"
                             android:text="2번"/>
@@ -188,13 +189,13 @@
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <CheckBox
                             android:id="@+id/checkBox_boxAlarm_number3"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:background="#696aad"
                             android:textColor="@color/white"
                             android:text="3번"/>
@@ -206,13 +207,13 @@
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
 
                         <CheckBox
                             android:id="@+id/checkBox_boxAlarm_number4"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:background="#696aad"
                             android:textColor="@color/white"
                             android:text="4번"/>
