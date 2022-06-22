@@ -214,7 +214,10 @@ public class Box_Alarm_modifyActivity extends Activity{
                 CommonMethod.executeAskGet(task);
 
                 Intent i=new Intent(Box_Alarm_modifyActivity.this, Box_AlarmActivity.class);
+                i.putExtra("finish", true);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
+                finish();
             }
         });
 

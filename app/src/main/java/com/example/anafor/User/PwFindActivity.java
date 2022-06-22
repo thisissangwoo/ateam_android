@@ -1,5 +1,6 @@
 package com.example.anafor.User;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -94,12 +95,15 @@ public class PwFindActivity extends AppCompatActivity {
     public void showDialog(){
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(PwFindActivity.this)
                 .setTitle("알림")
-                .setMessage("해당 이메일로 임시비밀번호를 발급했습니다. 메인페이지로 이동합니다.")
+                .setMessage("해당 이메일로 임시비밀번호를 발급했습니다. 로그인페이지로 이동합니다.")
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         finish();
-                        Intent intent = new Intent(PwFindActivity.this,MainActivity.class);
+                        Intent intent = new Intent(PwFindActivity.this,LoginActivity.class);
+                        intent.putExtra("finish", true);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                        finish();
                     }
                 });
         AlertDialog msgDlg = msgBuilder.create();
