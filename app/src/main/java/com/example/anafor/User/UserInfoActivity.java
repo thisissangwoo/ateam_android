@@ -344,7 +344,10 @@ public class UserInfoActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserInfoActivity.this,UserDeleteActivity.class);
+                intent.putExtra("finish", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -387,7 +390,10 @@ public class UserInfoActivity extends AppCompatActivity{
                 CommonMethod.executeAskGet(task);
 
                 Intent intent = new Intent(UserInfoActivity.this,MainActivity.class);
+                intent.putExtra("finish", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
                 Toast.makeText(UserInfoActivity.this,"회원정보가 수정되었습니다", Toast.LENGTH_SHORT).show();
             }
         });
