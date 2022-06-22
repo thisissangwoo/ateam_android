@@ -53,14 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getHashKey();
 
-        //로고클릭-메인이동
-        findViewById(R.id.tv_login_anaforlogo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
         //뒤로가기-메인이동
         findViewById(R.id.imgv_login_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +81,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this,PwFindActivity.class);
+                intent.putExtra("finish", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
 
