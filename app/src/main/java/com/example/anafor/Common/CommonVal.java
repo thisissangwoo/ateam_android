@@ -5,7 +5,7 @@ import com.example.anafor.User.UserVO;
 public class CommonVal {
 
 
-    public static String HTTP_IP = "http://192.168.0.33";
+    public static String HTTP_IP = "http://192.168.0.";
 
     public static String SVRPATH = "/anafor/";
     public static UserVO loginInfo = null; // 해당하는 static멤버가 null이라면 로그인이 안된상태.
