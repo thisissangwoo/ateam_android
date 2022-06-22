@@ -222,7 +222,10 @@ public class Box_Alarm_modifyActivity extends Activity{
                     task.addParam("case_time",case_time);
                     CommonMethod.executeAskGet(task);
                     Intent intent = new Intent(Box_Alarm_modifyActivity.this, Box_AlarmActivity.class);
+                    intent.putExtra("finish", true);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    finish();
                     Toast.makeText(Box_Alarm_modifyActivity.this, "수정되었습니다", Toast.LENGTH_SHORT).show();
                 }
             }

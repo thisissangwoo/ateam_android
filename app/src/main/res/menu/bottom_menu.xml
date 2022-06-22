@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/btm_cheobang"
-        android:icon="@drawable/iot_box_pill"
+        android:icon="@drawable/bottom_pill"
         android:enabled="true"
         app:showAsAction="ifRoom"
         android:title="처방전"/>

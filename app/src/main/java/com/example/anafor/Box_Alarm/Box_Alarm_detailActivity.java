@@ -261,7 +261,10 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                 CommonMethod.executeAskGet(task);
 
                 Intent intent = new Intent(Box_Alarm_detailActivity.this, Box_AlarmActivity.class);
+                intent.putExtra("finish", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
                 Toast.makeText(getApplicationContext(), "알람이 등록되었습니다.", Toast.LENGTH_SHORT).show();
             }
         });
