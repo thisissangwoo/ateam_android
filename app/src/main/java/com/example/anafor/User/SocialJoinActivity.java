@@ -64,7 +64,7 @@ public class SocialJoinActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 nameInput = tiedt_name.getText().toString();
-                if (!nameInput.isEmpty() && Pattern.matches("^[가-힣]*$", nameInput)) {
+                if (!nameInput.isEmpty() && Pattern.matches("^[가-힣a-zA-Z]{2,10}$", nameInput)) {
                     til_name.setHelperText("");
                     til_name.setError(null);
                     nameChk = true;
