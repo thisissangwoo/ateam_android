@@ -3,6 +3,15 @@ package com.example.anafor.User;
 public class UserVO {
 
     private String user_id, user_pw, user_name, user_birth, user_gender, user_tel, user_kakao, user_naver, admin;
+    private int box_id;
+
+    public int getBox_id() {
+        return box_id;
+    }
+
+    public void setBox_id(int box_id) {
+        this.box_id = box_id;
+    }
 
     public String getUser_id() {
         return user_id;

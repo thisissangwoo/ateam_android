@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 
+import com.example.anafor.Common.CommonVal;
 import com.example.anafor.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -159,7 +160,7 @@ public class ScheduleActivity extends AppCompatActivity {
         setCal();
         Gson gson = new Gson();
         AskTask task = new AskTask("/schedule_select");
-        task.addParam("select", "admin");
+        task.addParam("select", CommonVal.loginInfo.getUser_id());
         ArrayList<ScheduleDTO> selectdate = gson.fromJson(CommonMethod.executeAskGet(task),
                 new TypeToken<List<ScheduleDTO>>() {
                 }.getType());
