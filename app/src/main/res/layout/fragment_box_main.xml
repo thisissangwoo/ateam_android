@@ -166,7 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:backgroundTint="#696aad"
-            android:text="설정"
+            android:text="위치"
             android:drawableLeft="@android:drawable/ic_menu_edit"/>
 
     </LinearLayout>
