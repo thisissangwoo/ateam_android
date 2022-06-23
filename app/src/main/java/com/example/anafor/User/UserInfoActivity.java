@@ -316,6 +316,7 @@ public class UserInfoActivity extends AppCompatActivity{
                         i.putExtra("finish", true);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         CommonVal.loginInfo = null;
+                        CommonVal.bottom_menu = "0";
                         SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.remove("login");
