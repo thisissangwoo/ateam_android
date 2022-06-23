@@ -78,7 +78,7 @@ public class Box_MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (CommonVal.loginInfo.getBox_id() != 0) {
-                    Intent intent = new Intent(getContext(), Box_SettingActivity.class);
+                    Intent intent = new Intent(getContext(),  WebMapActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getContext().getApplicationContext(), "박스 아이디 등록후 이용하세요", Toast.LENGTH_SHORT).show();
