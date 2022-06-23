@@ -89,9 +89,6 @@ public class MainActivity extends AppCompatActivity {
         nav_view = findViewById(R.id.nav_view);
         pic_Slid = findViewById(R.id.mainMidMenu);
 
-
-
-
         slidePic();
 
         setSupportActionBar(main_toolbar);
@@ -140,9 +137,11 @@ public class MainActivity extends AppCompatActivity {
                 // 광고 ViewFlipper 를 메인 엑티비티에만 적용시키고
                 // 나머지 바텀메뉴 프래그먼트에는 안보이게 GONE 처리
                 if (item.getItemId() == R.id.btm_home){
+                    CommonVal.bottom_menu="1";
                     pic_Slid.setVisibility(View.VISIBLE);
                     changeFragment(new Hp_MainFragment());
                 }else if (item.getItemId() == R.id.btm_cheobang){
+                    CommonVal.bottom_menu="2";
                     pic_Slid.setVisibility(View.GONE);
                     //여기서 로그인 액티비티로 이동
                     if(CommonVal.loginInfo == null){
@@ -152,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 }else if (item.getItemId() == R.id.btm_yagtong){
+                    CommonVal.bottom_menu="3";
                     pic_Slid.setVisibility(View.GONE);
                     if(CommonVal.loginInfo == null){
                         alertLogin();
@@ -402,7 +402,6 @@ public class MainActivity extends AppCompatActivity {
             dao.isUserLogin();
         }
 
-
         if(CommonVal.loginInfo != null) {
             tv_login.setText(CommonVal.loginInfo.getUser_name() + "님 반갑습니다");
             tv_edit.setText("정보수정");
@@ -428,6 +427,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        if (CommonVal.bottom_menu.equals("1")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new Hp_MainFragment()).commit();
+        }else if (CommonVal.bottom_menu.equals("2")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new Pill_MainFragment()).commit();
+        }else if(CommonVal.bottom_menu.equals("3")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new Box_MainFragment()).commit();
+        }
+
     }
     //비로그인상태일때 로그인해야 이용가능하다는 알림
     public void alertLogin(){
@@ -457,4 +465,5 @@ public class MainActivity extends AppCompatActivity {
         qrScan.setPrompt("QR 코드를 사각형 안에 넣어주세요.");
         qrScan.initiateScan();
     }
+
 }
