@@ -67,7 +67,8 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login_login );
         tv_join = findViewById(R.id.tv_login_join);
         chk_auto = findViewById(R.id.switch_login_autologin);
-        SharedPreferences preferences = getPreferences(LoginActivity.MODE_PRIVATE);
+
+        SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
         tiedt_id.setText(preferences.getString("id" , ""));
         tiedt_pw.setText(preferences.getString("pw" , ""));
         loginName = findViewById(R.id.tv_main_header_login);

@@ -38,14 +38,14 @@ public class Box_MainFragment extends Fragment {
         Button btn_box_main_setting = v.findViewById(R.id.btn_box_main_setting);
         TextView tv_box_main_box_id = v.findViewById(R.id.tv_box_main_box_id);
         TextView tv_box_main_box_real_id = v.findViewById(R.id.tv_box_main_box_real_id);
-        TextView tv_box_main_boxID_edit = v.findViewById(R.id.tv_box_main_boxID_edit);
+/*        TextView tv_box_main_boxID_edit = v.findViewById(R.id.tv_box_main_boxID_edit);*/
 
         if(CommonVal.loginInfo.getBox_id()!=0){
             tv_box_main_box_real_id.setText(String.valueOf(CommonVal.loginInfo.getBox_id()));
         }else{
             tv_box_main_box_id.setText("");
             tv_box_main_box_real_id.setText("아나포박스를 등록해주세요");
-            tv_box_main_boxID_edit.setText("등록");
+/*            tv_box_main_boxID_edit.setText("등록");*/
         }
 
         btn_box_main_alarm.setOnClickListener(new View.OnClickListener() {
@@ -65,21 +65,28 @@ public class Box_MainFragment extends Fragment {
         btn_box_main_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Box_RecordActivity.class);
-                startActivity(intent);
+                if (CommonVal.loginInfo.getBox_id() != 0){
+                    Intent intent = new Intent(getContext(), Box_RecordActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(getContext().getApplicationContext(), "박스 아이디 등록후 이용하세요", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         btn_box_main_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), Box_SettingActivity.class);
-                startActivity(intent);
+                if (CommonVal.loginInfo.getBox_id() != 0) {
+                    Intent intent = new Intent(getContext(), Box_SettingActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getContext().getApplicationContext(), "박스 아이디 등록후 이용하세요", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         return v;
     }
-
 
 }
