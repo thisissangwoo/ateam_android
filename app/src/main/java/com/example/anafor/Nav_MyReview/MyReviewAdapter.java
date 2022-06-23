@@ -30,6 +30,14 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
     ReviewVO vo;
     Context context;
 
+    public ArrayList<ReviewVO> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<ReviewVO> list) {
+        this.list = list;
+    }
+
     public MyReviewAdapter(LayoutInflater inflater, ArrayList<ReviewVO> list, Context context) {
         this.inflater = inflater;
         this.list = list;
@@ -109,8 +117,10 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
                                     task.addParam("rev_num",String.valueOf(list.get(position).getRev_num()));
                                     CommonMethod.executeAskGet(task);
                                     Toast.makeText(context, "리뷰가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                                    notifyItemRemoved(position);
                                     dialog.dismiss();
+                                    list.remove(position);
+                                    notifyItemRemoved(position);
+                                    notifyItemRangeChanged(position,list.size());
                                 }
                             }
                         }).show();

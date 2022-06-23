@@ -17,7 +17,7 @@
             android:text="박천일 님"
             android:textStyle="bold"
             android:textColor="#696aad"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:layout_marginLeft="10dp"/>
     </LinearLayout>
 
@@ -56,11 +56,11 @@
     </LinearLayout>
         <TextView
             android:id="@+id/tv_review_content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="감기 몸살 기운이 있어서 내원 했는데\n다행히 코로나는 아니네요 !\n그리고 의사분도 매우 친절 하셨습니다."
             android:textStyle="bold"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:layout_marginTop="3dp"
             android:layout_marginLeft="10dp"/>
 
@@ -70,7 +70,7 @@
             android:text="병원 만족도 조사"
             android:textColor="#696aad"
             android:textStyle="bold"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"/>
 
@@ -78,28 +78,28 @@
             android:id="@+id/tv_review_survey1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="● 증상을 쉽게 설명해 주셨어요."
+            android:text="병원이 깨끗했어요"
             android:textColor="#808080"
             android:textStyle="bold"
-            android:textSize="14dp"
+            android:textSize="13dp"
             android:layout_marginLeft="10dp"/>
         <TextView
             android:id="@+id/tv_review_survey2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="● 꼼꼼하게 진단해 주셨어요."
+            android:text="꼼꼼하게 진단해 주셨어요"
             android:textColor="#808080"
             android:textStyle="bold"
-            android:textSize="14dp"
+            android:textSize="13dp"
             android:layout_marginLeft="10dp"/>
         <TextView
             android:id="@+id/tv_review_survey3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="● 부대시설이 만족스러웠어요."
+            android:text="부대시설이 만족스러웠어요"
             android:textColor="#808080"
             android:textStyle="bold"
-            android:textSize="14dp"
+            android:textSize="13dp"
             android:layout_marginLeft="10dp"/>
 
     </LinearLayout>
