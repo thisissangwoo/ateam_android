@@ -453,6 +453,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                pic_Slid.setVisibility(View.VISIBLE);
             }
         });
         builder.show();
