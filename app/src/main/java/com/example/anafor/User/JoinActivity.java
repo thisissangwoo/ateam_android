@@ -203,7 +203,7 @@ public class JoinActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 pwInput = tiedt_pw.getText().toString();
-                String pwPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z[0-9]]{8,16}$";
+                String pwPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z[0-9]]{8,20}$";
                 if(!pwInput.isEmpty() && Pattern.matches(pwPattern, pwInput)){
                     til_pw.setHelperText("사용 가능한 비밀번호입니다.");
                     til_pw.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));

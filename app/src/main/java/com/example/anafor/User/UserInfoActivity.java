@@ -140,7 +140,7 @@ public class UserInfoActivity extends AppCompatActivity{
             @Override
             public void afterTextChanged(Editable s) {
                 pwInput = tiedt_pw.getText().toString();
-                if(!pwInput.isEmpty() && Pattern.matches("^[a-zA-Z0-9]{8,16}$", pwInput)){
+                if(!pwInput.isEmpty() && Pattern.matches("^[a-zA-Z0-9]{8,20}$", pwInput)){
                     til_pw.setHelperText("사용 가능한 비밀번호입니다.");
                     til_pw.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
                     pwChk = true;
@@ -312,14 +312,15 @@ public class UserInfoActivity extends AppCompatActivity{
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        finish();
                         Intent i=new Intent(UserInfoActivity.this,MainActivity.class);
                         i.putExtra("finish", true);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         CommonVal.loginInfo = null;
                         SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
+                        editor.remove("login");
                         editor.clear();
+                        editor.apply();
                         editor.commit();
                         startActivity(i);
                         finish();
