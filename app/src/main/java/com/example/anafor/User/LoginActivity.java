@@ -17,9 +17,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.anafor.Box_Main.Box_MainFragment;
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
+import com.example.anafor.Common.CommonVal;
 import com.example.anafor.MainActivity;
+import com.example.anafor.Pill_Main.Pill_MainFragment;
 import com.example.anafor.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.kakao.sdk.auth.model.OAuthToken;
@@ -106,9 +109,9 @@ public class LoginActivity extends AppCompatActivity {
                     if(dao.isUserLogin()){
                         checkAutoLogin();
                         goMain();
+
                     }else{
                         Toast.makeText(LoginActivity.this,"아이디 또는 비밀번호가 틀립니다",Toast.LENGTH_SHORT).show();
-
                         tiedt_id.setText("");
                         tiedt_pw.setText("");
                         tiedt_id.requestFocus();
