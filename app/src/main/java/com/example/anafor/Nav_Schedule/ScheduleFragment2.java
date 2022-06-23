@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 
+import com.example.anafor.Common.CommonVal;
 import com.example.anafor.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -51,7 +52,7 @@ public class ScheduleFragment2 extends Fragment {
         // 스프링에서 조회를 하고 selectList 로 옴
         Gson gson = new Gson();
         AskTask task = new AskTask("/schedule_select");
-        task.addParam("select", "admin");
+        task.addParam("select", CommonVal.loginInfo.getUser_id());
         ArrayList<ScheduleDTO> list = gson.fromJson(CommonMethod.executeAskGet(task),
                 new TypeToken<List<ScheduleDTO>>(){}.getType());
 
