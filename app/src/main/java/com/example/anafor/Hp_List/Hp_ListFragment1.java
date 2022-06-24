@@ -61,7 +61,7 @@ public class Hp_ListFragment1 extends Fragment {
     }
 
     public void selectList(String query){
-
+        Log.d("fgcfggf", "selectList: " + query);
         Gson gson = new Gson();
         AskTask task = new AskTask("/review");
         task.addParam("select", query);
