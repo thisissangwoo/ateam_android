@@ -23,6 +23,9 @@ public class Pill_QRcodeActivity extends AppCompatActivity {
 
     IntentIntegrator qrScan;
     ArrayList<Pill_MainDTO> list;
+    Pill_MainDTO dto;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,8 @@ public class Pill_QRcodeActivity extends AppCompatActivity {
                 //DB insert 처리를 함
                 AskTask task = new AskTask("/pill");
                 task.addParam("pill", result.getContents());
+
+
 
                 CommonMethod.executeAskGet(task);
                 //json 형식으로 받은 데이터를 변형 시켜서 인서트
