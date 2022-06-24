@@ -31,6 +31,7 @@ public class Box_MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
         View v = inflater.inflate(R.layout.fragment_box_main, container, false);
 
         Button btn_box_main_alarm = v.findViewById(R.id.btn_box_main_alarm);
@@ -42,6 +43,14 @@ public class Box_MainFragment extends Fragment {
 
         if(CommonVal.loginInfo.getBox_id()!=0){
             tv_box_main_box_real_id.setText(String.valueOf(CommonVal.loginInfo.getBox_id()));
+            tv_box_main_boxID_edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), Box_IdActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            });
         }else{
             tv_box_main_box_id.setText("");
             tv_box_main_box_real_id.setText("아나포박스를 등록해주세요");

@@ -1,12 +1,15 @@
 package com.example.anafor.Common;
 
+import android.widget.ViewFlipper;
+
+import com.example.anafor.MainActivity;
+import com.example.anafor.R;
 import com.example.anafor.User.UserVO;
 
 public class CommonVal {
 
 
-    public static String HTTP_IP = "http://192.168.0.34";
-
+    public static String HTTP_IP = "http://192.168.0.33";
 
     public static String SVRPATH = "/anafor/";
 
@@ -20,4 +23,5 @@ public class CommonVal {
     //룰을 정해서 이름 규칙이나 여러가지 형태들을 회의한 후에 결정해서 사용.
 
     public static String bottom_menu = "0";
+
 }
