@@ -298,6 +298,9 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             beginListenForData();  // 상태 확인*/
+            countDownTimer();
+            CDT.start();
+            Log.d(TAG, "onReceive: CDT 시작");
         }
     };
 
@@ -540,41 +543,23 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                                             CDT.cancel();
                                             Log.d("Main","약을 먹었습니다.");
 
+                                            //약 먹었을때 기록 저장==============================================================================
+
+
+                                            AskTask task = new AskTask("/iot_recode");
+                                            task.addParam("user_id", CommonVal.loginInfo.getUser_id());
+                                            task.addParam("case_number",case_number);
+                                            CommonMethod.executeAskGet(task);
+
+
+
+
+
+                                            //==============================================================================
+
+
                                         }else if(tempData.equals("n")){
-                                            CDT = new CountDownTimer(600 * 1000, 60 * 1000) {
-                                                public void onTick(long millisUntilFinished) {
 
-                                                    //반복실행할 구문
-                                                    sendData("a");         // 상태 확인문자 우노보드로 보내기
-                                                    try {
-                                                        Thread.sleep(1000); // 잠시대기
-                                                    } catch (InterruptedException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                    beginListenForData();
-                                                }
-                                                public void onFinish() {
-                                                    //마지막에 실행할 구문
-                                                    CDT.cancel();
-                                                    drugCount++;
-                                                    if(drugCount >= 3){
-                                                        CDT.cancel();
-                                                        drugCount = 0;
-                                                    }else{
-                                                        //반복실행할 구문
-                                                        sendData("g");         // 상태 확인문자 우노보드로 보내기
-                                                        try {
-                                                            Thread.sleep(1000); // 잠시대기
-                                                        } catch (InterruptedException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                        beginListenForData();
-                                                    }
-
-                                                }
-                                            }.start();
-
-                                            Log.d("Main","약을 아직 먹지 않았습니다.");
 
                                         }
 
@@ -610,6 +595,45 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void countDownTimer(){
+        // 반복하는 부분 몇분동안 신호 보내고 있을지
+        CDT = new CountDownTimer(100 * 1000, 10 * 1000) {
+            public void onTick(long millisUntilFinished) {
+
+                //반복실행할 구문
+                sendData("a");         // 상태 확인문자 우노보드로 보내기
+                try {
+                    Thread.sleep(1000); // 잠시대기
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                beginListenForData();
+            }
+            public void onFinish() {
+                //마지막에 실행할 구문
+                CDT.cancel();
+                drugCount++;
+                if(drugCount >= 3){
+                    CDT.cancel();
+                    drugCount = 0;
+                }else{
+                    //반복실행할 구문
+                    sendData("g");         // 상태 확인문자 우노보드로 보내기
+                    try {
+                        Thread.sleep(1000); // 잠시대기
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    beginListenForData();
+                    CDT.start();
+                }
+
+            }
+        };
+
+        Log.d("Main","약을 아직 먹지 않았습니다.");
     }
 
     // 블루투스 장치의 이름이 주어졌을때 해당 블루투스 장치 객체를 페어링 된 장치 목록에서 찾아내는 코드.
