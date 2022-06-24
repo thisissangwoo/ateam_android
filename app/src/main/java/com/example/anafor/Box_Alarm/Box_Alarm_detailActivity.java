@@ -543,6 +543,21 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                                             CDT.cancel();
                                             Log.d("Main","약을 먹었습니다.");
 
+                                            //약 먹었을때 기록 저장==============================================================================
+
+
+                                            AskTask task = new AskTask("/iot_recode");
+                                            task.addParam("user_id", CommonVal.loginInfo.getUser_id());
+                                            task.addParam("case_number",case_number);
+                                            CommonMethod.executeAskGet(task);
+
+
+
+
+
+                                            //==============================================================================
+
+
                                         }else if(tempData.equals("n")){
 
 
@@ -584,7 +599,7 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
 
     public void countDownTimer(){
         // 반복하는 부분 몇분동안 신호 보내고 있을지
-        CDT = new CountDownTimer(300 * 1000, 10 * 1000) {
+        CDT = new CountDownTimer(100 * 1000, 10 * 1000) {
             public void onTick(long millisUntilFinished) {
 
                 //반복실행할 구문
