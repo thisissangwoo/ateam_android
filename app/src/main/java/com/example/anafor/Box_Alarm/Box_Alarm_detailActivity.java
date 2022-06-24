@@ -29,6 +29,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -56,11 +57,11 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
     private static final String TAG = "알람저장";
     
     ImageView imgv_box_detail_back;
-    Button btn_box_detail_blue, btn_box_detail_insert;
+    Button btn_box_detail_cancel, btn_box_detail_insert;
     EditText edt_box_alarm_content;
     CheckBox btn_box_alarm_location1, btn_box_alarm_location2, btn_box_alarm_location3, btn_box_alarm_location4;
     String case_number,box_time,box_minute,case_time;
-    IoTVO vo;
+    TextView tv_box_detail_blue;
 
     //블루투스======================================
     private ActivityResultLauncher<Void> overlayPermissionLauncher;
@@ -115,8 +116,9 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
         btn_box_alarm_location2 = findViewById(R.id.btn_box_alarm_location2);
         btn_box_alarm_location3 = findViewById(R.id.btn_box_alarm_location3);
         btn_box_alarm_location4 = findViewById(R.id.btn_box_alarm_location4);
-        btn_box_detail_blue = findViewById(R.id.btn_box_detail_blue);
+        tv_box_detail_blue = findViewById(R.id.tv_box_detail_blue);
         btn_box_detail_insert = findViewById(R.id.btn_box_detail_insert);
+        btn_box_detail_cancel = findViewById(R.id.btn_box_detail_cancel);
         edt_box_alarm_content = findViewById(R.id.edt_box_alarm_content);
 
         imgv_box_detail_back.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +128,7 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
             }
         });
 
-        btn_box_detail_blue.setOnClickListener(new View.OnClickListener() {
+        tv_box_detail_blue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkBluetooth();
@@ -185,6 +187,13 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                     btn_box_alarm_location2.setChecked(false);
                     btn_box_alarm_location3.setChecked(false);
                 }
+            }
+        });
+
+        btn_box_detail_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
@@ -272,8 +281,6 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                 CommonMethod.executeAskGet(task);
 
                 Intent intent = new Intent(Box_Alarm_detailActivity.this, Box_AlarmActivity.class);
-                intent.putExtra("finish", true);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
                 Toast.makeText(getApplicationContext(), "알람이 등록되었습니다.", Toast.LENGTH_SHORT).show();
