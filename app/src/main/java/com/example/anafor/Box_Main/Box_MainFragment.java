@@ -38,14 +38,22 @@ public class Box_MainFragment extends Fragment {
         Button btn_box_main_setting = v.findViewById(R.id.btn_box_main_setting);
         TextView tv_box_main_box_id = v.findViewById(R.id.tv_box_main_box_id);
         TextView tv_box_main_box_real_id = v.findViewById(R.id.tv_box_main_box_real_id);
-/*        TextView tv_box_main_boxID_edit = v.findViewById(R.id.tv_box_main_boxID_edit);*/
+        TextView tv_box_main_boxID_edit = v.findViewById(R.id.tv_box_main_boxID_edit);
 
         if(CommonVal.loginInfo.getBox_id()!=0){
             tv_box_main_box_real_id.setText(String.valueOf(CommonVal.loginInfo.getBox_id()));
         }else{
             tv_box_main_box_id.setText("");
             tv_box_main_box_real_id.setText("아나포박스를 등록해주세요");
-/*            tv_box_main_boxID_edit.setText("등록");*/
+            tv_box_main_boxID_edit.setText("등록");
+            tv_box_main_boxID_edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), Box_IdActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            });
         }
 
         btn_box_main_alarm.setOnClickListener(new View.OnClickListener() {

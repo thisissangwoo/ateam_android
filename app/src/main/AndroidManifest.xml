@@ -28,6 +28,9 @@ BLUETOOTH : 커넥션 요구, 커넥션 수락, 데이터 전송 등의 블루�
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Box_Main.Box_IdActivity"
+            android:exported="false" />
+        <activity
             android:name=".Box_Alarm.Box_Alarm_modifyActivity"
             android:exported="false" />
         <activity
