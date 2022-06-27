@@ -20,6 +20,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Common.CommonVal;
@@ -47,7 +48,7 @@ import java.util.ArrayList;
 public class Hp_InformationActivity extends AppCompatActivity implements MapView.POIItemEventListener {
 
     TabLayout hp_infor_tab_layout;
-    ImageView imgv_hp_infor_back;
+    ImageView imgv_hp_infor_back,imgv_hp_photo;
     TextView hp_infor_time, hp_infor_infor, hp_infor_review, tv_hp_today,tv_hp_todayTime,
             tv_hp_tlunch, tv_hp_name, tv_hp_addr , tv_hp_url, tv_hp_phone, tv_hp_wlunch,tv_hp_holi,
             tv_hp_mon, tv_hp_tue, tv_hp_wed, tv_hp_thu, tv_hp_fri, tv_hp_sat, tv_hp_sun, tv_hp_dlunch,
@@ -88,6 +89,12 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
                 infoDTO.getClose_ho(), infoDTO.getLunch_d(), infoDTO.getLunch_w()};
 
         imgv_heartclick = findViewById(R.id.imgv_heartclick);               //찜하기 기능
+        imgv_hp_photo = findViewById(R.id.imgv_hp_photo);               //병원 이미지
+
+        //DB에 이미지파일이 있을때
+        if(infoDTO.getFilepath()!=null){
+            Glide.with(Hp_InformationActivity.this).load(infoDTO.getFilepath()).into(imgv_hp_photo);
+        }
 
         hp_infor_scview = findViewById(R.id.hp_infor_scview);
 

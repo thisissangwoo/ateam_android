@@ -2,7 +2,23 @@ package com.example.anafor.Nav_Choice;
 
 public class ChoiceDTO {
 
-    String user_id,hp_code,ch_date, hp_name,hp_addr,hp_tel ;
+    String user_id,hp_code,ch_date, hp_name,hp_addr,hp_tel,filepath, filename;
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
     public String getHp_name() {
         return hp_name;

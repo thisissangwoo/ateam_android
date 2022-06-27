@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Hp_Information.Hp_InformationActivity;
@@ -50,7 +51,13 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-//        holder.imgv_my_choice_img.setImageResource(list.get(position).getImg_url());
+        if(position % 3 == 0){
+           holder.imgv_my_choice_img.setImageResource(R.drawable.hpimg1);
+        }else if(position % 3 == 1){
+            holder.imgv_my_choice_img.setImageResource(R.drawable.hpimg2);
+        }else if(position % 3 == 2){
+            holder.imgv_my_choice_img.setImageResource(R.drawable.hpimg3);
+        }
         holder.tv_my_choice_name.setText(list.get(position).getHp_name());
         holder.tv_my_choice_addr.setText(list.get(position).getHp_addr());
         if(list.get(position).getHp_tel()!=null){
