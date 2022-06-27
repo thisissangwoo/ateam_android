@@ -1,16 +1,15 @@
 package com.example.anafor.Pill_Main;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.view.menu.MenuView;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -19,18 +18,14 @@ import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Common.CommonVal;
 import com.example.anafor.MainActivity;
-import com.example.anafor.Pill_QRcode.Pill_QRcodeActivity;
+
 import com.example.anafor.R;
-import com.example.anafor.pill_detail.Pill_detailActivity;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 
-import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Pill_MainFragment extends Fragment {
