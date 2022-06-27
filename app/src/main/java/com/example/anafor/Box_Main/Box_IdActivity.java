@@ -100,7 +100,7 @@ public class Box_IdActivity extends AppCompatActivity {
     public void showDialog(){
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(Box_IdActivity.this)
                 .setTitle("알림")
-                .setMessage("이전 페이지로 이동합니다.")
+                .setMessage("등록완료")
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
 /*                      Intent intent = new Intent(Box_IdActivity.this, MainActivity.class);
