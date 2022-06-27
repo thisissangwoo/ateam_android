@@ -81,7 +81,7 @@ public class ScheduleActivity extends AppCompatActivity {
                         new ScheduleFragment1(tv_schedule_diary_date.getText() + "")).commit();
             } // onClick
         }); // setOnClickListener
-        select();   // 조회를 반복적으로 사용하기 위해 메소드를 만들어서 사용했음
+        select(null);   // 조회를 반복적으로 사용하기 위해 메소드를 만들어서 사용했음
     }// onCreate
     
     // 일요일 모양주기
@@ -147,17 +147,17 @@ public class ScheduleActivity extends AppCompatActivity {
         }// decorate
     }// EventDecorator
 
-    public void changeFragment(Fragment frag){
-        select();
+    public void changeFragment(Fragment frag , CalendarDay day){
+        select(day);
         getSupportFragmentManager().beginTransaction().replace(R.id.container_schedule, frag).commit();
     }// changeFragment
 
 
     // 특정일에 파란색 점을 찍기 위하여
     // 필요한 데이터를 DB 에서 조회를 해옴
-    public void select() {
+    public void select(CalendarDay days) {
         dates.clear(); // 리스트를 조회 하기 전에 한번 비워주고 다시 조회 하게 끔
-        setCal();
+        setCal(days);
         Gson gson = new Gson();
         AskTask task = new AskTask("/schedule_select");
         task.addParam("select", CommonVal.loginInfo.getUser_id());
@@ -168,7 +168,6 @@ public class ScheduleActivity extends AppCompatActivity {
         // selectdate 의 size 가 0 이 아닐 때 점을 찍어줌
         if (selectdate.size() != 0) {
             // ex) 2022년 5월 20일을 substring 으로 공백, 한글 년, 월, 일을 trim 처리 하였음
-            // 이 과정을 Eclipse 에서 테스트를 거친 후 코드를 가지고와서 적용 시켰음
             // dates.add 를 통해 년 월 일에 맞게 점을 찍어주도록 하였음
             for (ScheduleDTO dto : selectdate) {
                 String dateData = dto.getSc_date();
@@ -180,15 +179,15 @@ public class ScheduleActivity extends AppCompatActivity {
                 calendarView.addDecorators(new SundayDecorator(), new SaturdayDecorator(), new EventDecorator(Color.RED, dates,this));
             } // for
         } // if
-        setCal();
+        setCal(days);
     }
     @Override
     protected void onResume() {
         super.onResume();
-        select();
+        select(null);
     }
 
-    public void setCal(){
+    public void setCal(CalendarDay day){
         ln_cal.removeAllViews();
         // xml 에서 LinearLayout 으로 칸을 지정 해 놓은 다음,
         // 엑티비티에서 xml 작업을 진행하였음
@@ -221,12 +220,16 @@ public class ScheduleActivity extends AppCompatActivity {
         // 특정일에 선택이 되게끔 데이터 넘김
         calendarView.addDecorators(new SundayDecorator(), new SaturdayDecorator(), new EventDecorator(Color.RED, dates,this));
 
-        // 처음에는 오늘 날짜를 선택되게 해주었음
-        calendarView.setSelectedDate(CalendarDay.today());
+        if(day==null){
+            calendarView.setSelectedDate(CalendarDay.today());
+            tv_schedule_diary_date.setText(String.format(LocalDate.now().getYear() + "년 " +LocalDate.now().getMonthValue() + "월 " + LocalDate.now().getDayOfMonth() + "일 " ));
+        }else{
+            calendarView.setSelectedDate(day);
+            tv_schedule_diary_date.setText(day.getYear() + "년 " +day.getMonth() + "월 " + day.getDay() + "일 " ) ;
+        }
 
         // 첫 화면 들어갔을 때 오늘 날짜로 데이터가 있으면
-        // 그에 해댕하는 데이터를 보여주게 끔 처리
-        tv_schedule_diary_date.setText(String.format(LocalDate.now().getYear() + "년 " +LocalDate.now().getMonthValue() + "월 " + LocalDate.now().getDayOfMonth() + "일 " ));
+        // 그에 해당하는 데이터를 보여주게 끔 처리
         getSupportFragmentManager().beginTransaction().replace(R.id.container_schedule, new ScheduleFragment2(tv_schedule_diary_date.getText() + "")).commit();
 
         // 원하는 날짜를 클릭시 setText 로 date 를 찍어주는 이벤트와
@@ -243,6 +246,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container_schedule, new ScheduleFragment2(tv_schedule_diary_date.getText() + "")).commit();
             }// onDateSelected
         });// setOnDateChangedListener
+
     }// setCal
 
 }// class ScheduleActivity
