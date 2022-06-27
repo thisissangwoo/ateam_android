@@ -29,6 +29,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -56,11 +57,11 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
     private static final String TAG = "알람저장";
     
     ImageView imgv_box_detail_back;
-    Button btn_box_detail_blue, btn_box_detail_insert;
+    Button btn_box_detail_cancel, btn_box_detail_insert;
     EditText edt_box_alarm_content;
     CheckBox btn_box_alarm_location1, btn_box_alarm_location2, btn_box_alarm_location3, btn_box_alarm_location4;
     String case_number,box_time,box_minute,case_time;
-    IoTVO vo;
+    TextView tv_box_detail_blue;
 
     //블루투스======================================
     private ActivityResultLauncher<Void> overlayPermissionLauncher;
@@ -115,8 +116,9 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
         btn_box_alarm_location2 = findViewById(R.id.btn_box_alarm_location2);
         btn_box_alarm_location3 = findViewById(R.id.btn_box_alarm_location3);
         btn_box_alarm_location4 = findViewById(R.id.btn_box_alarm_location4);
-        btn_box_detail_blue = findViewById(R.id.btn_box_detail_blue);
+        tv_box_detail_blue = findViewById(R.id.tv_box_detail_blue);
         btn_box_detail_insert = findViewById(R.id.btn_box_detail_insert);
+        btn_box_detail_cancel = findViewById(R.id.btn_box_detail_cancel);
         edt_box_alarm_content = findViewById(R.id.edt_box_alarm_content);
 
         imgv_box_detail_back.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +128,7 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
             }
         });
 
-        btn_box_detail_blue.setOnClickListener(new View.OnClickListener() {
+        tv_box_detail_blue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkBluetooth();
@@ -185,6 +187,13 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                     btn_box_alarm_location2.setChecked(false);
                     btn_box_alarm_location3.setChecked(false);
                 }
+            }
+        });
+
+        btn_box_detail_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
@@ -272,8 +281,6 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                 CommonMethod.executeAskGet(task);
 
                 Intent intent = new Intent(Box_Alarm_detailActivity.this, Box_AlarmActivity.class);
-                intent.putExtra("finish", true);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
                 Toast.makeText(getApplicationContext(), "알람이 등록되었습니다.", Toast.LENGTH_SHORT).show();
@@ -291,6 +298,9 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             beginListenForData();  // 상태 확인*/
+            countDownTimer();
+            CDT.start();
+            Log.d(TAG, "onReceive: CDT 시작");
         }
     };
 
@@ -533,41 +543,23 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
                                             CDT.cancel();
                                             Log.d("Main","약을 먹었습니다.");
 
+                                            //약 먹었을때 기록 저장==============================================================================
+
+
+                                            AskTask task = new AskTask("/iot_recode");
+                                            task.addParam("user_id", CommonVal.loginInfo.getUser_id());
+                                            task.addParam("case_number",case_number);
+                                            CommonMethod.executeAskGet(task);
+
+
+
+
+
+                                            //==============================================================================
+
+
                                         }else if(tempData.equals("n")){
-                                            CDT = new CountDownTimer(600 * 1000, 60 * 1000) {
-                                                public void onTick(long millisUntilFinished) {
 
-                                                    //반복실행할 구문
-                                                    sendData("a");         // 상태 확인문자 우노보드로 보내기
-                                                    try {
-                                                        Thread.sleep(1000); // 잠시대기
-                                                    } catch (InterruptedException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                    beginListenForData();
-                                                }
-                                                public void onFinish() {
-                                                    //마지막에 실행할 구문
-                                                    CDT.cancel();
-                                                    drugCount++;
-                                                    if(drugCount >= 3){
-                                                        CDT.cancel();
-                                                        drugCount = 0;
-                                                    }else{
-                                                        //반복실행할 구문
-                                                        sendData("g");         // 상태 확인문자 우노보드로 보내기
-                                                        try {
-                                                            Thread.sleep(1000); // 잠시대기
-                                                        } catch (InterruptedException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                        beginListenForData();
-                                                    }
-
-                                                }
-                                            }.start();
-
-                                            Log.d("Main","약을 아직 먹지 않았습니다.");
 
                                         }
 
@@ -603,6 +595,45 @@ public class Box_Alarm_detailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void countDownTimer(){
+        // 반복하는 부분 몇분동안 신호 보내고 있을지
+        CDT = new CountDownTimer(100 * 1000, 10 * 1000) {
+            public void onTick(long millisUntilFinished) {
+
+                //반복실행할 구문
+                sendData("a");         // 상태 확인문자 우노보드로 보내기
+                try {
+                    Thread.sleep(1000); // 잠시대기
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                beginListenForData();
+            }
+            public void onFinish() {
+                //마지막에 실행할 구문
+                CDT.cancel();
+                drugCount++;
+                if(drugCount >= 3){
+                    CDT.cancel();
+                    drugCount = 0;
+                }else{
+                    //반복실행할 구문
+                    sendData("g");         // 상태 확인문자 우노보드로 보내기
+                    try {
+                        Thread.sleep(1000); // 잠시대기
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    beginListenForData();
+                    CDT.start();
+                }
+
+            }
+        };
+
+        Log.d("Main","약을 아직 먹지 않았습니다.");
     }
 
     // 블루투스 장치의 이름이 주어졌을때 해당 블루투스 장치 객체를 페어링 된 장치 목록에서 찾아내는 코드.
