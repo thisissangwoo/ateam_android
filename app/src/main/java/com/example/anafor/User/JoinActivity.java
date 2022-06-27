@@ -264,7 +264,7 @@ public class JoinActivity extends AppCompatActivity {
                     til_name.setError("이름을 입력하세요");
                     nameChk = false;
                 } else {
-                    til_name.setError("이름을 입력해주세요");
+                    til_name.setError("한글 또는 영문이름을 입력해주세요");
                     nameChk = false;
                 }
             }
