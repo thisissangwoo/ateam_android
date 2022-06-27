@@ -1,9 +1,5 @@
 package com.example.anafor.Common;
 
-import android.widget.ViewFlipper;
-
-import com.example.anafor.MainActivity;
-import com.example.anafor.R;
 import com.example.anafor.User.UserVO;
 
 public class CommonVal {
