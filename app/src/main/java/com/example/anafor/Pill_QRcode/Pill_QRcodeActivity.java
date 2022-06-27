@@ -23,6 +23,9 @@ public class Pill_QRcodeActivity extends AppCompatActivity {
 
     IntentIntegrator qrScan;
     ArrayList<Pill_MainDTO> list;
+    Pill_MainDTO dto;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +34,7 @@ public class Pill_QRcodeActivity extends AppCompatActivity {
         qrScan = new IntentIntegrator(this);
         qrScan.setOrientationLocked(true); // default 가 세로모드인데 휴대폰 방향에 따라 가로, 세로로 자동 변경됩니다.
         qrScan.setPrompt("QR 코드를 사각형 안에 넣어주세요.");
-       // qrScan.setRequestCode(999);
+        // qrScan.setRequestCode(999);
         qrScan.initiateScan();
 
     }
@@ -49,6 +52,8 @@ public class Pill_QRcodeActivity extends AppCompatActivity {
                 //DB insert 처리를 함
                 AskTask task = new AskTask("/pill");
                 task.addParam("pill", result.getContents());
+
+
 
                 CommonMethod.executeAskGet(task);
                 //json 형식으로 받은 데이터를 변형 시켜서 인서트

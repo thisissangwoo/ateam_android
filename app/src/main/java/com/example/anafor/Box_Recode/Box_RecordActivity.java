@@ -5,18 +5,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.anafor.Box_Alarm.IoTVO;
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
+import com.example.anafor.Common.CommonVal;
 import com.example.anafor.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Box_RecordActivity extends AppCompatActivity {
 
     ImageView imgv_box_record_back;
     RecyclerView recv_box_record;
-    ArrayList<Box_RecordDTO> list = new ArrayList<>();
+    ArrayList<IoTVO> list = new ArrayList<>();
     private Object Context;
 
 
@@ -34,25 +43,28 @@ public class Box_RecordActivity extends AppCompatActivity {
             }
         });
 
+        list = selectList();
+
         recv_box_record = findViewById(R.id.recv_box_record);
-        list.add(new Box_RecordDTO("오후 3시에 타이레놀 복용하기", "타이레놀 복용 완료",
-                "15 : 00 PM"));
-
-        list.add(new Box_RecordDTO("오후 4시에 이가탄탄 복용하기", "이가탄탄 복용 완료",
-                "16 : 00 PM"));
-
-        list.add(new Box_RecordDTO("오후 5시에 게보린 복용하기", "게보린 복용 완료",
-                "17 : 00 PM"));
-
-        list.add(new Box_RecordDTO("오후 6시에 감기약 복용하기", "감기약 복용 완료",
-                "18 : 00 PM"));
-
-        list.add(new Box_RecordDTO("오후 7시에 비염약 복용하기", "비염약 복용 완료",
-                "19 : 00 PM"));
 
         Box_RecordAdapter adapter = new Box_RecordAdapter(getLayoutInflater(), list);
 
         recv_box_record.setAdapter(adapter);
         recv_box_record.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+    }
+
+    public ArrayList<IoTVO> selectList() {
+        Gson gson = new Gson();
+        AskTask task = new AskTask("iot_recode_select");
+        task.addParam("user_id", CommonVal.loginInfo.getUser_id());
+        Log.d("TAG", "selectList: " + CommonVal.loginInfo.getUser_id() );
+        InputStreamReader ir =  CommonMethod.executeAskGet(task);
+        ArrayList<IoTVO> list = null ;
+        if(ir!=null){
+            list = gson.fromJson(ir, new TypeToken<List<IoTVO>>(){}.getType());
+        }else{
+            Log.d("TAG", "selectList: " + "널임");
+        }
+        return list;
     }
 }

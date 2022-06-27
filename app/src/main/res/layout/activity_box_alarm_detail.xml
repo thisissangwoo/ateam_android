@@ -51,14 +51,28 @@
             android:padding="10dp"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="AnaFor Box"
-                android:textSize="28dp"
-                android:gravity="center"
-                android:textColor="#696aad"
-                android:textStyle="bold"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="AnaFor Box"
+                    android:textSize="28dp"
+                    android:gravity="center"
+                    android:textColor="#696aad"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="80dp"
+                    android:layout_weight="2"/>
+                <TextView
+                    android:id="@+id/tv_box_detail_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center|right"
+                    android:text="Bluetooth"
+                    android:drawableRight="@drawable/icon_bluetooth"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -238,10 +252,10 @@
                         android:layout_weight="1">
 
                         <Button
-                            android:id="@+id/btn_box_detail_blue"
+                            android:id="@+id/btn_box_detail_cancel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="블루투스연결"
+                            android:text="취소"
                             android:textColor="#696aad"
                             android:textSize="18dp"
                             android:backgroundTint="#ccc"/>

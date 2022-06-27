@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.anafor.Box_Alarm.IoTVO;
 import com.example.anafor.R;
 
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ import java.util.ArrayList;
 public class Box_RecordAdapter extends RecyclerView.Adapter<Box_RecordAdapter.ViewHolder>{
 
     LayoutInflater inflater;
-    ArrayList<Box_RecordDTO> list;
+    ArrayList<IoTVO> list;
 
-    public Box_RecordAdapter(LayoutInflater inflater, ArrayList<Box_RecordDTO> list) {
+    public Box_RecordAdapter(LayoutInflater inflater, ArrayList<IoTVO> list) {
         this.inflater = inflater;
         this.list = list;
     }
@@ -34,9 +35,8 @@ public class Box_RecordAdapter extends RecyclerView.Adapter<Box_RecordAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tv_box_recode_title.setText(list.get(position).getTitle());
-        holder.tv_box_recode_content.setText(list.get(position).getContent());
-        holder.tv_box_recode_date.setText(list.get(position).getDate());
+        holder.tv_box_recode_title.setText(list.get(position).getMemo());
+        holder.tv_box_recode_date.setText(list.get(position).getCase_time());
     }
 
     @Override
