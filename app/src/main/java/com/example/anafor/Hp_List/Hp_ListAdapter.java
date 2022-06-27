@@ -69,6 +69,13 @@ public class Hp_ListAdapter extends RecyclerView.Adapter<Hp_ListAdapter.ViewHold
             holder.tv_hp_list_addr.setText(list.get(i).getHp_addr());
             holder.tv_hp_list_kategorie.setText(list.get(i).getHp_tel());
 
+            if(i % 3 == 0){
+                holder. imgv_hp_list_img.setImageResource(R.drawable.hpimg1);
+            }else if(i % 3 == 1){
+                holder. imgv_hp_list_img.setImageResource(R.drawable.hpimg2);
+            }else if(i % 3 == 2){
+                holder. imgv_hp_list_img.setImageResource(R.drawable.hpimg3);
+            }
 
             holder.hp_list_reviewchoic.setOnClickListener(new View.OnClickListener() {
                 @Override
