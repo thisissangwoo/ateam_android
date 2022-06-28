@@ -1,6 +1,5 @@
 package com.example.anafor.pill_detail;
 
-import android.content.Context;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.anafor.Hp_Information.Hp_InformationActivity;
-import com.example.anafor.Pill_Main.Pill_MainAdapter;
 import com.example.anafor.R;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -23,10 +19,9 @@ public class Pill_detailAdapter extends RecyclerView.Adapter<Pill_detailAdapter.
 
     LayoutInflater inflater;
     ArrayList<Pill_detailDTO> list;
-    Gson gson = new Gson();
-    Context context;
+    Pill_detailActivity context;
 
-    public Pill_detailAdapter(LayoutInflater inflater, ArrayList<Pill_detailDTO> list, Context context) {
+    public Pill_detailAdapter(LayoutInflater inflater, ArrayList<Pill_detailDTO> list, Pill_detailActivity context) {
         this.inflater = inflater;
         this.list = list;
         this.context = context;
@@ -41,6 +36,15 @@ public class Pill_detailAdapter extends RecyclerView.Adapter<Pill_detailAdapter.
         return new ViewHolder(itemview);
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -49,7 +53,7 @@ public class Pill_detailAdapter extends RecyclerView.Adapter<Pill_detailAdapter.
         holder.tv_pill_detail_efcy.setText(Html.fromHtml(list.get(position).getDrug_efcy()));
         holder.tv_pill_detail_use.setText(Html.fromHtml(list.get(position).getDrug_use()));
         holder.tv_pill_detail_se.setText(Html.fromHtml(list.get(position).getDrug_se()));
-        if(list.get(position).getDrug_img() != null){
+        if(! list.get(position).getDrug_img() .equals("null")){
             Glide.with(context).load(list.get(position).getDrug_img()).into(holder.imgv_pill_detail_img);
         }else{
             holder.imgv_pill_detail_img.setImageResource(R.drawable.pill_noimg);

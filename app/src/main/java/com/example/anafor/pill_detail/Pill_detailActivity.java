@@ -33,7 +33,6 @@ public class Pill_detailActivity extends AppCompatActivity {
     RecyclerView recv_pill_detail;
     ArrayList<Pill_detailDTO> list = new ArrayList<>();
     Pill_detailAdapter adapter;
-    Gson gson = new Gson();
     Context context;
 
     @Override
@@ -57,10 +56,9 @@ public class Pill_detailActivity extends AppCompatActivity {
 
         selectList();
 
-        adapter = new Pill_detailAdapter(getLayoutInflater(), list,context);
+        adapter = new Pill_detailAdapter(getLayoutInflater(), list,this);
         recv_pill_detail.setAdapter(adapter);
         recv_pill_detail.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-
 
     }
 
