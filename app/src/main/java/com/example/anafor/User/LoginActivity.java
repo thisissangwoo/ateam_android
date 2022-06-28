@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.anafor.Common.AskTask;
+import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.MainActivity;
 import com.example.anafor.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -79,6 +81,9 @@ public class LoginActivity extends AppCompatActivity {
         loginName = findViewById(R.id.tv_main_header_login);
         pwFind = findViewById(R.id.tv_login_pwFind);
 
+
+        //SharedPreferences id, pw정보를 String에 담고 그값이 .length() > 3 & 만족하면
+        //UserDAO dao = new UserDAO(LoginActivity.this); 하고 메인에서 Navigation에 회원정보 보이게만 수정.
         //비번찾기
         pwFind.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,18 +106,25 @@ public class LoginActivity extends AppCompatActivity {
                     tiedt_pw.requestFocus();
                     return;
                 }else{
-                    UserDAO dao = new UserDAO(LoginActivity.this);
+                    UserDAO dao = new UserDAO(tiedt_id.getText().toString(),tiedt_pw.getText().toString());
                     if(dao.isUserLogin()){
                         checkAutoLogin();
                         goMain();
                     }else{
+                        Toast.makeText(LoginActivity.this,"아이디 또는 비밀번호가 틀립니다",Toast.LENGTH_SHORT).show();
+
+                        tiedt_id.setText("");
+                        tiedt_pw.setText("");
+                        tiedt_id.requestFocus();
                         chk_auto.setChecked(false);
                         checkAutoLogin();
                     }
                 }
             }
         });
-
+        if(tiedt_id.getText().toString().length() > 3 && tiedt_pw.getText().toString().length() > 3){
+            //btn_login.performClick();
+        }
         //네아로SDK를 애플리케이션에 적용하려면 네아로 객체를 초기화
         NaverIdLoginSDK.INSTANCE.initialize(
                 this,"szRRJL0N7PYQvmPTLsqe",
@@ -164,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (oAuthToken != null){
                     Log.d(TAG,"카카오 토큰이 있음. 로그인 정보를 뺴오면 됨");
                     getKakaoProfile();
-                    goMain();
+
                 }else{
                     Log.d(TAG,"카카오 토큰이 없음." + throwable.toString());
                 }
@@ -195,6 +207,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     //네이버 프로필 가져오기
@@ -206,7 +219,9 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "onSuccess 이름: " + nidProfileResponse.getProfile().getName());
                 Log.d(TAG, "onSuccess 이메일: " + nidProfileResponse.getProfile().getEmail());
                 Log.d(TAG, "onSuccess 전화번호: " + nidProfileResponse.getProfile().getMobile());
-                goMain();
+                tiedt_id.setText(null);
+                tiedt_pw.setText(null);
+                socialLogin(nidProfileResponse.getProfile().getEmail());
             }
 
             @Override
@@ -236,6 +251,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(account != null){
                     Log.d(TAG, "onSuccess 이름: "+account.getProfile().getNickname());
                     Log.d(TAG, "onSuccess 이메일: "+account.getEmail());
+                    socialLogin(account.getEmail());
                 }
             }
             return null;
@@ -271,15 +287,29 @@ public class LoginActivity extends AppCompatActivity {
 
     //자동로그인
     public void checkAutoLogin(){
-        SharedPreferences preferences = getPreferences(LoginActivity.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         if(chk_auto.isChecked()){
             editor.putString("id" , tiedt_id.getText().toString());
             editor.putString("pw" , tiedt_pw.getText().toString());
         }else{
-            editor.clear(); //전체지우기
+            editor.clear();
         }
         editor.apply();
+    }
+
+    //1. 소셜로그인 시 회원 아이디에 없으면, 이메일을 가지고 회원가입 화면으로 이동 => 나머지 정보를 입력받고 회원가입 시킴.!
+    public void socialLogin(String user_id){
+        UserDAO dao = new UserDAO(user_id);
+        Intent intent = null;
+        if(dao.isSocialLogin() ){
+            intent = new Intent(LoginActivity.this , MainActivity.class);
+        }else{
+            intent = new Intent(LoginActivity.this , SocialJoinActivity.class);
+            intent.putExtra("user_id"  , user_id);
+        }
+        startActivity(intent);
+        finish();
     }
 
 }

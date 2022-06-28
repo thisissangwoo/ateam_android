@@ -1,5 +1,6 @@
 package com.example.anafor.Hp_Information;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,23 +9,30 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Common.CommonVal;
+import com.example.anafor.Hp_Review.Hp_ReviewAllActivity;
+import com.example.anafor.Hp_Review.Hp_infoReviewFragment;
+import com.example.anafor.Hp_Review.ReviewTotalVO;
+import com.example.anafor.Hp_Review.ReviewVO;
 import com.example.anafor.R;
 import com.example.anafor.User.LoginActivity;
 import com.example.anafor.utils.GetDate;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Hp_InformationActivity extends AppCompatActivity {
 
@@ -32,7 +40,9 @@ public class Hp_InformationActivity extends AppCompatActivity {
     ImageView imgv_hp_infor_back;
     TextView hp_infor_time, hp_infor_infor, hp_infor_review, tv_hp_today,tv_hp_todayTime,
             tv_hp_tlunch, tv_hp_name, tv_hp_addr , tv_hp_url, tv_hp_phone, tv_hp_wlunch,tv_hp_holi,
-            tv_hp_mon, tv_hp_tue, tv_hp_wed, tv_hp_thu, tv_hp_fri, tv_hp_sat, tv_hp_sun, tv_hp_dlunch;
+            tv_hp_mon, tv_hp_tue, tv_hp_wed, tv_hp_thu, tv_hp_fri, tv_hp_sat, tv_hp_sun, tv_hp_dlunch,
+            tv_review_total, tv_review_rate, tv_review_mbtn, tv_total_survey1, tv_total_survey2, tv_total_survey3;
+
     ScrollView hp_infor_scview;
     Button btn_review;
     ImageView imgv_heartclick;
@@ -44,11 +54,16 @@ public class Hp_InformationActivity extends AppCompatActivity {
     Gson gson;
     int flag = 0;               //상태 변수
     boolean heartclick = false; //조회 여부 확인 (default)
+    LinearProgressIndicator pro_survey1, pro_survey2, pro_survey3;
+    ReviewTotalVO totalReview ;
+    ArrayList<ReviewVO> reviewList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hp_information);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         Intent intent = getIntent();
         infoDTO = (Hp_infoDTO) intent.getSerializableExtra("infoDTO"); //DTO 값 저장
         gson = new Gson();
@@ -89,9 +104,33 @@ public class Hp_InformationActivity extends AppCompatActivity {
         tv_time[8] = findViewById(R.id.tv_hp_wlunch);                      //주말 점심시간
         tv_hp_sun = findViewById(R.id.tv_hp_sun);                            //일요일
 
+        tv_review_total = findViewById(R.id.tv_review_total);               //총 리뷰 수
+        tv_review_rate = findViewById(R.id.tv_review_rate);                  //별점 평균
+        tv_review_mbtn = findViewById(R.id.tv_review_mbtn);             //더보기 버튼
+
+        tv_total_survey1 =findViewById(R.id.tv_total_survey1);          //병원이 깨끗했어요
+        tv_total_survey2 = findViewById(R.id.tv_total_survey2);         //친절하게 진단해주셨어요
+        tv_total_survey3 = findViewById(R.id.tv_total_survey3);         //부대시설 만족
+
+        pro_survey1 = findViewById(R.id.pro_surevey1);
+        pro_survey2 = findViewById(R.id.pro_surevey2);
+        pro_survey3 = findViewById(R.id.pro_surevey3);
+
+        tv_review_mbtn.setVisibility(View.GONE);
         writeTextView();  //전체 진료시간 출력
         writeHpInfo();      //병원 정보 출력
 
+        selectReviewtList();            //리뷰 정보 조회
+
+        //더보기 버튼 클릭시 (리뷰 리스트 출력)
+        tv_review_mbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                        Intent intent = new Intent(Hp_InformationActivity.this, Hp_ReviewAllActivity.class);
+                        intent.putExtra("reviewList",reviewList);
+                        startActivity(intent);
+            }
+        });
 
         //로그인이 된 경우
         if(CommonVal.loginInfo !=null) {
@@ -144,11 +183,11 @@ public class Hp_InformationActivity extends AppCompatActivity {
 
                 int position = tab.getPosition();
 
-                if(position == 0){
+                if(position == 0){          //진료시간
                     hp_infor_scview.smoothScrollTo(0, hp_infor_time.getTop());
-                }else if (position == 1){
+                }else if (position == 1){           //병원정보
                     hp_infor_scview.smoothScrollTo(0, hp_infor_infor.getTop());
-                }else if (position == 2){
+                }else if (position == 2){           //리뷰
                     hp_infor_scview.smoothScrollTo(0, hp_infor_review.getTop());
                 }
 
@@ -173,7 +212,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
                     Intent intent = new Intent(Hp_InformationActivity.this, Hp_InformationReviewActivity.class);
                     intent.putExtra("hp_name",infoDTO.getHp_name());
                     intent.putExtra("hp_code",infoDTO.getHp_code());
-                    startActivity(intent);
+                    startActivityForResult(intent , 100);
                 }else{
                     alertLogin();
                 }
@@ -271,17 +310,44 @@ public class Hp_InformationActivity extends AppCompatActivity {
 
     }
 
-    //Spring 통신
+    //Spring 통신(찜하기)
     public InputStreamReader aTask (String mapping){
         AskTask task = new AskTask(mapping);
         task.addParam("user_id", CommonVal.loginInfo.getUser_id());
-        task.addParam("hp_code", infoDTO.hp_code);
+        task.addParam("hp_code", infoDTO.getHp_code());
         return CommonMethod.executeAskGet(task);
+    }
+
+    //리뷰 조회
+    public void selectReviewtList(){
+            //전체 리뷰 총합계 조회
+            AskTask task = new AskTask("total.review");
+            task.addParam("code",infoDTO.getHp_code());
+            totalReview = gson.fromJson(CommonMethod.executeAskGet(task),ReviewTotalVO.class);
+            if(totalReview != null){
+                AskTask  task2 = new AskTask("selectAll.review");
+                task2.addParam("code",infoDTO.getHp_code());
+                reviewList = gson.fromJson(CommonMethod.executeAskGet(task2), new TypeToken<ArrayList<ReviewVO>>() {}.getType());
+                tv_review_total.setText("리뷰  "+totalReview.getTotalcnt()+" 개");             //총 리뷰 수
+                tv_total_survey1.setText("("+totalReview.getSurvey1cnt()+")");
+                tv_total_survey2.setText("("+totalReview.getSurvey2cnt()+")");
+                tv_total_survey3.setText("("+totalReview.getSurvey3cnt()+")");
+                tv_review_rate.setText(totalReview.getTotalrate()+" 점");
+                tv_review_mbtn.setVisibility(View.VISIBLE);
+                pro_survey1.setProgressCompat((int)(totalReview.getSurvey1rate()*100.0),false);
+                pro_survey2.setProgressCompat((int)(totalReview.getSurvey2rate()*100.0),false);
+                pro_survey3.setProgressCompat((int)(totalReview.getSurvey3rate()*100.0),false);
+                //해당 병원 전체 리뷰 조회
+            }else{
+                tv_review_mbtn.setVisibility(View.INVISIBLE);
+            }
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
     }
 
 
     @Override
     public void onBackPressed() {
+
               //뒤로 가기 했을때 한번만 DB에 값 전달
             if(heartclick){       //원래 값이 있었을때
                 if(flag == 1){                //찜한 날짜 바꿔서 업데이트
@@ -294,7 +360,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
                     aTask("insert.heart");
                 }
             }
-            finish();
+            super.onBackPressed();
     }
     //비로그인상태일때 로그인해야 이용가능하다는 알림
     public void alertLogin(){
@@ -315,6 +381,16 @@ public class Hp_InformationActivity extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100 && resultCode == RESULT_OK){
+            selectReviewtList();
+        }
     }
 }
 

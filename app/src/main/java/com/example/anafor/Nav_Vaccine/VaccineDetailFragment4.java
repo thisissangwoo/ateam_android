@@ -1,4 +1,4 @@
-package com.example.anafor.Hp_Information;
+package com.example.anafor.Nav_Vaccine;
 
 import android.os.Bundle;
 
@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 
 import com.example.anafor.R;
 
-public class Hp_InformationFragment extends Fragment {
+
+public class VaccineDetailFragment4 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_hp_information, container, false);
+        View v = inflater.inflate(R.layout.fragment_vaccine_detail4, container, false);
+
 
         return v;
     }

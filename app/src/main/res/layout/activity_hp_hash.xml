@@ -48,273 +48,265 @@
         android:layout_gravity="center"/>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="자주 찾는 증상"
-            android:textSize="20dp"
-            android:textColor="#696aad"
-            android:textStyle="bold"
-            android:layout_margin="10dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="자주 찾는 증상"
+        android:textSize="20dp"
+        android:textColor="#696aad"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center"
+            android:layout_marginLeft="20dp"
             android:orientation="horizontal">
 
-
-
-            <Button
-                android:id="@+id/btn_hp_hash_head"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recv_hp_hash"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#696aad"
-                android:textStyle="bold"
-                android:text="두통이 있어요"/>
-
-            <Button
-                android:id="@+id/btn_hp_hash_bone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#696aad"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:text="뼈가 아파요"/>
-
-            <Button
-                android:id="@+id/btn_hp_hash_teeth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#696aad"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:text="이가 아파요"/>
+                android:orientation="horizontal"
+                android:layout_margin="5dp"/>
 
         </LinearLayout>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="최근 인기 클리닉"
+            android:text="대표적인 증상"
             android:textSize="20dp"
             android:textColor="#696aad"
             android:textStyle="bold"
-            android:layout_marginLeft="30dp"/>
+            android:layout_marginLeft="10dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="감기"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="디스크"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="생리불순"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="비염"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="중이염"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="방광염"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="소아진료"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="골절"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="치통"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="성형"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="라식/라섹"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="안구건조"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="우울증"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="공황장애"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="여드름"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="염증"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="종양"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="신경통"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        app:cardCornerRadius="30dp"
-        android:layout_marginTop="-8dp"
-        app:cardUseCompatPadding="true"
-        android:elevation="30dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="30dp"
-            android:layout_marginLeft="-5dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_hp_hash_gamgi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="감기"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_yeodeuleum"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="28dp"
-                android:text="여드름"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_saenglibulsun"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="생리불순"
-                android:paddingLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_biyeom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="28dp"
-                android:text="비염"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_jungiyeom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="28dp"
-                android:text="중이염"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_hp_hash_banggwangyeom"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="방광염"
-                android:layout_marginLeft="25dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_soajinlyo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="소아진료"
-                android:layout_marginLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_goljeol"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="골절"
-                android:layout_marginLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_chitong"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="치통"
-                android:layout_marginLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_seonghyeong"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="성형"
-                android:layout_marginLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="125dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_hp_hash_lasig"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="라식/라섹"
-                android:layout_marginLeft="25dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_angugeonjo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="안구건조"
-                android:layout_marginLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_uuljeung"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="우울증"
-                android:layout_marginLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_gonghwangjangae"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="공황장애"
-                android:layout_marginLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="170dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_hp_hash_disk"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="디스크"
-                android:layout_marginLeft="25dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_yeomjeung"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="염증"
-                android:layout_marginLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_jongyang"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="종양"
-                android:layout_marginLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-            <TextView
-                android:id="@+id/tv_hp_hash_singyeongtong"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="신경통"
-                android:layout_marginLeft="28dp"
-                android:textStyle="bold"
-                android:textSize="17dp"/>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

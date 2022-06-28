@@ -4,6 +4,7 @@ import static android.content.res.ColorStateList.valueOf;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,18 +34,22 @@ import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
-public class UserInfoActivity extends AppCompatActivity {
+public class UserInfoActivity extends AppCompatActivity{
     private static final String TAG = "회원정보수정";
 
-    TextView tv_logo,tv_logout,tv_idDelete;
+    TextView tv_logout,tv_idDelete;
     ImageView back;
     TextInputLayout til_id,til_pw,til_pwChk,til_name,til_birth,til_tel;
     TextInputEditText tiedt_id,tiedt_pw,tiedt_pwChk,tiedt_name,tiedt_birth,tiedt_tel;
     Button btn_edit;
     RadioGroup radioGroup;
     RadioButton rdo_male, rdo_female;
+    String  pwInput, pwChkInput, nameInput, telInput, birthInput;
+    boolean pwChk = true, nameChk = true, telChk = true, birthChk = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,16 +82,6 @@ public class UserInfoActivity extends AppCompatActivity {
         tv_idDelete = findViewById(R.id.tv_userInfo_idDelete);
         btn_edit = findViewById(R.id.btn_userInfo_edit);
 
-        //로고클릭
-        tv_logo = findViewById(R.id.tv_userInfo_anaforlogo);
-        tv_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(UserInfoActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
         //뒤로가기
         back = findViewById(R.id.imgv_userInfo_back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -97,14 +93,29 @@ public class UserInfoActivity extends AppCompatActivity {
 
         //회원정보 가져오기
         tiedt_id.setText(CommonVal.loginInfo.getUser_id());
-        tiedt_pw.setText(CommonVal.loginInfo.getUser_pw());
-        tiedt_pwChk.setText(CommonVal.loginInfo.getUser_pw());
+        if (!(CommonVal.loginInfo.getUser_pw()== null)){
+            tiedt_pw.setText(CommonVal.loginInfo.getUser_pw());
+            tiedt_pwChk.setText(CommonVal.loginInfo.getUser_pw());
+        }else{
+            tiedt_pw.setText(null);
+            tiedt_pwChk.setText(null);
+        }
+
         tiedt_name.setText(CommonVal.loginInfo.getUser_name());
-        tiedt_tel.setText(CommonVal.loginInfo.getUser_tel());
+
+        if (!(CommonVal.loginInfo.getUser_tel()==null)){
+            tiedt_tel.setText(CommonVal.loginInfo.getUser_tel());
+        }else{
+            tiedt_tel.setText(null);
+        }
 
         //생년월일 정규식
-        String match = "[^\uAC00-\uD7A30-9a-zA-Z]";
-        tiedt_birth.setText(CommonVal.loginInfo.getUser_birth().replaceAll(match, ""));
+        if (!(CommonVal.loginInfo.getUser_birth()==null)){
+            String match = "[^\uAC00-\uD7A30-9a-zA-Z]";
+            tiedt_birth.setText(CommonVal.loginInfo.getUser_birth().replaceAll(match, ""));
+        }else{
+            tiedt_birth.setText(null);
+        }
 
         //성별체크
         if(CommonVal.loginInfo.getUser_gender().equals("여")){
@@ -128,16 +139,19 @@ public class UserInfoActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String pwInput = tiedt_pw.getText().toString();
+                pwInput = tiedt_pw.getText().toString();
                 if(!pwInput.isEmpty() && Pattern.matches("^[a-zA-Z0-9]{8,16}$", pwInput)){
                     til_pw.setHelperText("사용 가능한 비밀번호입니다.");
                     til_pw.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
+                    pwChk = true;
                 }else if(pwInput.replace(" ", "").equals("")){
                     til_pw.setError("비밀번호를 입력하세요");
                     til_pwChk.setHelperText(null);
                     til_pwChk.setError(null);
+                    pwChk = false;
                 }else{
                     til_pw.setError("사용할 수 없는 비밀번호입니다.");
+                    pwChk = false;
                 }
             }
         });
@@ -152,7 +166,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String pwInput = tiedt_pw.getText().toString();
+                pwChkInput = tiedt_pw.getText().toString();
                 String pwChkInput = tiedt_pwChk.getText().toString();
                 if(pwChkInput.equals(pwInput) && !(pwChkInput.replace(" ", "").equals("")) && !(pwInput.isEmpty()) ) {
                     til_pwChk.setHelperText("비밀번호가 일치합니다");
@@ -176,13 +190,17 @@ public class UserInfoActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String nameInput = tiedt_name.getText().toString();
+                nameInput = tiedt_name.getText().toString();
                 if (!nameInput.isEmpty() && Pattern.matches("^[가-힣]*$", nameInput)) {
-                    til_name.setHelperText(" ");
-                } else if (nameInput.replace(" ", "").equals("")) {
+                    til_name.setHelperText("");
+                    til_name.setError(null);
+                    nameChk = true;
+                } else if(nameInput.replace(" ", "").equals("")) {
                     til_name.setError("이름을 입력하세요");
+                    nameChk = false;
                 } else {
-                    til_name.setError("이름을 한글로 입력해주세요");
+                    til_name.setError("이름을 입력해주세요");
+                    nameChk = false;
                 }
             }
         });
@@ -197,13 +215,17 @@ public class UserInfoActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String telInput = tiedt_tel.getText().toString();
+                telInput = tiedt_tel.getText().toString();
                 if (!telInput.isEmpty() && Pattern.matches("\\d{11}", telInput)) {
                     til_tel.setHelperText(" ");
+                    til_tel.setError(null);
+                    telChk = true;
                 } else if (telInput.replace(" ", "").equals("")) {
                     til_tel.setError("핸드폰번호를 입력하세요");
+                    telChk = false;
                 } else {
                     til_tel.setError("번호만 입력하세요 예)01012345678");
+                    telChk = false;
                 }
             }
         });
@@ -218,18 +240,45 @@ public class UserInfoActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                SimpleDateFormat dateFormatParser = new SimpleDateFormat("yyyyMMdd"); //검증할 날짜 포맷 설정
-                dateFormatParser.setLenient(false); //false일경우 처리시 입력한 값이 잘못된 형식일 시 오류가 발생
-                String birthInput = tiedt_birth.getText().toString();
+                birthInput = tiedt_birth.getText().toString();
+                Date nowDate = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd"); //검증할 날짜 포맷 설정
+                String strNowDate = format.format(nowDate);
 
+                format.setLenient(false); //false일경우 처리시 입력한 값이 잘못된 형식일 시 오류가 발생
                 try {
-                    dateFormatParser.parse(birthInput); //대상 값 포맷에 적용되는지 확인
-                    til_birth.setHelperText(null);
-                    til_birth.setError(null);
-                } catch (ParseException e) {
+                    format.parse(birthInput); //대상 값 포맷에 적용되는지 확인
+                    String startAge = CommonMethod.AddDate(strNowDate,-14,0,0);
+                    format.parse(startAge);
+                    String endAge = CommonMethod.AddDate(strNowDate,-100,0,0);
+                    format.parse(endAge);
+
+                    if (birthInput.compareTo(startAge) <= 0 && birthInput.compareTo(endAge) >= 0){
+                        til_birth.setHelperText("");
+                        til_birth.setError(null);
+                        birthChk = true;
+                    }else if(birthInput.compareTo(endAge) < 0){
+                        til_birth.setError("정말이세요?");
+                        birthChk = false;
+                    }else if(birthInput.compareTo(startAge) > 0 && birthInput.compareTo(strNowDate) <= 0){
+                        til_birth.setHelperText(null);
+                        til_birth.setError("만14세 미만은 아나포를 이용할수 없습니다");
+                        birthChk = false;
+                    }else if(birthInput.compareTo(strNowDate) > 0){
+                        til_birth.setHelperText(null);
+                        til_birth.setError("미래에서 오셨군요^^");
+                        birthChk = false;
+                    }else{
+                        til_birth.setHelperText(null);
+                        til_birth.setError("가입할수 없는 나이입니다 죄송합니다");
+                        birthChk = false;
+                    }
+                } catch (Exception e) {
                     e.printStackTrace();
                     til_birth.setError("생년월일 입력하세요 예)19950101");
+                    birthChk = false;
                 }
+
             }
         });
 
@@ -268,6 +317,10 @@ public class UserInfoActivity extends AppCompatActivity {
                         i.putExtra("finish", true);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         CommonVal.loginInfo = null;
+                        SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear();
+                        editor.commit();
                         startActivity(i);
                         finish();
                     }
@@ -299,19 +352,23 @@ public class UserInfoActivity extends AppCompatActivity {
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 if(tiedt_pw.getText().toString().length() < 1){
+                if(tiedt_pw.getText().toString().length() < 1 || pwChk == false){
                     Toast.makeText(UserInfoActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    tiedt_pw.requestFocus();
                     return;
-                }else if(tiedt_pwChk.getText().toString().length() < 1){
+                }else if(!(tiedt_pwChk.getText().toString().equals(tiedt_pw.getText().toString()))){
                     Toast.makeText(UserInfoActivity.this, "비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
+                    tiedt_pwChk.requestFocus();
                     return;
-                }else if(tiedt_name.getText().toString().length() < 1){
+                }else if(tiedt_name.getText().toString().length() < 1 || nameChk == false){
                     Toast.makeText(UserInfoActivity.this, "이름을 입력해주세요", Toast.LENGTH_SHORT).show();
+                    tiedt_name.requestFocus();
                     return;
-                }else if(tiedt_tel.getText().toString().length() < 1){
+                }else if(tiedt_tel.getText().toString().length() < 1 || telChk == false){
                     Toast.makeText(UserInfoActivity.this, "전화번호를 입력해주세요", Toast.LENGTH_SHORT).show();
+                    tiedt_tel.requestFocus();
                     return;
-                }else if(tiedt_birth.getText().toString().length() < 1){
+                }else if(tiedt_birth.getText().toString().length() < 1 || birthChk == false) {
                     Toast.makeText(UserInfoActivity.this, "생년월일을 입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -335,6 +392,9 @@ public class UserInfoActivity extends AppCompatActivity {
             }
         });
     }
+
 }
+
+
 
 

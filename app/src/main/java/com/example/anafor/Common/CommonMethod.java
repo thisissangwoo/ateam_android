@@ -4,6 +4,9 @@ import android.os.AsyncTask;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class CommonMethod {
@@ -20,4 +23,20 @@ public class CommonMethod {
         }
         return null;
     }
+
+    public static String AddDate(String strDate, int year, int month, int day) throws Exception{
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal = Calendar.getInstance();
+
+        Date nowDate = format.parse(strDate);
+        cal.setTime(nowDate);
+
+        cal.add(Calendar.YEAR, year);
+        cal.add(Calendar.MONTH, month);
+        cal.add(Calendar.DATE, day);
+
+        return format.format(cal.getTime());
+    }
 }
+
+

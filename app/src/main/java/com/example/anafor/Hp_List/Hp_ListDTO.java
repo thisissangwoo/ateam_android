@@ -3,23 +3,7 @@ package com.example.anafor.Hp_List;
 public class Hp_ListDTO {
 
     private int imgv_url;
-    private String HP_CODE, HP_NAME, TYPE_CODE, SIDO_CODE, SIDO_NAME, SIGUNGU_CODE, SIGUNGU_NAME, HP_ADDR, HP_TEL, HP_URL, HP_X, HP_Y;
-
-    public Hp_ListDTO(int imgv_url, String HP_CODE, String HP_NAME, String TYPE_CODE, String SIDO_CODE, String SIDO_NAME, String SIGUNGU_CODE, String SIGUNGU_NAME, String HP_ADDR, String HP_TEL, String HP_URL, String HP_X, String HP_Y) {
-        this.imgv_url = imgv_url;
-        this.HP_CODE = HP_CODE;
-        this.HP_NAME = HP_NAME;
-        this.TYPE_CODE = TYPE_CODE;
-        this.SIDO_CODE = SIDO_CODE;
-        this.SIDO_NAME = SIDO_NAME;
-        this.SIGUNGU_CODE = SIGUNGU_CODE;
-        this.SIGUNGU_NAME = SIGUNGU_NAME;
-        this.HP_ADDR = HP_ADDR;
-        this.HP_TEL = HP_TEL;
-        this.HP_URL = HP_URL;
-        this.HP_X = HP_X;
-        this.HP_Y = HP_Y;
-    }
+    private String hp_code, hp_name, type_code, sido_code, sido_name, sigungu_code, sigungu_name, hp_addr, hp_tel, hp_url, hp_x, hp_y;
 
     public int getImgv_url() {
         return imgv_url;
@@ -29,99 +13,99 @@ public class Hp_ListDTO {
         this.imgv_url = imgv_url;
     }
 
-    public String getHP_CODE() {
-        return HP_CODE;
+    public String getHp_code() {
+        return hp_code;
     }
 
-    public void setHP_CODE(String HP_CODE) {
-        this.HP_CODE = HP_CODE;
+    public void setHp_code(String hp_code) {
+        this.hp_code = hp_code;
     }
 
-    public String getHP_NAME() {
-        return HP_NAME;
+    public String getHp_name() {
+        return hp_name;
     }
 
-    public void setHP_NAME(String HP_NAME) {
-        this.HP_NAME = HP_NAME;
+    public void setHp_name(String hp_name) {
+        this.hp_name = hp_name;
     }
 
-    public String getTYPE_CODE() {
-        return TYPE_CODE;
+    public String getType_code() {
+        return type_code;
     }
 
-    public void setTYPE_CODE(String TYPE_CODE) {
-        this.TYPE_CODE = TYPE_CODE;
+    public void setType_code(String type_code) {
+        this.type_code = type_code;
     }
 
-    public String getSIDO_CODE() {
-        return SIDO_CODE;
+    public String getSido_code() {
+        return sido_code;
     }
 
-    public void setSIDO_CODE(String SIDO_CODE) {
-        this.SIDO_CODE = SIDO_CODE;
+    public void setSido_code(String sido_code) {
+        this.sido_code = sido_code;
     }
 
-    public String getSIDO_NAME() {
-        return SIDO_NAME;
+    public String getSido_name() {
+        return sido_name;
     }
 
-    public void setSIDO_NAME(String SIDO_NAME) {
-        this.SIDO_NAME = SIDO_NAME;
+    public void setSido_name(String sido_name) {
+        this.sido_name = sido_name;
     }
 
-    public String getSIGUNGU_CODE() {
-        return SIGUNGU_CODE;
+    public String getSigungu_code() {
+        return sigungu_code;
     }
 
-    public void setSIGUNGU_CODE(String SIGUNGU_CODE) {
-        this.SIGUNGU_CODE = SIGUNGU_CODE;
+    public void setSigungu_code(String sigungu_code) {
+        this.sigungu_code = sigungu_code;
     }
 
-    public String getSIGUNGU_NAME() {
-        return SIGUNGU_NAME;
+    public String getSigungu_name() {
+        return sigungu_name;
     }
 
-    public void setSIGUNGU_NAME(String SIGUNGU_NAME) {
-        this.SIGUNGU_NAME = SIGUNGU_NAME;
+    public void setSigungu_name(String sigungu_name) {
+        this.sigungu_name = sigungu_name;
     }
 
-    public String getHP_ADDR() {
-        return HP_ADDR;
+    public String getHp_addr() {
+        return hp_addr;
     }
 
-    public void setHP_ADDR(String HP_ADDR) {
-        this.HP_ADDR = HP_ADDR;
+    public void setHp_addr(String hp_addr) {
+        this.hp_addr = hp_addr;
     }
 
-    public String getHP_TEL() {
-        return HP_TEL;
+    public String getHp_tel() {
+        return hp_tel;
     }
 
-    public void setHP_TEL(String HP_TEL) {
-        this.HP_TEL = HP_TEL;
+    public void setHp_tel(String hp_tel) {
+        this.hp_tel = hp_tel;
     }
 
-    public String getHP_URL() {
-        return HP_URL;
+    public String getHp_url() {
+        return hp_url;
     }
 
-    public void setHP_URL(String HP_URL) {
-        this.HP_URL = HP_URL;
+    public void setHp_url(String hp_url) {
+        this.hp_url = hp_url;
     }
 
-    public String getHP_X() {
-        return HP_X;
+    public String getHp_x() {
+        return hp_x;
     }
 
-    public void setHP_X(String HP_X) {
-        this.HP_X = HP_X;
+    public void setHp_x(String hp_x) {
+        this.hp_x = hp_x;
     }
 
-    public String getHP_Y() {
-        return HP_Y;
+    public String getHp_y() {
+        return hp_y;
     }
 
-    public void setHP_Y(String HP_Y) {
-        this.HP_Y = HP_Y;
+    public void setHp_y(String hp_y) {
+        this.hp_y = hp_y;
     }
 }

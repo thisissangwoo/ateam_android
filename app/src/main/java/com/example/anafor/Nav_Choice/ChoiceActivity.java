@@ -52,13 +52,13 @@ public class ChoiceActivity extends AppCompatActivity {
 
     }
 
+    //찜한 병원 조회
     public void selectList(){
         AskTask task = new AskTask("select.heart");
         task.addParam("user_id",CommonVal.loginInfo.getUser_id());
         list = gson.fromJson(CommonMethod.executeAskGet(task),new TypeToken<ArrayList<ChoiceDTO>>(){}.getType());
         if(list.size()==0){
             tv_heart.setVisibility(View.VISIBLE);
-            recv_my_choice_list.setVisibility(View.GONE);
         }else{
             adapter = new ChoiceAdapter(getLayoutInflater(), list,context);
             recv_my_choice_list.setAdapter(adapter);

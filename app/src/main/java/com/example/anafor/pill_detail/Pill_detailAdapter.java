@@ -1,6 +1,7 @@
 package com.example.anafor.pill_detail;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,9 @@ public class Pill_detailAdapter extends RecyclerView.Adapter<Pill_detailAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tv_pill_detail_name.setText(list.get(position).getDrug_name());
         holder.tv_pill_detail_cp.setText(list.get(position).getDrug_cp());
-        holder.tv_pill_detail_efcy.setText(list.get(position).getDrug_efcy());
-        holder.tv_pill_detail_use.setText(list.get(position).getDrug_use());
-        holder.tv_pill_detail_se.setText(list.get(position).getDrug_se());
+        holder.tv_pill_detail_efcy.setText(Html.fromHtml(list.get(position).getDrug_efcy()));
+        holder.tv_pill_detail_use.setText(Html.fromHtml(list.get(position).getDrug_use()));
+        holder.tv_pill_detail_se.setText(Html.fromHtml(list.get(position).getDrug_se()));
 
 
     }

@@ -2,52 +2,56 @@ package com.example.anafor.Hp_Hash;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.anafor.Common.AskTask;
-import com.example.anafor.Common.CommonMethod;
-import com.example.anafor.Common.MemberSelect;
 import com.example.anafor.Hp_List.Hp_ListActivity;
+import com.example.anafor.Hp_List.Hp_ListAdapter;
 import com.example.anafor.R;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class Hp_HashActivity extends AppCompatActivity {
 
     ImageView imgv_hp_hash_back;
-    Button btn_hp_hash_head, btn_hp_hash_bone, btn_hp_hash_teeth;
-    SearchView schv_hp_hash_search;
     TextView search_text;
-    ArrayList<hpVO> dtos;
+    SearchView schv_hp_hash_search;
+    ArrayList<HpDTO> list;
+    Hp_HashAdapter adapter;
+    RecyclerView recv_hp_hash;
+    Context context;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hp_hash);
-        dtos = new ArrayList<>();
-
+        list = new ArrayList<>();
+        context = this;
         imgv_hp_hash_back = findViewById(R.id.imgv_hp_hash_back);
-        btn_hp_hash_head = findViewById(R.id.btn_hp_hash_head);
-        btn_hp_hash_bone = findViewById(R.id.btn_hp_hash_bone);
-        btn_hp_hash_teeth = findViewById(R.id.btn_hp_hash_teeth);
+        recv_hp_hash = findViewById(R.id.recv_hp_hash);
         search_text = findViewById(R.id.search_text);
 
         schv_hp_hash_search = findViewById(R.id.schv_hp_hash_search);
 
+
+        list.add(new HpDTO("비염", "이비인후과"));
+        list.add(new HpDTO("감기", "내과"));
+        list.add(new HpDTO("디스크", "신경외과"));
+
+        adapter = new Hp_HashAdapter(getLayoutInflater(), list, context);
+        // 리사이클러뷰에 어댑터를 세팅
+        recv_hp_hash.setAdapter(adapter);
+        recv_hp_hash.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
         imgv_hp_hash_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,14 +76,13 @@ public class Hp_HashActivity extends AppCompatActivity {
                 }*/
                 // Intent
                 Intent intent = new Intent(Hp_HashActivity.this, Hp_ListActivity.class);
-                intent.putExtra("query", "내과");
+                intent.putExtra("query", query);
 
                 startActivity(intent);
 
                 // GPS 좌표를 받아, 주소로 변환
 
                 // DB에서 받은 값을 리스트로 출력 > new Activity 로 넘겨 출력
-
 
                 return true;
             }
@@ -89,5 +92,8 @@ public class Hp_HashActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+
     }
 }

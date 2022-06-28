@@ -19,9 +19,20 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".User.PwFindActivity"
+            android:name=".User.SocialJoinActivity"
             android:exported="false" />
-        <!-- 로그인 -->
+        <activity
+            android:name=".Nav_Vaccine.VaccineDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Hp_Information.Hp_informationModifyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Hp_Review.Hp_ReviewAllActivity"
+            android:exported="false" />
+        <activity
+            android:name=".User.PwFindActivity"
+            android:exported="false" /> <!-- 로그인 -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

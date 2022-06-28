@@ -2,10 +2,8 @@ package com.example.anafor.Common;
 
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
-import android.util.JsonReader;
-import android.util.Log;
 
-import com.example.anafor.Hp_Hash.hpVO;
+import com.example.anafor.Hp_Hash.HpDTO;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,7 +13,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -26,15 +23,15 @@ public class MemberSelect extends AsyncTask<Void, Void, InputStreamReader> {
 
     // 생성자를 만들어서 데이터를 받는다
     //Context context;  // 필요하면 받는다
-    ArrayList<hpVO> dtos;
+    ArrayList<HpDTO> dtos;
     String query;
     //MemberAdapter adapter;
 
-//    public MemberSelect(ArrayList<hpVO> dtos, MemberAdapter adapter) {
+    //    public MemberSelect(ArrayList<HpDTO> dtos, MemberAdapter adapter) {
 //        this.dtos = dtos;
 //        //this.adapter = adapter;
 //    }
-    public MemberSelect(ArrayList<hpVO> dtos, String query) {
+    public MemberSelect(ArrayList<HpDTO> dtos, String query) {
         this.dtos = dtos;
         this.query = query;
         //this.adapter = adapter;
@@ -59,6 +56,7 @@ public class MemberSelect extends AsyncTask<Void, Void, InputStreamReader> {
             // 여기가 우리가 수정해야 하는 부분 : 서버로 보내는 데이터
             // builder에 문자열 및 데이터 추가하기
             builder.addTextBody("query", query, ContentType.create("Multipart/related", "UTF-8"));
+
 
             // 전송
             // 전송 url : 우리가 수정해야 하는 부분
@@ -120,7 +118,7 @@ public class MemberSelect extends AsyncTask<Void, Void, InputStreamReader> {
 //        }
 //    }
 //
-//    public hpVO readMessage(JsonReader reader) throws IOException {
+//    public HpDTO readMessage(JsonReader reader) throws IOException {
 //        String hp_code = "", hp_name = "", type_code = "", sido_code="",  sido_name="", sigungu_code="", sigungu_name="", hp_addr="", hp_tel="", hp_url="", hp_x="", hp_y="" ;
 //
 //        reader.beginObject();
@@ -154,7 +152,7 @@ public class MemberSelect extends AsyncTask<Void, Void, InputStreamReader> {
 //        }
 //        reader.endObject();
 //        Log.d(TAG, hp_code + "," + hp_name + "," + type_code + "," + sido_code + "," + sido_name);
-//        return new hpVO(hp_code, hp_name, type_code, sido_code, sido_name, sigungu_code, sigungu_name, hp_addr ,hp_tel ,hp_url ,hp_x ,hp_y);
+//        return new HpDTO(hp_code, hp_name, type_code, sido_code, sido_name, sigungu_code, sigungu_name, hp_addr ,hp_tel ,hp_url ,hp_x ,hp_y);
 //    }
 
 }
