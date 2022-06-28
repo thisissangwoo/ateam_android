@@ -92,7 +92,7 @@ public class Box_MainFragment extends Fragment {
             list = gson.fromJson(ir, new TypeToken<List<IoTVO>>(){}.getType());
             Log.d(TAG, "iot_select_pill: " + list);
 
-            Log.d(TAG, "아제발 " + list.get(0).getCase_num() );
+            
 
             for (IoTVO vo : list){
                 String case_num = vo.getCase_num();
