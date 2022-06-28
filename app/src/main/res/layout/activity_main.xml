@@ -65,7 +65,8 @@
                 android:id="@+id/mainMidMenu"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:layout_marginBottom="30dp"/>
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/btm_nav"
                 android:layout_width="match_parent"
