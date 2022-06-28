@@ -51,14 +51,28 @@
             android:padding="10dp"
             android:orientation="vertical">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="AnaFor Box"
-                android:textSize="28dp"
-                android:gravity="center"
-                android:textColor="#696aad"
-                android:textStyle="bold"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="AnaFor Box"
+                    android:textSize="28dp"
+                    android:gravity="center"
+                    android:textColor="#696aad"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="80dp"
+                    android:layout_weight="2"/>
+                <TextView
+                    android:id="@+id/tv_box_detail_blue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center|right"
+                    android:text="Bluetooth"
+                    android:drawableRight="@drawable/icon_bluetooth"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -79,6 +93,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:maxLength="17"
                 android:background="@drawable/edt_st"
                 android:hint="내용을 입력해주세요"/>
 
@@ -97,32 +112,17 @@
                 android:text="시간 설정"/>
 
             <LinearLayout
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="150dp"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/edt_box_alarm_time"
+                <TimePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_width="100dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:hint="시"
-                    android:background="@drawable/edt_st"
-                    android:layout_weight="1"/>
-
-                <EditText
-                    android:id="@+id/edt_box_alarm_minute"
-                    android:layout_gravity="center"
-                    android:layout_width="100dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:hint="분"
-                    android:background="@drawable/edt_st"
-                    android:layout_weight="1"/>
-
+                    android:timePickerMode="spinner"
+                    android:id="@+id/time_picker" />
             </LinearLayout>
 
             <LinearLayout
@@ -279,10 +279,15 @@
                             android:backgroundTint="#ccc"/>
 
 
+
+
+
                     </LinearLayout>
 
 
                 </LinearLayout>
+
+
 
             </LinearLayout>
 

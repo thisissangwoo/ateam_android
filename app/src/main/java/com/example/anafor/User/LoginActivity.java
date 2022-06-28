@@ -17,9 +17,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.anafor.Box_Main.Box_MainFragment;
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
+import com.example.anafor.Common.CommonVal;
 import com.example.anafor.MainActivity;
+import com.example.anafor.Pill_Main.Pill_MainFragment;
 import com.example.anafor.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.kakao.sdk.auth.model.OAuthToken;
@@ -53,14 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         getHashKey();
 
-        //로고클릭-메인이동
-        findViewById(R.id.tv_login_anaforlogo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
         //뒤로가기-메인이동
         findViewById(R.id.imgv_login_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = findViewById(R.id.btn_login_login );
         tv_join = findViewById(R.id.tv_login_join);
         chk_auto = findViewById(R.id.switch_login_autologin);
-        SharedPreferences preferences = getPreferences(LoginActivity.MODE_PRIVATE);
+
+        SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
         tiedt_id.setText(preferences.getString("id" , ""));
         tiedt_pw.setText(preferences.getString("pw" , ""));
         loginName = findViewById(R.id.tv_main_header_login);
@@ -89,7 +85,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this,PwFindActivity.class);
+                intent.putExtra("finish", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -110,9 +109,9 @@ public class LoginActivity extends AppCompatActivity {
                     if(dao.isUserLogin()){
                         checkAutoLogin();
                         goMain();
+
                     }else{
                         Toast.makeText(LoginActivity.this,"아이디 또는 비밀번호가 틀립니다",Toast.LENGTH_SHORT).show();
-
                         tiedt_id.setText("");
                         tiedt_pw.setText("");
                         tiedt_id.requestFocus();

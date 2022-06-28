@@ -17,6 +17,9 @@ import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.R;
 import com.google.gson.Gson;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
+import org.threeten.bp.LocalDate;
 
 import java.util.ArrayList;
 
@@ -101,7 +104,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                                     // 0 번째 == 수정
                                     // 액티비티를 제외한 프래그먼트, 어댑터는 본인의 출처 즉, 부모가 누구인지
                                     // 알아야 서로 넘겨주면서 사용이 가능하므로 Context 로 받아와서 사용하여야 함
-                                    ((ScheduleActivity)context).changeFragment(new ScheduleFragment3(list.get(position),schedule));
+                                    CalendarDay day =  CalendarDay.from(LocalDate.of(2022, Integer.parseInt( schedule.substring(schedule.indexOf("년")+1,schedule.indexOf("월")).trim()),
+                                            Integer.parseInt( schedule.substring(schedule.indexOf("월")+1,schedule.indexOf("일")).trim())));
+                                    ((ScheduleActivity)context).changeFragment(new ScheduleFragment3(list.get(position),schedule),day);
                                     dialog.dismiss();
                                 }else if (which == 1){
                                     // 1 번째 == 삭제
@@ -111,7 +116,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
                                     task.addParam("dto", gson.toJson(dto));
                                     CommonMethod.executeAskGet(task);
 
-                                    ((ScheduleActivity)context).changeFragment(new ScheduleFragment2(schedule));
+                                    ((ScheduleActivity)context).changeFragment(new ScheduleFragment2(schedule),null);
                                     Toast.makeText(context.getApplicationContext(), "해당 일정이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 }

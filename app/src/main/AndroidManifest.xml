@@ -3,6 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.anafor">
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!--
+BLUETOOTH : 커넥션 요구, 커넥션 수락, 데이터 전송 등의 블루투스 통신을 하기 위해 필요한 권한
+   BLUETOOTH_ADMIN : 디바이스 검색 시작, 블루투스 설정을 조작하기 위해 필요
+    -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 카카오맵 api -->
@@ -13,11 +21,21 @@
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_main"
+        android:label="AnaFor"
+        android:roundIcon="@mipmap/ic_main_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Box_Main.Box_IdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Box_Alarm.Box_Alarm_modifyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Box_Main.WebMapActivity"
+            android:exported="false" />
         <activity
             android:name=".User.SocialJoinActivity"
             android:exported="false" />
@@ -81,9 +99,6 @@
             android:name=".Box_Recode.Box_RecordActivity"
             android:exported="false" />
         <activity
-            android:name=".Box_Main.Box_SettingActivity"
-            android:exported="false" />
-        <activity
             android:name=".Pill_QRcode.Pill_QRcodeActivity"
             android:exported="false" />
         <activity
@@ -128,6 +143,8 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="8b43a4029fe7a1169d57ad185993d4f0" />
+
+        <receiver android:name=".Box_Alarm.AlarmReceiver" />
     </application>
 
 </manifest>

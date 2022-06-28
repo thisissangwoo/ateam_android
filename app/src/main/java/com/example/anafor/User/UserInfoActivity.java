@@ -140,7 +140,7 @@ public class UserInfoActivity extends AppCompatActivity{
             @Override
             public void afterTextChanged(Editable s) {
                 pwInput = tiedt_pw.getText().toString();
-                if(!pwInput.isEmpty() && Pattern.matches("^[a-zA-Z0-9]{8,16}$", pwInput)){
+                if(!pwInput.isEmpty() && Pattern.matches("^[a-zA-Z0-9]{8,20}$", pwInput)){
                     til_pw.setHelperText("사용 가능한 비밀번호입니다.");
                     til_pw.setHelperTextColor(valueOf(Color.parseColor("#FF6200EE")));
                     pwChk = true;
@@ -191,7 +191,7 @@ public class UserInfoActivity extends AppCompatActivity{
             @Override
             public void afterTextChanged(Editable s) {
                 nameInput = tiedt_name.getText().toString();
-                if (!nameInput.isEmpty() && Pattern.matches("^[가-힣]*$", nameInput)) {
+                if (!nameInput.isEmpty() && Pattern.matches("^[가-힣a-zA-Z]{2,10}$", nameInput)) {
                     til_name.setHelperText("");
                     til_name.setError(null);
                     nameChk = true;
@@ -312,14 +312,16 @@ public class UserInfoActivity extends AppCompatActivity{
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        finish();
                         Intent i=new Intent(UserInfoActivity.this,MainActivity.class);
                         i.putExtra("finish", true);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         CommonVal.loginInfo = null;
+                        CommonVal.bottom_menu = "0";
                         SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
+                        editor.remove("login");
                         editor.clear();
+                        editor.apply();
                         editor.commit();
                         startActivity(i);
                         finish();
@@ -344,7 +346,10 @@ public class UserInfoActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserInfoActivity.this,UserDeleteActivity.class);
+                intent.putExtra("finish", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -387,7 +392,10 @@ public class UserInfoActivity extends AppCompatActivity{
                 CommonMethod.executeAskGet(task);
 
                 Intent intent = new Intent(UserInfoActivity.this,MainActivity.class);
+                intent.putExtra("finish", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
                 Toast.makeText(UserInfoActivity.this,"회원정보가 수정되었습니다", Toast.LENGTH_SHORT).show();
             }
         });

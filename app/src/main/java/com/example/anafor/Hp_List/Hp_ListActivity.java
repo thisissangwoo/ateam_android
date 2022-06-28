@@ -16,8 +16,11 @@ import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Hp_Hash.HpDTO;
 
+import com.example.anafor.Hp_Hash.Hp_HashActivity;
+import com.example.anafor.MainActivity;
 import com.example.anafor.R;
 
+import com.example.anafor.User.UserInfoActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -59,7 +62,11 @@ public class Hp_ListActivity extends AppCompatActivity {
         imgv_hp_list_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();    // 바로 이전에 왔던 곳으로 이동 (마이페이지 유지)
+                Intent intent = new Intent(Hp_ListActivity.this, Hp_HashActivity.class);
+                intent.putExtra("finish", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
             }
         });
 

@@ -16,6 +16,9 @@ import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.R;
 import com.google.gson.Gson;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
+import org.threeten.bp.LocalDate;
 
 
 public class ScheduleFragment3 extends Fragment {
@@ -75,7 +78,11 @@ public class ScheduleFragment3 extends Fragment {
                     CommonMethod.executeAskGet(task);
 
                     Toast.makeText(getContext().getApplicationContext(), "일정 수정 완료", Toast.LENGTH_SHORT).show();
-                    ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2(schedule));
+
+                    CalendarDay day =  CalendarDay.from(LocalDate.of(2022, Integer.parseInt( schedule.substring(schedule.indexOf("년")+1,schedule.indexOf("월")).trim()),
+                            Integer.parseInt( schedule.substring(schedule.indexOf("월")+1,schedule.indexOf("일")).trim())));
+
+                    ((ScheduleActivity)getActivity()).changeFragment(new ScheduleFragment2(schedule),day);
                 }// if
             }// onClick
         });// setOnClickListener

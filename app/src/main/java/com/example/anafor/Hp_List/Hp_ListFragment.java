@@ -71,10 +71,7 @@ public class Hp_ListFragment extends Fragment {
             }
             InputStreamReader isr =  CommonMethod.executeAskGet(task);
             list = gson.fromJson(isr, new TypeToken<ArrayList<Hp_ListDTO>>(){}.getType());
-            for(Hp_ListDTO vo : list){
-                Log.d("@@@@", "onQueryTextSubmit: "+ vo.getHp_name());
-            }
-            Log.d("basic", "onQueryTextSubmit: " + list.size());
+
         } catch (Exception e) {
             e.printStackTrace();
         }

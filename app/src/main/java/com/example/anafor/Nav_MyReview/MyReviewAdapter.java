@@ -19,6 +19,8 @@ import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Hp_Information.Hp_informationModifyActivity;
 import com.example.anafor.Hp_Review.ReviewVO;
+import com.example.anafor.Nav_Schedule.ScheduleActivity;
+import com.example.anafor.Nav_Schedule.ScheduleFragment2;
 import com.example.anafor.R;
 
 import java.util.ArrayList;
@@ -29,11 +31,21 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
     ArrayList<ReviewVO> list;
     ReviewVO vo;
     Context context;
+    MyReviewActivity activity;
 
-    public MyReviewAdapter(LayoutInflater inflater, ArrayList<ReviewVO> list, Context context) {
+    public ArrayList<ReviewVO> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<ReviewVO> list) {
+        this.list = list;
+    }
+
+    public MyReviewAdapter(LayoutInflater inflater, ArrayList<ReviewVO> list, Context context, MyReviewActivity activity) {
         this.inflater = inflater;
         this.list = list;
         this.context = context;
+        this.activity = activity;
     }
 
     @NonNull
@@ -109,8 +121,13 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyRevi
                                     task.addParam("rev_num",String.valueOf(list.get(position).getRev_num()));
                                     CommonMethod.executeAskGet(task);
                                     Toast.makeText(context, "리뷰가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                                    notifyItemRemoved(position);
                                     dialog.dismiss();
+                                    list.remove(position);
+                                    notifyItemRemoved(position);
+                                    notifyItemRangeChanged(position,list.size());
+                                    if(list.size()==0){
+                                        activity.tv_review.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             }
                         }).show();

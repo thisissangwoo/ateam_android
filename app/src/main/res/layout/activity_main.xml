@@ -10,7 +10,7 @@
     tools:openDrawer="start"
     tools:context=".MainActivity"
     android:id="@+id/drawer"
-    android:background="#25808080">
+    android:background="#FFFFFF">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"

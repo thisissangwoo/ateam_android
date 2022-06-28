@@ -22,6 +22,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -89,9 +90,6 @@ public class MainActivity extends AppCompatActivity {
         nav_view = findViewById(R.id.nav_view);
         pic_Slid = findViewById(R.id.mainMidMenu);
 
-
-
-
         slidePic();
 
         setSupportActionBar(main_toolbar);
@@ -140,9 +138,11 @@ public class MainActivity extends AppCompatActivity {
                 // 광고 ViewFlipper 를 메인 엑티비티에만 적용시키고
                 // 나머지 바텀메뉴 프래그먼트에는 안보이게 GONE 처리
                 if (item.getItemId() == R.id.btm_home){
+                    CommonVal.bottom_menu="1";
                     pic_Slid.setVisibility(View.VISIBLE);
                     changeFragment(new Hp_MainFragment());
                 }else if (item.getItemId() == R.id.btm_cheobang){
+                    CommonVal.bottom_menu="2";
                     pic_Slid.setVisibility(View.GONE);
                     //여기서 로그인 액티비티로 이동
                     if(CommonVal.loginInfo == null){
@@ -152,8 +152,13 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 }else if (item.getItemId() == R.id.btm_yagtong){
+                    CommonVal.bottom_menu="3";
                     pic_Slid.setVisibility(View.GONE);
-                    changeFragment(new Box_MainFragment());
+                    if(CommonVal.loginInfo == null){
+                        alertLogin();
+                    }else {
+                        changeFragment(new Box_MainFragment());
+                    }
                 }
                 return true;
             }
@@ -358,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
                 IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
                 if(result != null && result.getContents() != null){
 
-                    Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "큐알코드를 스캔합니다", Toast.LENGTH_SHORT).show();
                     // todo
                     //DB insert 처리를 함
                     AskTask task = new AskTask("/pill");
@@ -366,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
 
                     CommonMethod.executeAskGet(task);
                 }else{
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "취소되었습니다", Toast.LENGTH_SHORT).show();
                 }
 
      /*       */
@@ -398,7 +403,6 @@ public class MainActivity extends AppCompatActivity {
             dao.isUserLogin();
         }
 
-
         if(CommonVal.loginInfo != null) {
             tv_login.setText(CommonVal.loginInfo.getUser_name() + "님 반갑습니다");
             tv_edit.setText("정보수정");
@@ -424,6 +428,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        if (CommonVal.bottom_menu.equals("1")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new Hp_MainFragment()).commit();
+        }else if (CommonVal.bottom_menu.equals("2")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new Pill_MainFragment()).commit();
+        }else if(CommonVal.bottom_menu.equals("3")){
+            getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new Box_MainFragment()).commit();
+        }
+
     }
     //비로그인상태일때 로그인해야 이용가능하다는 알림
     public void alertLogin(){
@@ -441,6 +454,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                pic_Slid.setVisibility(View.VISIBLE);
+
+
+/*              Menu bottomNavigationMenu = btm_nav.getMenu();
+                bottomNavigationMenu.setGroupCheckable(0,true,false);
+                bottomNavigationMenu.findItem(R.id.btm_home).setChecked(false);
+                bottomNavigationMenu.findItem(R.id.btm_cheobang).setChecked(false);
+                bottomNavigationMenu.findItem(R.id.btm_yagtong).setChecked(false);*/
             }
         });
         builder.show();
@@ -453,4 +474,5 @@ public class MainActivity extends AppCompatActivity {
         qrScan.setPrompt("QR 코드를 사각형 안에 넣어주세요.");
         qrScan.initiateScan();
     }
+
 }

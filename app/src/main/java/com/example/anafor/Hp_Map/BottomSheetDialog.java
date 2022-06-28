@@ -22,6 +22,8 @@ import com.example.anafor.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.Gson;
 
+import net.daum.mf.map.api.MapView;
+
 import java.io.InputStreamReader;
 
 public class BottomSheetDialog extends BottomSheetDialogFragment {
@@ -30,7 +32,7 @@ public class BottomSheetDialog extends BottomSheetDialogFragment {
     String place_name , distance, roadAddr, phone;
     Gson gson = new Gson();
 
-    public BottomSheetDialog(Context context, String place_name, String distance, String roadAddr, String phone) {
+    public BottomSheetDialog(Context context, String place_name, String distance, String roadAddr, String phone ) {
         this.context = context;
         this.place_name = place_name;
         this.distance = distance;

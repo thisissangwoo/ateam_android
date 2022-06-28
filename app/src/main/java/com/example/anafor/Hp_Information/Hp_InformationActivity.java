@@ -6,38 +6,49 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.anafor.Common.AskTask;
 import com.example.anafor.Common.CommonMethod;
 import com.example.anafor.Common.CommonVal;
+import com.example.anafor.Hp_Map.Hp_MapActivity;
 import com.example.anafor.Hp_Review.Hp_ReviewAllActivity;
 import com.example.anafor.Hp_Review.Hp_infoReviewFragment;
 import com.example.anafor.Hp_Review.ReviewTotalVO;
 import com.example.anafor.Hp_Review.ReviewVO;
 import com.example.anafor.R;
 import com.example.anafor.User.LoginActivity;
+import com.example.anafor.gps.GpsTracker;
 import com.example.anafor.utils.GetDate;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import net.daum.mf.map.api.MapPOIItem;
+import net.daum.mf.map.api.MapPoint;
+import net.daum.mf.map.api.MapView;
+
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class Hp_InformationActivity extends AppCompatActivity {
+public class Hp_InformationActivity extends AppCompatActivity implements MapView.POIItemEventListener {
 
     TabLayout hp_infor_tab_layout;
-    ImageView imgv_hp_infor_back;
+    ImageView imgv_hp_infor_back,imgv_hp_photo;
     TextView hp_infor_time, hp_infor_infor, hp_infor_review, tv_hp_today,tv_hp_todayTime,
             tv_hp_tlunch, tv_hp_name, tv_hp_addr , tv_hp_url, tv_hp_phone, tv_hp_wlunch,tv_hp_holi,
             tv_hp_mon, tv_hp_tue, tv_hp_wed, tv_hp_thu, tv_hp_fri, tv_hp_sat, tv_hp_sun, tv_hp_dlunch,
@@ -55,13 +66,19 @@ public class Hp_InformationActivity extends AppCompatActivity {
     int flag = 0;               //상태 변수
     boolean heartclick = false; //조회 여부 확인 (default)
     LinearProgressIndicator pro_survey1, pro_survey2, pro_survey3;
-    ReviewTotalVO totalReview ;
+    ReviewTotalVO totalReview = null ;
     ArrayList<ReviewVO> reviewList;
+    MapView KakaoMapView;
+    ViewGroup mMapViewContainer;
+    private double mCurrentLng;     //경도
+    private double mCurrentLat;     //위도
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hp_information);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  //프로그램 화면 세로 고정
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         Intent intent = getIntent();
@@ -71,8 +88,13 @@ public class Hp_InformationActivity extends AppCompatActivity {
                 infoDTO.getEnd_w(), infoDTO.getStart_th(), infoDTO.getEnd_th(), infoDTO.getStart_f(), infoDTO.getEnd_f(), infoDTO.getStart_s(), infoDTO.getEnd_s(),
                 infoDTO.getClose_ho(), infoDTO.getLunch_d(), infoDTO.getLunch_w()};
 
-
         imgv_heartclick = findViewById(R.id.imgv_heartclick);               //찜하기 기능
+        imgv_hp_photo = findViewById(R.id.imgv_hp_photo);               //병원 이미지
+
+        //DB에 이미지파일이 있을때
+        if(infoDTO.getFilepath()!=null){
+            Glide.with(Hp_InformationActivity.this).load(infoDTO.getFilepath()).into(imgv_hp_photo);
+        }
 
         hp_infor_scview = findViewById(R.id.hp_infor_scview);
 
@@ -117,10 +139,10 @@ public class Hp_InformationActivity extends AppCompatActivity {
         pro_survey3 = findViewById(R.id.pro_surevey3);
 
         tv_review_mbtn.setVisibility(View.GONE);
-        writeTextView();  //전체 진료시간 출력
-        writeHpInfo();      //병원 정보 출력
-
-        selectReviewtList();            //리뷰 정보 조회
+        writeTextView();                        //전체 진료시간 출력
+        writeHpInfo();                          //병원 정보 출력
+        initView();                                 //카카오 맵 상세 정보
+        selectReviewtList();                //리뷰 정보 조회
 
         //더보기 버튼 클릭시 (리뷰 리스트 출력)
         tv_review_mbtn.setOnClickListener(new View.OnClickListener() {
@@ -208,13 +230,13 @@ public class Hp_InformationActivity extends AppCompatActivity {
         btn_review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(CommonVal.loginInfo != null){
+                if(CommonVal.loginInfo != null){            //로그인 상태
                     Intent intent = new Intent(Hp_InformationActivity.this, Hp_InformationReviewActivity.class);
-                    intent.putExtra("hp_name",infoDTO.getHp_name());
-                    intent.putExtra("hp_code",infoDTO.getHp_code());
+                    intent.putExtra("hp_name",infoDTO.getHp_name()); //병원 이름
+                    intent.putExtra("hp_code",infoDTO.getHp_code());    //병원 코드 
                     startActivityForResult(intent , 100);
                 }else{
-                    alertLogin();
+                    alertLogin();                           //비로그인 상태일때
                 }
 
             }
@@ -238,6 +260,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
             }
         }
 
+        //전제 진료시간 출력
         int cnt = 0;
         for(int i = 0; i<9; i++){
             if(i<6){               //월~토요일
@@ -328,23 +351,26 @@ public class Hp_InformationActivity extends AppCompatActivity {
                 AskTask  task2 = new AskTask("selectAll.review");
                 task2.addParam("code",infoDTO.getHp_code());
                 reviewList = gson.fromJson(CommonMethod.executeAskGet(task2), new TypeToken<ArrayList<ReviewVO>>() {}.getType());
-                tv_review_total.setText("리뷰  "+totalReview.getTotalcnt()+" 개");             //총 리뷰 수
-                tv_total_survey1.setText("("+totalReview.getSurvey1cnt()+")");
-                tv_total_survey2.setText("("+totalReview.getSurvey2cnt()+")");
-                tv_total_survey3.setText("("+totalReview.getSurvey3cnt()+")");
-                tv_review_rate.setText(totalReview.getTotalrate()+" 점");
-                tv_review_mbtn.setVisibility(View.VISIBLE);
-                pro_survey1.setProgressCompat((int)(totalReview.getSurvey1rate()*100.0),false);
-                pro_survey2.setProgressCompat((int)(totalReview.getSurvey2rate()*100.0),false);
-                pro_survey3.setProgressCompat((int)(totalReview.getSurvey3rate()*100.0),false);
-                //해당 병원 전체 리뷰 조회
-            }else{
-                tv_review_mbtn.setVisibility(View.INVISIBLE);
+                countReview();            //해당 병원 전체 리뷰 조회
             }
         getSupportFragmentManager().beginTransaction().replace(R.id.container_hp_reivew,new Hp_infoReviewFragment(reviewList)).commit();
     }
-
-
+    public void countReview(){
+        tv_review_total.setText("리뷰  "+totalReview.getTotalcnt()+" 개");             //총 리뷰 수
+        tv_total_survey1.setText("("+totalReview.getSurvey1cnt()+")");
+        tv_total_survey2.setText("("+totalReview.getSurvey2cnt()+")");
+        tv_total_survey3.setText("("+totalReview.getSurvey3cnt()+")");
+        tv_review_rate.setText(totalReview.getTotalrate()+" 점");
+        pro_survey1.setProgressCompat((int)(totalReview.getSurvey1rate()*100.0),false);
+        pro_survey2.setProgressCompat((int)(totalReview.getSurvey2rate()*100.0),false);
+        pro_survey3.setProgressCompat((int)(totalReview.getSurvey3rate()*100.0),false);
+        if(totalReview.getTotalcnt() == 0){                 //더보기 버튼 숨김 처리
+            tv_review_mbtn.setVisibility(View.GONE);
+        }else{
+            tv_review_mbtn.setVisibility(View.VISIBLE);
+        }
+    }
+    
     @Override
     public void onBackPressed() {
 
@@ -360,7 +386,7 @@ public class Hp_InformationActivity extends AppCompatActivity {
                     aTask("insert.heart");
                 }
             }
-            super.onBackPressed();
+            finish();
     }
     //비로그인상태일때 로그인해야 이용가능하다는 알림
     public void alertLogin(){
@@ -383,6 +409,20 @@ public class Hp_InformationActivity extends AppCompatActivity {
         builder.show();
     }
 
+    //카카오맵 실행 (길찾기할때)
+    public void showMap(Uri geoLocation) {
+        Intent intent2;
+        try {
+            intent2 = new Intent(Intent.ACTION_VIEW, geoLocation);
+            intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent2);
+        } catch (Exception e) {
+            intent2 = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://play.google.com/store/apps/details?id=net.daum.android.map&hl=ko"));
+            intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent2);
+        }
+    }
+
 
 
     @Override
@@ -392,5 +432,90 @@ public class Hp_InformationActivity extends AppCompatActivity {
             selectReviewtList();
         }
     }
+
+    @Override
+    public void onPOIItemSelected(MapView mapView, MapPOIItem mapPOIItem) {
+        
+    }
+
+    //마커 말풍선 클릭했을때
+    @Override
+    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
+        double lat = mapPOIItem.getMapPoint().getMapPointGeoCoord().latitude;
+        double lng = mapPOIItem.getMapPoint().getMapPointGeoCoord().longitude;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("길찾기");
+        builder.setMessage("길찾기를 원하시면 확인 버튼을 눌러주세요");
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showMap(Uri.parse("daummaps://route?sp=" + mCurrentLat + "," + mCurrentLng + "&ep=" + lat + "," + lng + "&by=FOOT"));
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mMapViewContainer.removeView(KakaoMapView);
+        Log.d("", "onPause: ");
+    }
+
+    @Override
+    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
+
+    }
+
+    @Override
+    public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //if (mMapViewContainer.is) {
+        if(mMapViewContainer.getChildCount() == 0){
+            initView();
+        }else{
+            mMapViewContainer.removeView(KakaoMapView);
+        }
+
+    }
+
+    
+    //처음에 맵 시작하는 함수
+    public void initView(){
+
+        KakaoMapView = new MapView(this);
+        mMapViewContainer = findViewById(R.id.KakaoMapView);
+        mMapViewContainer.addView(KakaoMapView);
+        GpsTracker gpsTracker = new GpsTracker(Hp_InformationActivity.this);
+        mCurrentLat = gpsTracker.getLatitude();
+        mCurrentLng = gpsTracker.getLongitude();
+        KakaoMapView.setPOIItemEventListener(this);
+        if(infoDTO.getHp_x() != null && infoDTO.getHp_y()!=null){       //병원의 좌표가 null이 아닐때 마커를 찍음
+            MapPoint mapPoint = MapPoint.mapPointWithGeoCoord(Double.parseDouble(infoDTO.getHp_y()),Double.parseDouble(infoDTO.getHp_x()));
+            KakaoMapView.setMapCenterPoint(mapPoint,true);  //지도 중심점 병원 좌표로
+            KakaoMapView.setZoomLevel(1,true); //값이 작을수록 더 확대됨
+            MapPOIItem marker = new MapPOIItem();
+            marker.setMapPoint(mapPoint);
+            marker.setItemName(infoDTO.getHp_name());
+            marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+            KakaoMapView.addPOIItem(marker);
+        }
+
+
+    }
+
 }
 

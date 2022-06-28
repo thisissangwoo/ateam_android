@@ -18,6 +18,8 @@ import com.example.anafor.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class MyReviewActivity extends AppCompatActivity {
@@ -25,17 +27,19 @@ public class MyReviewActivity extends AppCompatActivity {
     ImageView imgv_myreview_back;
     RecyclerView recv_my_review_list;
     ArrayList<ReviewVO> list = null;
-    TextView tv_review;
     Gson gson = new Gson();
     Context context;
+    MyReviewAdapter adapter;
+    TextView tv_review;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myreview);
         context = this;
-        tv_review=findViewById(R.id.tv_review);
         imgv_myreview_back = findViewById(R.id.imgv_myreview_back);
         recv_my_review_list = findViewById(R.id.recv_my_review_list);
+        tv_review = findViewById(R.id.tv_review);
         imgv_myreview_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,14 +49,17 @@ public class MyReviewActivity extends AppCompatActivity {
         selectList();
     }
 
+    //리뷰 조회
     public void selectList(){
         AskTask task = new AskTask("selectMy.review");
         task.addParam("user_id",CommonVal.loginInfo.getUser_id());
         list = gson.fromJson(CommonMethod.executeAskGet(task),new TypeToken<ArrayList<ReviewVO>>(){}.getType());
         if(list.size()==0){
             tv_review.setVisibility(View.VISIBLE);
+            recv_my_review_list.setVisibility(View.INVISIBLE);
         }else{
-            MyReviewAdapter adapter = new MyReviewAdapter(getLayoutInflater(), list,context);
+            tv_review.setVisibility(View.GONE);
+            adapter = new MyReviewAdapter(getLayoutInflater(), list,context,MyReviewActivity.this);
             recv_my_review_list.setAdapter(adapter);
             recv_my_review_list.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         }
