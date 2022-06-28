@@ -154,7 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:backgroundTint="#696aad"
-            android:drawableLeft="@android:drawable/ic_menu_edit"
+            android:drawableLeft="@drawable/ic_baseline_access_alarm_24"
             android:text="알람"/>
 
         <Button
@@ -165,7 +165,7 @@
             android:backgroundTint="#696aad"
             android:layout_marginRight="30dp"
             android:layout_marginLeft="30dp"
-            android:drawableLeft="@android:drawable/ic_menu_edit"
+            android:drawableLeft="@drawable/ic_baseline_speaker_notes_24"
             android:text="기록"/>
 
         <Button
@@ -175,7 +175,7 @@
             android:layout_marginBottom="20dp"
             android:backgroundTint="#696aad"
             android:text="위치"
-            android:drawableLeft="@android:drawable/ic_menu_edit"/>
+            android:drawableLeft="@drawable/ic_baseline_map_24"/>
 
     </LinearLayout>
 
