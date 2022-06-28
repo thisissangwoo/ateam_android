@@ -28,6 +28,7 @@
                     android:layout_width="150dp"
                     android:layout_height="130dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
                     android:src="@drawable/piller"
                     android:scaleType="fitXY"
                     android:id="@+id/imgv_pill_main_img"/>
