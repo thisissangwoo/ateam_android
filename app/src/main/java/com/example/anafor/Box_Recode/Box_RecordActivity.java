@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.anafor.Box_Alarm.IoTVO;
 import com.example.anafor.Common.AskTask;
@@ -27,13 +28,14 @@ public class Box_RecordActivity extends AppCompatActivity {
     RecyclerView recv_box_record;
     ArrayList<IoTVO> list = new ArrayList<>();
     private Object Context;
-
+    TextView tv_box_record_not_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_record);
 
+        tv_box_record_not_list = findViewById(R.id.tv_box_record_not_list);
         imgv_box_record_back = findViewById(R.id.imgv_box_record_back);
 
         imgv_box_record_back.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +46,11 @@ public class Box_RecordActivity extends AppCompatActivity {
         });
 
         list = selectList();
+        if (list.size()==0){
+            tv_box_record_not_list.setVisibility(View.VISIBLE);
+        }else{
+            tv_box_record_not_list.setVisibility(View.INVISIBLE);
+        }
 
         recv_box_record = findViewById(R.id.recv_box_record);
 
@@ -51,6 +58,7 @@ public class Box_RecordActivity extends AppCompatActivity {
 
         recv_box_record.setAdapter(adapter);
         recv_box_record.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+
     }
 
     public ArrayList<IoTVO> selectList() {
@@ -60,6 +68,9 @@ public class Box_RecordActivity extends AppCompatActivity {
         Log.d("TAG", "selectList: " + CommonVal.loginInfo.getUser_id() );
         InputStreamReader ir =  CommonMethod.executeAskGet(task);
         ArrayList<IoTVO> list = null ;
+
+        Log.d("TAG", "selectList: " + ir);
+
         if(ir!=null){
             list = gson.fromJson(ir, new TypeToken<List<IoTVO>>(){}.getType());
         }else{
