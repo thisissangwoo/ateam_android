@@ -40,7 +40,7 @@ public class Pill_detailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pill_detail);
-
+        context= this;
         Intent intent = getIntent();
         dto = (Pill_MainDTO) intent.getSerializableExtra("dto");
         Log.d("TAG", "onCreate: " + dto.getPill_code());
