@@ -42,12 +42,13 @@ public class Pill_QRcodeActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
         if(result != null) {
             if(result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "취소되었습니다", Toast.LENGTH_SHORT).show();
                 // todo
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "큐알코드를 스캔합니다", Toast.LENGTH_SHORT).show();
                 // todo
                 //DB insert 처리를 함
                 AskTask task = new AskTask("/pill");

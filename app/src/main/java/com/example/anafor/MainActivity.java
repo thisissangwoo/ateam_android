@@ -22,6 +22,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -362,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
                 IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
                 if(result != null && result.getContents() != null){
 
-                    Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "큐알코드를 스캔합니다", Toast.LENGTH_SHORT).show();
                     // todo
                     //DB insert 처리를 함
                     AskTask task = new AskTask("/pill");
@@ -370,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
 
                     CommonMethod.executeAskGet(task);
                 }else{
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "취소되었습니다", Toast.LENGTH_SHORT).show();
                 }
 
      /*       */
@@ -454,6 +455,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 pic_Slid.setVisibility(View.VISIBLE);
+
+
+/*              Menu bottomNavigationMenu = btm_nav.getMenu();
+                bottomNavigationMenu.setGroupCheckable(0,true,false);
+                bottomNavigationMenu.findItem(R.id.btm_home).setChecked(false);
+                bottomNavigationMenu.findItem(R.id.btm_cheobang).setChecked(false);
+                bottomNavigationMenu.findItem(R.id.btm_yagtong).setChecked(false);*/
             }
         });
         builder.show();

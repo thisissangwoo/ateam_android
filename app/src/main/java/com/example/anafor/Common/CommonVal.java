@@ -1,16 +1,13 @@
 package com.example.anafor.Common;
 
-import android.widget.ViewFlipper;
-
-import com.example.anafor.MainActivity;
-import com.example.anafor.R;
 import com.example.anafor.User.UserVO;
 
 public class CommonVal {
 
 
 
-    public static String HTTP_IP = "http://192.168.0.43";
+
+    public static String HTTP_IP = "http://192.168.0.33";
 
 
     public static String SVRPATH = "/anafor/";

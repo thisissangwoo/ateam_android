@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 
-import com.example.anafor.Hp_List.Hp_ListActivity;
 import com.example.anafor.Hp_Map.Hp_MapActivity;
 import com.example.anafor.R;
 
