@@ -5,7 +5,10 @@ import com.example.anafor.User.UserVO;
 public class CommonVal {
 
 
+
     public static String HTTP_IP = "http://192.168.0.33";
+
+
 
 
     public static String SVRPATH = "/anafor/";
