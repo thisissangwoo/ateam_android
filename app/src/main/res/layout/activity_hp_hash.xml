@@ -102,7 +102,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="감기"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -110,7 +110,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
+                    android:text="골절"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
                     android:text="디스크"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -118,24 +126,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="생리불순"
-                    android:textStyle="bold"
-                    android:textSize="20dp"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="비염"
-                    android:textStyle="bold"
-                    android:textSize="20dp"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="중이염"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
 
@@ -160,7 +152,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="방광염"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -168,23 +160,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="소아진료"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="골절"
-                    android:textStyle="bold"
-                    android:textSize="20dp"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="치통"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -192,7 +177,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="성형"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -219,7 +204,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="라식/라섹"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -227,7 +212,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="안구건조"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -235,7 +220,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="우울증"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -243,7 +228,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="공황장애"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -269,7 +254,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="여드름"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -277,7 +262,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="염증"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
@@ -285,15 +270,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="종양"
+                    android:gravity="left"
+                    android:text="생리불순"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="신경통"
                     android:textStyle="bold"
                     android:textSize="20dp"/>

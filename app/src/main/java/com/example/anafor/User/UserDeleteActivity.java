@@ -2,6 +2,7 @@ package com.example.anafor.User;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,6 +70,12 @@ public class UserDeleteActivity extends AppCompatActivity {
                             Intent i=new Intent(UserDeleteActivity.this, MainActivity.class);
                             i.putExtra("finish", true);
                             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            SharedPreferences preferences = getSharedPreferences("login",MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.remove("login");
+                            editor.clear();
+                            editor.apply();
+                            editor.commit();
                             Gson gson = new Gson();
                             AskTask task = new AskTask("delete");
                             task.addParam("vo", gson.toJson(CommonVal.loginInfo));

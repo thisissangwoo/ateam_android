@@ -302,13 +302,14 @@ public class LoginActivity extends AppCompatActivity {
         UserDAO dao = new UserDAO(user_id);
         Intent intent = null;
         if(dao.isSocialLogin() ){
-            intent = new Intent(LoginActivity.this , MainActivity.class);
+            goMain();
         }else{
             intent = new Intent(LoginActivity.this , SocialJoinActivity.class);
             intent.putExtra("user_id"  , user_id);
+            startActivity(intent);
+            finish();
         }
-        startActivity(intent);
-        finish();
+
     }
 
 }

@@ -457,9 +457,9 @@ public class MainActivity extends AppCompatActivity {
                 pic_Slid.setVisibility(View.VISIBLE);
 
 
-/*              Menu bottomNavigationMenu = btm_nav.getMenu();
+/*                Menu bottomNavigationMenu = btm_nav.getMenu();
                 bottomNavigationMenu.setGroupCheckable(0,true,false);
-                bottomNavigationMenu.findItem(R.id.btm_home).setChecked(false);
+                bottomNavigationMenu.findItem(R.id.btm_home).setChecked(true);
                 bottomNavigationMenu.findItem(R.id.btm_cheobang).setChecked(false);
                 bottomNavigationMenu.findItem(R.id.btm_yagtong).setChecked(false);*/
             }
