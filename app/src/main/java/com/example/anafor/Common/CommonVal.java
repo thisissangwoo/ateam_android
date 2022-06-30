@@ -7,7 +7,7 @@ public class CommonVal {
 
 
 
-    public static String HTTP_IP = "http://192.168.0.";
+    public static String HTTP_IP = "http://192.168.0.16";
 
 
     public static String SVRPATH = "/anafor/";

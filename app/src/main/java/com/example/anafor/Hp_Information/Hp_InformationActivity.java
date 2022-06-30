@@ -29,6 +29,7 @@ import com.example.anafor.Hp_Review.Hp_ReviewAllActivity;
 import com.example.anafor.Hp_Review.Hp_infoReviewFragment;
 import com.example.anafor.Hp_Review.ReviewTotalVO;
 import com.example.anafor.Hp_Review.ReviewVO;
+import com.example.anafor.MainActivity;
 import com.example.anafor.R;
 import com.example.anafor.User.LoginActivity;
 import com.example.anafor.gps.GpsTracker;
@@ -48,7 +49,7 @@ import java.util.ArrayList;
 public class Hp_InformationActivity extends AppCompatActivity implements MapView.POIItemEventListener {
 
     TabLayout hp_infor_tab_layout;
-    ImageView imgv_hp_infor_back,imgv_hp_photo;
+    ImageView imgv_hp_infor_back,imgv_hp_photo,imgv_hp_infor_home;
     TextView hp_infor_time, hp_infor_infor, hp_infor_review, tv_hp_today,tv_hp_todayTime,
             tv_hp_tlunch, tv_hp_name, tv_hp_addr , tv_hp_url, tv_hp_phone, tv_hp_wlunch,tv_hp_holi,
             tv_hp_mon, tv_hp_tue, tv_hp_wed, tv_hp_thu, tv_hp_fri, tv_hp_sat, tv_hp_sun, tv_hp_dlunch,
@@ -184,6 +185,28 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
 
         hp_infor_tab_layout = findViewById(R.id.hp_infor_tab_layout);  //탭 레이아웃
         imgv_hp_infor_back = findViewById(R.id.imgv_hp_infor_back);
+
+        imgv_hp_infor_home = findViewById(R.id.imgv_hp_infor_home);
+        imgv_hp_infor_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //뒤로 가기 했을때 한번만 DB에 값 전달
+                if(heartclick){       //원래 값이 있었을때
+                    if(flag == 1){                //찜한 날짜 바꿔서 업데이트
+                        aTask("update.heart");
+                    }else{                                 //찜한 병원 정보 삭제
+                        aTask("delete.heart");
+                    }
+                }else{                        // 처음 찜한 상태
+                    if(flag == 1){
+                        aTask("insert.heart");
+                    }
+                }
+                Intent intent2 = new Intent(Hp_InformationActivity.this,MainActivity.class);
+                startActivity(intent2);
+                finish();
+            }
+        });
 
         imgv_hp_infor_back.setOnClickListener(new View.OnClickListener() {
             @Override
