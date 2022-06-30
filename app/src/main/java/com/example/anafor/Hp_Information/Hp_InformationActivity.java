@@ -287,20 +287,20 @@ public class Hp_InformationActivity extends AppCompatActivity implements MapView
         int cnt = 0;
         for(int i = 0; i<9; i++){
             if(i<6){               //월~토요일
-                if(today+1 == i){   
+                if(today == i+1){
                     if(weekTime[cnt]!= null && weekTime[cnt+1]!= null){
-                        //Log.d("today@@@@@@", i+" "+today+"  writeTextView: "+cnt);
+                     //   Log.d("today@@@@@@", i+" "+today+"  writeTextView: "+cnt);
                         tv_hp_todayTime.setText(weekTime[cnt]+"~"+weekTime[cnt+1]);
                     }
                 }
                 if(weekTime[cnt]!= null && weekTime[cnt+1] != null){
-                    //    Log.d("@@@@@@@@", i+"  writeTextView: "+cnt);
+                       // Log.d("@@@@@@@@", i+"  writeTextView: "+cnt);
                     tv_time[i].setText(weekTime[cnt]+"~"+weekTime[cnt+1]);
                 }
                 cnt+=2;
             }else{                              //평일, 주말점심시간
                 if(weekTime[cnt]!= null){
-                    //     Log.d("@@@@@@@@", i+"  writeTextView: "+cnt);
+                       //  Log.d("@@@@@@@@", i+"  writeTextView: "+cnt);
                     tv_time[i].setText(weekTime[cnt]);
                 }
                 cnt++;
